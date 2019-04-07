@@ -16,7 +16,7 @@ void main() async {
   // 创建数据库
   final provider = new Provider();
   // 数据库初始化
-  await provider.init(true);
+//  await provider.init(true);
   // 获取 SP 对象
   sp = await SpUtil.getInstance();
   // 得到单例对象的 搜索 管理对象

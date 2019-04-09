@@ -30,7 +30,8 @@ var categoryHandler = new Handler(
 
 var webViewPageHand = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      String id = params['id']?.first;
       String title = params['title']?.first;
-      String url = params['url']?.first;
-      return new WebViewPage(url, title);
+      String link = params['link']?.first;
+      return new WebViewPage(int.parse(id), title, link);
     });

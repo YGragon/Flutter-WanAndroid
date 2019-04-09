@@ -5,11 +5,12 @@ import 'dart:core';
 
 /// 自定义组件，首页 card 中显示用
 class ListViewItem extends StatelessWidget {
+  final int itemId;
   final String itemUrl;
   final String itemTitle;
   final String data;
 
-  const ListViewItem({Key key, this.itemUrl, this.itemTitle, this.data})
+  const ListViewItem({Key key, this.itemId, this.itemUrl, this.itemTitle, this.data})
       : super(key: key);
 
 
@@ -22,7 +23,7 @@ class ListViewItem extends StatelessWidget {
       child: ListTile(
         onTap: () {
           // _launchURL(itemUrl, context);
-          Application.router.navigateTo(context, '${Routes.webViewPage}?title=${Uri.encodeComponent(itemTitle)}&url=${Uri.encodeComponent(itemUrl)}');
+          Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent(itemId.toString())}&title=${Uri.encodeComponent(itemTitle)}&link=${Uri.encodeComponent(itemUrl)}');
         },
         title: Padding(
           child: Text(

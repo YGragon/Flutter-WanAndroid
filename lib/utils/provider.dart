@@ -6,23 +6,11 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-//const createSql = {
-//  'cat': """
-//      CREATE TABLE "cat" (
-//      `id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-//      `name`	TEXT NOT NULL UNIQUE,
-//      `depth`	INTEGER NOT NULL DEFAULT 1,
-//      `parentId`	INTEGER NOT NULL,
-//      `desc`	TEXT
-//    );
-//  """,
-//  'collectio': """
-//    CREATE TABLE collection (id INTEGER PRIMARY KEY NOT NULL UNIQUE, name TEXT NOT NULL, router TEXT);
-//  """,
-//  'widget': """
-//    CREATE TABLE widget (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TEXT NOT NULL, cnName TEXT NOT NULL, image TEXT NOT NULL, doc TEXT, demo TEXT, catId INTEGER NOT NULL REFERENCES cat (id), owner TEXT);
-//  """;
-//};
+const createSql = {
+  'collectio': """
+    
+  """
+};
 
 class Provider {
   static Database db;
@@ -37,12 +25,13 @@ class Provider {
     tables.forEach((item)  {
       targetList.add(item['name']);
     });
+    print("所有表格："+targetList.toString());
     return targetList;
   }
 
   // 检查数据库中, 表是否完整, 在部份android中, 会出现表丢失的情况
   Future checkTableIsRight() async {
-    List<String> expectTables = ['cat', 'widget', 'collection'];
+    List<String> expectTables = ['collection'];
 
     List<String> tables = await getTables();
 
@@ -61,14 +50,15 @@ class Provider {
     //Get a location using getDatabasesPath
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'flutter.db');
-    print(path);
+    print("数据库的路径："+path);
     try {
       db = await openDatabase(path);
     } catch (e) {
-      print("Error $e");
+      print("错误信息  Error $e");
     }
     bool tableIsRight = await this.checkTableIsRight();
 
+    print("表格是否存在："+tableIsRight.toString());
     if (!tableIsRight) {
       // 关闭上面打开的db，否则无法执行open
       db.close();
@@ -81,12 +71,12 @@ class Provider {
 
       db = await openDatabase(path, version: 1,
           onCreate: (Database db, int version) async {
-            print('db created version is $version');
+            print('数据库的版本号：db created version is $version');
           }, onOpen: (Database db) async {
-            print('new db opened');
+            print('新的数据库：new db opened');
           });
     } else {
-      print("Opening existing database");
+      print("打开旧的数据库：Opening existing database");
     }
   }
 

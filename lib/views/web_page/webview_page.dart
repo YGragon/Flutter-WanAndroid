@@ -69,7 +69,7 @@ class _WebViewPageState extends State<WebViewPage> {
       // 插入操作
       _collectionControl
           .insert(Collection(
-          id: widget.id,
+          id: widget.id.toString(),
           title: widget.title,
           link: widget.link))
           .then((result) {

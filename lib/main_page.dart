@@ -76,6 +76,7 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
     var db = Provider.db;
 
     return new Scaffold(
+      // TODO 顶部的搜索功能
       appBar: new AppBar(title: new Text("首页"),),
       body: new TabBarView(controller: controller, children: <Widget>[
         new HomePage(),

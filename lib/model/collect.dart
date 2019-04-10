@@ -4,13 +4,13 @@ import 'package:flutter_wanandroid/utils/sql.dart';
 
 
 abstract class CollectionInterface {
-  int get id;
+  String get id;
   String get title;
   String get link;
 }
 
 class Collection implements CollectionInterface {
-  int id;
+  String id;
   String title;
   String link;
 

@@ -17,7 +17,7 @@ class WebViewPage extends StatefulWidget{
 class _WebViewPageState extends State<WebViewPage> {
 
   bool _hasCollected = false;
-  String _router = '';
+  String _link = '';
   var _collectionIcons;
   CollectionControlModel _collectionControl = new CollectionControlModel();
 
@@ -25,15 +25,12 @@ class _WebViewPageState extends State<WebViewPage> {
   @override
   void initState() {
     super.initState();
-    print("标题："+widget.title.trim());
     _collectionControl
         .getRouterById(widget.id)
         .then((list) {
       list.forEach((item) {
         if (widget.title.trim() == item['title']) {
-          print("title："+item['title']);
-          print("link："+item['link']);
-          _router = item['link'];
+          _link = item['link'];
         }
       });
       if (mounted) {
@@ -55,11 +52,14 @@ class _WebViewPageState extends State<WebViewPage> {
           setState(() {
             _hasCollected = false;
           });
-          _scaffoldKey.currentState
-              .showSnackBar(SnackBar(content: Text('已取消收藏')));
+          print("已取消收藏");
+
+          /// 目前 WebView 插件还没有解决在 WebView 上显示弹窗这个问题 可查看 issue
+          /// https://github.com/fluttercommunity/flutter_webview_plugin/issues/69
+//          _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('已取消收藏')));
           if (ApplicationEvent.event != null) {
             ApplicationEvent.event
-                .fire(CollectionEvent(widget.title, _router, true));
+                .fire(CollectionEvent(widget.title, _link, true));
           }
           return;
         }
@@ -77,13 +77,16 @@ class _WebViewPageState extends State<WebViewPage> {
           setState(() {
             _hasCollected = true;
           });
+          print("收藏成功");
+          /// 目前 WebView 插件还没有解决在 WebView 上显示弹窗这个问题 可查看 issue
+          /// https://github.com/fluttercommunity/flutter_webview_plugin/issues/69
+//          _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('收藏成功')));
 
           if (ApplicationEvent.event != null) {
             ApplicationEvent.event
-                .fire(CollectionEvent(widget.title, _router, false));
+                .fire(CollectionEvent(widget.title, _link, false));
           }
-          _scaffoldKey.currentState
-              .showSnackBar(SnackBar(content: Text('收藏成功')));
+
         }
       });
     }

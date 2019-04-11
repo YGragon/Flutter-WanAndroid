@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/utils/provider.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
+import 'package:flutter_wanandroid/views/cat_page/cat_page.dart';
 import 'package:flutter_wanandroid/views/collection_page/collection_page.dart';
 import 'package:flutter_wanandroid/views/home_page/home_page.dart';
 import 'package:flutter_wanandroid/views/mine_page/mine_page.dart';
@@ -28,6 +29,7 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
   String appBarTitle = tabData[0]['text'];
   static List tabData = [
     {'text': '首页', 'icon': new Icon(Icons.home)},
+    {'text': '猫耳', 'icon': new Icon(Icons.category)},
     {'text': '收藏', 'icon': new Icon(Icons.favorite)},
     {'text': '图库', 'icon': new Icon(Icons.photo)},
     {'text': '我的', 'icon': new Icon(Icons.person)}
@@ -80,6 +82,7 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
       appBar: new AppBar(title: new Text("首页"),),
       body: new TabBarView(controller: controller, children: <Widget>[
         new HomePage(),
+        new CatPage(),
         new CollectionPage(),
         new PhotoPage(),
         new MinePage(),

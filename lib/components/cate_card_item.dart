@@ -6,7 +6,7 @@ import 'package:flutter_wanandroid/utils/style.dart';
 
 String _widgetName;
 
-class CateCardItem extends StatelessWidget {
+  class CateCardItem extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final int index; //用于计算border

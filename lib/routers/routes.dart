@@ -7,8 +7,9 @@ import './router_handler.dart';
 class Routes {
   static String root = "/";
   static String home = "/home";
-  static String widgetDemo = '/widget-demo';
-  static String codeView = '/code-view';
+  static String category = '/category';
+  static String naviList = '/navi-list';
+  static String projectList = '/project-list';
   static String webViewPage = '/web-view-page';
 
   static void configureRoutes(Router router) {
@@ -19,11 +20,14 @@ class Routes {
     // 首页
     router.define(home, handler: homeHandler);
     // 分类
-    router.define('/category/:type', handler: categoryHandler);
+//    router.define('/category/:type', handler: categoryHandler);
     // 404 页面
 //    router.define('/category/error/404', handler: widgetNotFoundHandler);
     // 详情页面
     router.define(webViewPage,handler:webViewPageHand);
+    router.define(category,handler:categoryHandler);
+    router.define(naviList,handler:webViewPageHand);
+    router.define(projectList,handler:webViewPageHand);
 
   }
 }

@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
 
 //    initSearchHistory();
     controller = new TabController(
-        initialIndex: 0, vsync: this, length: 4); // 这里的length 决定有多少个底导 submenus
+        initialIndex: 0, vsync: this, length: 5); // 这里的length 决定有多少个底导 submenus
     for (int i = 0; i < tabData.length; i++) {
       myTabs.add(new Tab(text: tabData[i]['text'], icon: tabData[i]['icon']));
     }

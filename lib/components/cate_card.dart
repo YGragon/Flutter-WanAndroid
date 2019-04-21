@@ -127,9 +127,11 @@ class _CateCardState extends State<CateCard> {
   }
 
   Widget _buildWidgetContainer() {
+    /// 没有数据显示空页面
     if (this.categories.length == 0) {
       return Container();
     }
+    /// 有数据显示网格布局
     return Container(
       padding: const EdgeInsets.only(bottom: 10.0, top: 5.0),
       decoration: BoxDecoration(

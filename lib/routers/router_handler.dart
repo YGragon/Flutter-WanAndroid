@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:flutter_wanandroid/components/navi_list.dart';
+import 'package:flutter_wanandroid/components/project_list.dart';
 import 'package:flutter_wanandroid/views/collection_page/collection_page.dart';
 import 'package:flutter_wanandroid/views/home_page/home_page.dart';
 import 'package:flutter_wanandroid/views/web_page/webview_page.dart';
@@ -18,6 +20,23 @@ var categoryHandler = new Handler(
     String name = params["type"]?.first;
 
     return new CollectionPage();
+  },
+);
+
+var naviListHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    String id = params['id']?.first;
+    String title = params['title']?.first;
+    return new NaviListPage(int.parse(id), title);
+  },
+);
+
+var projectHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    String id = params['id']?.first;
+    String title = params['title']?.first;
+    return new ProjectListPage(int.parse(id), title);
+
   },
 );
 

@@ -52,8 +52,8 @@ class CateCardContainer extends StatelessWidget {
                   if(item.articles.isNotEmpty){
                     /// 导航页面
                     /// 跳转 category 页面：传递 id ,title
-                    Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent(itemId.toString())}&title=${Uri.encodeComponent(itemTitle)}');
-                    Application.router.navigateTo(context, "$targetRouter", transition: TransitionType.inFromRight);
+//                    Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent(itemId.toString())}&title=${Uri.encodeComponent(itemTitle)}');
+//                    Application.router.navigateTo(context, "$targetRouter", transition: TransitionType.inFromRight);
                   }else if(item.cats.isNotEmpty){
                     /// 知识体系
                     /// 跳转 category 页面：传递 id ,title

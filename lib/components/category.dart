@@ -35,10 +35,10 @@ class _CategoryHome extends State<CategoryHome> {
     super.initState();
     // 初始化加入顶级的name
     /// 请求网络，通过 id 去获取，当前下面的 children 是否有数据
-    this.getCatByName(widget.name).then((Cat cat) {
-      catHistory.add(cat);
-      searchCatOrWigdet();
-    });
+//    this.getCatByName(widget.name).then((Cat cat) {
+//      catHistory.add(cat);
+//      searchCatOrWigdet();
+//    });
   }
 
 
@@ -74,7 +74,7 @@ class _CategoryHome extends State<CategoryHome> {
   void onWidgetTap(Cat cat) {
     /// 如果 cats 不空
     /// 跳转 category 页面：传递 id ,title
-    Application.router.navigateTo(context, "$targetRouter");
+//    Application.router.navigateTo(context, "$targetRouter");
   }
 
   /// 内容显示

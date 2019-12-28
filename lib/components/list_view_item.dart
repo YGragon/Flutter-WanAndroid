@@ -8,9 +8,10 @@ class ListViewItem extends StatelessWidget {
   final int itemId;
   final String itemUrl;
   final String itemTitle;
-  final String data;
+  final String itemShareUser;
+  final String itemNiceDate;
 
-  const ListViewItem({Key key, this.itemId, this.itemUrl, this.itemTitle, this.data})
+  const ListViewItem({Key key, this.itemId, this.itemUrl, this.itemTitle, this.itemShareUser,this.itemNiceDate})
       : super(key: key);
 
 
@@ -35,9 +36,14 @@ class ListViewItem extends StatelessWidget {
         subtitle: Row(
           children: <Widget>[
             Padding(
-              child: Text(data,
+              child: Text(itemShareUser,
                   style: TextStyle(color: Colors.black54, fontSize: 10.0)),
               padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+            ),
+            Padding(
+              child: Text(itemNiceDate,
+                  style: TextStyle(color: Colors.black54, fontSize: 10.0)),
+              padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0),
             )
           ],
         ),

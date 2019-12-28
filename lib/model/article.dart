@@ -65,6 +65,7 @@ class Article {
   int userId;
   int visible;
   int zan;
+  int shareDate;
   bool collect;
   bool fresh;
   String apkLink;
@@ -78,9 +79,12 @@ class Article {
   String projectLink;
   String superChapterName;
   String title;
+  String shareUser;
   List<Tag> tags;
 
-  Article.fromParams({this.chapterId, this.courseId, this.id, this.publishTime, this.superChapterId, this.type, this.userId, this.visible, this.zan, this.collect, this.fresh, this.apkLink, this.author, this.chapterName, this.desc, this.envelopePic, this.link, this.niceDate, this.origin, this.projectLink, this.superChapterName, this.title, this.tags});
+  Article.fromParams({this.chapterId, this.courseId, this.id, this.publishTime, this.superChapterId, this.type, this.userId, this.visible, this.zan,
+    this.collect, this.fresh, this.apkLink, this.author, this.chapterName, this.desc, this.envelopePic, this.link, this.niceDate,
+    this.origin, this.projectLink, this.superChapterName, this.title, this.shareUser, this.shareDate, this.tags});
 
   Article.fromJson(jsonRes) {
     chapterId = jsonRes['chapterId'];
@@ -105,6 +109,8 @@ class Article {
     projectLink = jsonRes['projectLink'];
     superChapterName = jsonRes['superChapterName'];
     title = jsonRes['title'];
+    shareUser = jsonRes['shareUser'];
+    shareDate = jsonRes['shareDate'];
     tags = jsonRes['tags'] == null ? null : [];
 
     for (var tagsItem in tags == null ? [] : jsonRes['tags']){
@@ -114,7 +120,13 @@ class Article {
 
   @override
   String toString() {
-    return '{"chapterId": $chapterId,"courseId": $courseId,"id": $id,"publishTime": $publishTime,"superChapterId": $superChapterId,"type": $type,"userId": $userId,"visible": $visible,"zan": $zan,"collect": $collect,"fresh": $fresh,"apkLink": ${apkLink != null?'${json.encode(apkLink)}':'null'},"author": ${author != null?'${json.encode(author)}':'null'},"chapterName": ${chapterName != null?'${json.encode(chapterName)}':'null'},"desc": ${desc != null?'${json.encode(desc)}':'null'},"envelopePic": ${envelopePic != null?'${json.encode(envelopePic)}':'null'},"link": ${link != null?'${json.encode(link)}':'null'},"niceDate": ${niceDate != null?'${json.encode(niceDate)}':'null'},"origin": ${origin != null?'${json.encode(origin)}':'null'},"projectLink": ${projectLink != null?'${json.encode(projectLink)}':'null'},"superChapterName": ${superChapterName != null?'${json.encode(superChapterName)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'},"tags": $tags}';
+    return '{"chapterId": $chapterId,"courseId": $courseId,"id": $id,"publishTime": $publishTime,"superChapterId": $superChapterId,"type": $type,"userId": $userId,'
+        '"visible": $visible,"zan": $zan,"collect": $collect,"fresh": $fresh,"apkLink": ${apkLink != null?'${json.encode(apkLink)}':'null'},'
+        '"author": ${author != null?'${json.encode(author)}':'null'},"chapterName": ${chapterName != null?'${json.encode(chapterName)}':'null'},"desc": ${desc != null?'${json.encode(desc)}':'null'},'
+        '"envelopePic": ${envelopePic != null?'${json.encode(envelopePic)}':'null'},"link": ${link != null?'${json.encode(link)}':'null'},"niceDate": ${niceDate != null?'${json.encode(niceDate)}':'null'},'
+        '"origin": ${origin != null?'${json.encode(origin)}':'null'},"projectLink": ${projectLink != null?'${json.encode(projectLink)}':'null'},'
+        '"superChapterName": ${superChapterName != null?'${json.encode(superChapterName)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'},'
+        '"shareUser": ${shareUser != null?'${json.encode(shareUser)}':'null'},"shareDate": $shareDate,"tags": $tags}';
   }
 }
 

@@ -52,11 +52,16 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
   /// 列表中的卡片item
   Widget makeCard(index,item){
 
-    var myId = item.id;
-    var myTitle = '${item.title}';
-    var myUsername = '${'👲'}: ${item.author} ';
-    var codeUrl = '${item.link}';
-    return new ListViewItem(itemId: myId, itemTitle: myTitle, itemUrl:codeUrl,data: myUsername,);
+    var mId = item.id;
+    var mTitle = '${item.title}';
+    var mShareUserName = '${'👲'}: ${item.shareUser} ';
+
+    if(item.shareUser == ""){
+      mShareUserName = '${'👲'}: ${item.author} ';
+    }
+    var mLikeUrl = '${item.link}';
+    var mNiceDate = '${'🔔'}: ${item.niceDate}';
+    return new ListViewItem(itemId: mId, itemTitle: mTitle, itemUrl:mLikeUrl,itemShareUser: mShareUserName, itemNiceDate: mNiceDate);
   }
 
   /// banner

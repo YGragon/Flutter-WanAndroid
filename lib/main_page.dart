@@ -10,6 +10,9 @@ import 'package:flutter_wanandroid/views/home_page/home_page.dart';
 import 'package:flutter_wanandroid/views/mine_page/mine_page.dart';
 import 'package:flutter_wanandroid/views/photo_page/photo_page.dart';
 
+import 'package:flutter_wanandroid/model/search_history.dart';
+import 'package:flutter_wanandroid/components/search_input.dart';
+
 
 const int ThemeColor = 0xFFC91B3A;
 
@@ -25,6 +28,8 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
   SpUtil sp;
 
   TabController controller;
+  SearchHistoryList searchHistoryList;
+
   String data = '无';
   String appBarTitle = tabData[0]['text'];
   static List tabData = [
@@ -41,7 +46,7 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
   void initState() {
     super.initState();
 
-//    initSearchHistory();
+    initSearchHistory();
     controller = new TabController(
         initialIndex: 0, vsync: this, length: 5); // 这里的length 决定有多少个底导 submenus
     for (int i = 0; i < tabData.length; i++) {
@@ -66,9 +71,34 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
   /// 初始化搜索历史列表
   initSearchHistory() async {
     sp = await SpUtil.getInstance();
-//    String json = sp.getString(SharedPreferencesKeys.searchHistory);
-//    print("json $json");
-//    searchHistoryList = SearchHistoryList.fromJSON(json);
+    String json = sp.getString(SharedPreferencesKeys.searchHistory);
+    print("json----------------->>>>> $json");
+    searchHistoryList = SearchHistoryList.fromJSON(json);
+  }
+
+  /// 联想搜索，显示搜索结果列表
+  Widget buildSearchInput(BuildContext context){
+    return new SearchInput((value)  async{
+          if (value != '') {
+            // TODO 发起网络请求，搜索结果
+            print("---------------->>>>>>>"+value);
+            // List<WidgetPoint> list = await widgetControl.search(value);
+
+            // return list
+            //     .map((item) => new MaterialSearchResult<String>(
+            //           value: item.name,
+            //           icon: WidgetName2Icon.icons[item.name] ?? null,
+            //           text: 'widget',
+            //           onTap: () {
+            //             // item 点击
+            //             onWidgetTap(item, context);
+            //           },
+            //         ))
+            //     .toList();
+          } else {
+            return null;
+          }
+    }, (value){},(){});  
   }
 
 
@@ -78,8 +108,7 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
     var db = Provider.db;
 
     return new Scaffold(
-      // TODO 顶部的搜索功能
-      appBar: new AppBar(title: new Text("首页"),),
+      appBar: new AppBar(title: buildSearchInput(context),),
       body: new TabBarView(controller: controller, children: <Widget>[
         new HomePage(),
         new CatPage(),

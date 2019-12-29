@@ -4,60 +4,17 @@ import 'package:flutter_wanandroid/components/cate_card_container.dart';
 import 'package:flutter_wanandroid/model/car.dart';
 
 class CateCard extends StatefulWidget {
+  // 猫耳标题
   final String category;
-  CateCard({@required this.category});
+  final List<Cat> categorieLists;
+
+  CateCard({@required this.category, this.categorieLists});
 
   @override
   _CateCardState createState() => _CateCardState();
 }
 
 class _CateCardState extends State<CateCard> {
-
-  List<Cat> categories = [];
-
-
-  @override
-  void initState() {
-    super.initState();
-    getFirstChildCategoriesByParentId();
-  }
-
-  // 获取一层目录下的二级内容
-  getFirstChildCategoriesByParentId() async {
-
-    /// 获取猫耳列表数据
-    /// 体系、项目、导航
-      categories.clear();
-      /// TODO 得到的结果做为一个 猫耳 布局, 获取子集合 显示新的猫耳布局
-      CommonService().getSystemTree((CatModel catModel) {
-        if(!mounted){
-          return;
-        }
-        setState(() {
-          categories.addAll(catModel.data);
-        });
-      });
-
-      /// TODO 得到的结果做为一个 猫耳 布局，model 还需要调整，
-      CommonService().getNaviList((CatModel catModel) {
-        if(!mounted){
-          return;
-        }
-        setState(() {
-          categories.addAll(catModel.data);
-        });
-      });
-
-      /// TODO 得到的结果做为一个 猫耳 布局
-      CommonService().getProjectTree((CatModel catModel) {
-        if(!mounted){
-          return;
-        }
-        setState(() {
-          categories.addAll(catModel.data);
-        });
-      });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +23,7 @@ class _CateCardState extends State<CateCard> {
     return Container(
       width: screenWidth,
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      /// 层叠布局，让猫耳icon在左上角
       child: Stack(
         children: <Widget>[
           Container(
@@ -77,6 +35,7 @@ class _CateCardState extends State<CateCard> {
             ),
             child: Column(
               children: <Widget>[
+                /// 标题
                 Container(
                   width: screenWidth - 20,
                   padding: const EdgeInsets.only(left: 65.0, top: 3.0),
@@ -90,10 +49,12 @@ class _CateCardState extends State<CateCard> {
                     ),
                   ),
                 ),
+                /// 网格布局
                 _buildWidgetContainer(),
               ],
             ),
           ),
+          /// 标题左边的icon
           Positioned(
             left: 0.0,
             top: 0.0,
@@ -128,23 +89,20 @@ class _CateCardState extends State<CateCard> {
 
   Widget _buildWidgetContainer() {
     /// 没有数据显示空页面
-    if (this.categories.length == 0) {
+    if (widget.categorieLists.length == 0) {
       return Container();
     }
+
     /// 有数据显示网格布局
     return Container(
       padding: const EdgeInsets.only(bottom: 10.0, top: 5.0),
       decoration: BoxDecoration(
         image: DecorationImage(
             image: AssetImage('assets/images/paimaiLogo.png'),
-            alignment: Alignment.bottomRight
-        ),
+            alignment: Alignment.bottomRight),
       ),
       child: CateCardContainer(
-          categories: this.categories,
-          columnCount: 3,
-          isWidgetPoint:false
-      ),
+          categories: widget.categorieLists, columnCount: 3, isWidgetPoint: false),
     );
   }
 }

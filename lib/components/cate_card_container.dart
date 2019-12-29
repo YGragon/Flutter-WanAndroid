@@ -7,6 +7,9 @@ import 'package:flutter_wanandroid/components/cate_card_item.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
 import '../routers/application.dart';
 
+/**
+ * 每一个猫耳布局展示的内容
+ */
 class CateCardContainer extends StatelessWidget {
   final int columnCount; //一行几个
   final List<dynamic> categories;

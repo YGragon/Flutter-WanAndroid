@@ -8,21 +8,21 @@ import 'package:flutter_wanandroid/model/car.dart';
 /// 展示 体系、项目、导航 三大分类
 /// 作者：龙衣
 
-class CatPage extends StatefulWidget{
+class CatPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return new CatPageState();
   }
-
 }
 
 class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
-
   TextEditingController controller;
   String active = 'test';
   String data = '无';
 
-  List<String> categories = [];
+  List<Cat> categorieTrees = [];
+  List<Cat> categorieNavs = [];
+  List<Cat> categorieProjects = [];
 
   @override
   bool get wantKeepAlive => true;
@@ -33,27 +33,40 @@ class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
     _getCatPageData();
   }
 
-
   void _getCatPageData() {
     if (!mounted) {
       return;
     }
-    if (categories.isEmpty) {
-      categories.add("体系");
-      categories.add("导航");
-      categories.add("项目");
+    /// 获取体系数据
+    CommonService().getSystemTree((CatModel catModel) {
+      categorieTrees.addAll(catModel.data);
       setState(() {
-        categories = categories;
+        categorieTrees = categorieTrees;
       });
-    }
+    });
+    /// 获取导航数据
+    CommonService().getNaviList((CatModel catModel) {
+      categorieNavs.addAll(catModel.data);
+      setState(() {
+        categorieNavs = categorieNavs;
+      });
+    });
+    /// 获取项目数据
+    CommonService().getProjectTree((CatModel catModel) {
+      categorieProjects.addAll(catModel.data);
+      setState(() {
+        categorieProjects = categorieProjects;
+      });
+    });
   }
+
   /// 构建网格布局
   Widget buildGrid() {
     // 存放最后的widget
     List<Widget> tiles = [];
-    for (String item in categories) {
-      tiles.add(new CateCard(category: item));
-    }
+    tiles.add(new CateCard(category: "体系", categorieLists: categorieTrees));
+    tiles.add(new CateCard(category: "导航", categorieLists: categorieNavs));
+    tiles.add(new CateCard(category: "项目", categorieLists: categorieProjects));
     return new ListView(
       children: tiles,
     );
@@ -62,11 +75,6 @@ class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (categories.length == 0) {
-      return ListView(
-        children: <Widget>[new Container()],
-      );
-    }
     return Container(
       color: Theme.of(context).backgroundColor,
       child: this.buildGrid(),

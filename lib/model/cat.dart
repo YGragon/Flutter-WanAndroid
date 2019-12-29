@@ -70,6 +70,8 @@ class Cat {
   }
 
   String toString() {
-    return '{"superChapterId": $superChapterId,"parentChapterId": $parentChapterId,"order": $order,"id": $id,"link": ${link != null?'${json.encode(link)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'},"name": ${name != null?'${json.encode(name)}':'null'},"cats": $cats,,"articles": $articles}';
+    return '{"superChapterId": $superChapterId,"parentChapterId": $parentChapterId,"order": $order,'
+        '"id": $id,"link": ${link != null?'${json.encode(link)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'},'
+        '"name": ${name != null?'${json.encode(name)}':'null'},"cats": $cats,"articles": $articles}';
   }
 }

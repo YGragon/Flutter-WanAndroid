@@ -7,7 +7,9 @@ import './router_handler.dart';
 class Routes {
   static String root = "/";
   static String home = "/home";
+  static String catSub = "/cat-sub";
   static String category = '/category';
+  static String treeList = '/tree-list';
   static String naviList = '/navi-list';
   static String projectList = '/project-list';
   static String webViewPage = '/web-view-page';
@@ -26,8 +28,9 @@ class Routes {
     // 详情页面
     router.define(webViewPage,handler:webViewPageHand);
     router.define(category,handler:categoryHandler);
-    router.define(naviList,handler:webViewPageHand);
-    router.define(projectList,handler:webViewPageHand);
+    router.define(treeList,handler:treeListHandler);
+    router.define(naviList,handler:naviListHandler);
+    router.define(projectList,handler:projectHandler);
 
   }
 }

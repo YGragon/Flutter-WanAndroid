@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/components/cate_card.dart';
-import 'package:flutter_wanandroid/model/car.dart';
+import 'package:flutter_wanandroid/model/cat.dart';
 
 /// 猫耳布局
 /// 展示 体系、项目、导航 三大分类

@@ -1,15 +1,18 @@
+import 'dart:convert';
+import 'dart:math';
+
 /// 猫耳页面 一行 主布局
 /// 作者 ：龙衣
 
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_wanandroid/components/cate_card_item.dart';
+import 'package:flutter_wanandroid/model/cat.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
+import 'package:flutter_wanandroid/views/cat_page/cat_sub_page.dart';
 import '../routers/application.dart';
 
-/**
- * 每一个猫耳布局展示的内容
- */
+/// 每一个猫耳布局展示的内容
 class CateCardContainer extends StatelessWidget {
   final int columnCount; //一行几个
   final List<dynamic> categories;
@@ -39,7 +42,6 @@ class CateCardContainer extends StatelessWidget {
               child: CateCardItem(
                 title: item.name,
                 onTap: () {
-                  print("item--->"+item.toString());
                   /// 导航
                   /// 如果有 cats 集合 ，parentChapterId > -1 有子分类，进入子分类页面
                   /// 如果有 cats 集合 ，parentChapterId == -1 没有有子分类，进入列表页面
@@ -47,24 +49,34 @@ class CateCardContainer extends StatelessWidget {
                   /// 体系
                   /// 如果有 cats 集合 ，superChapterId > -1 有子分类，进入子分类页面
                   /// 如果有 cats 集合 ，superChapterId == -1 没有有子分类，进入列表页面
+                  var cats = item.cats as List<Cat> ;
+                  if(cats.isNotEmpty){
+                    // 继续显示猫耳朵
+                    print("跳转猫耳-- 传递list->"+cats.toString());
+
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CatSubPage(name:item.name, cats: cats,)));
+                  }else{
+                    Application.router.navigateTo(context, "${Routes.treeList}?id=${Uri.encodeComponent(item.id.toString())}&name=${Uri.encodeComponent(item.name.toString())}", transition: TransitionType.inFromRight);
+                  }
+
                   ///
                   /// 项目
                   /// 如果有 cats 集合 ，superChapterId > -1 有子分类，进入子分类页面
                   /// 如果有 cats 集合 ，superChapterId == -1 没有有子分类，进入列表页面
 
-                  if(item.articles.isNotEmpty){
-                    /// 导航页面
-                    /// 跳转 category 页面：传递 id ,title
-//                    Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent(itemId.toString())}&title=${Uri.encodeComponent(itemTitle)}');
-//                    Application.router.navigateTo(context, "$targetRouter", transition: TransitionType.inFromRight);
-                  }else if(item.cats.isNotEmpty){
-                    /// 知识体系
-                    /// 跳转 category 页面：传递 id ,title
-                    Application.router.navigateTo(context, "/category/${item.name}", transition: TransitionType.inFromRight);
-                  }else{
-                    /// 项目
-                    /// 点击直接进入 项目列表页面
-                  }
+//                  if(item.articles.isNotEmpty){
+//                    /// 导航页面
+//                    /// 跳转 category 页面：传递 id ,title
+////                    Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent(itemId.toString())}&title=${Uri.encodeComponent(itemTitle)}');
+////                    Application.router.navigateTo(context, "$targetRouter", transition: TransitionType.inFromRight);
+//                  }else if(item.cats.isNotEmpty){
+//                    /// 知识体系
+//                    /// 跳转 category 页面：传递 id ,title
+//                    Application.router.navigateTo(context, "/category/${item.name}", transition: TransitionType.inFromRight);
+//                  }else{
+//                    /// 项目
+//                    /// 点击直接进入 项目列表页面
+//                  }
 //                  if (isWidgetPoint) {
 //                    String targetName = item.name;
 //                    String targetRouter = '/category/error/404';

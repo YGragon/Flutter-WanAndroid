@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/components/cate_card_container.dart';
-import 'package:flutter_wanandroid/model/car.dart';
+import 'package:flutter_wanandroid/model/cat.dart';
 
 class CateCard extends StatefulWidget {
   // 猫耳标题

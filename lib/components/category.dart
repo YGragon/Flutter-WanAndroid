@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/components/cate_card_container.dart';
 import 'package:flutter_wanandroid/model/article.dart';
-import 'package:flutter_wanandroid/model/car.dart';
+import 'package:flutter_wanandroid/model/cat.dart';
 
 import '../routers/application.dart';
 

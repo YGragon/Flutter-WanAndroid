@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_wanandroid/api/Api.dart';
 import 'package:flutter_wanandroid/model/article.dart';
 import 'package:flutter_wanandroid/model/banner.dart';
-import 'package:flutter_wanandroid/model/car.dart';
+import 'package:flutter_wanandroid/model/cat.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/net/dio_manager.dart';
 
@@ -38,11 +38,12 @@ class CommonService{
     });
   }
   /// 获取知识体系列表详情
-//  void getSystemTreeContent(Function callback,int _page,int _id) async {
-//    DioManager.singleton.dio.get(Api.SYSTEM_TREE_CONTENT+"$_page/json?cid=$_id", options: _getOptions()).then((response) {
-//      callback(Cat(response.data));
-//    });
-//  }
+  void getSystemTreeContent(Function callback,int _page,int _id) async {
+      print("url："+Api.SYSTEM_TREE_CONTENT+"$_page/json?cid=$_id");
+    DioManager.singleton.dio.get(Api.SYSTEM_TREE_CONTENT+"$_page/json?cid=$_id", options: _getOptions()).then((response) {
+      callback(ArticleModel(response.data));
+    });
+  }
   /// 获取导航列表数据
   void getNaviList(Function callback) async {
     DioManager.singleton.dio.get(Api.NAVI_LIST, options: _getOptions()).then((response) {

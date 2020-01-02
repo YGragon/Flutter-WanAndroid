@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
@@ -30,8 +32,7 @@ class _ArticleListPageState extends State<ArticleListPage> {
     _getData(_pageIndex,widget.id);
     _scrollController.addListener(() {
       // 如果下拉的当前位置到scroll的最下面
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         _getMoreData();
       }
     });
@@ -40,7 +41,6 @@ class _ArticleListPageState extends State<ArticleListPage> {
   _getData(int page, int id){
     /// 获取体系数据
     CommonService().getSystemTreeContent((ArticleModel catModel) {
-       print("---------->>>>>"+catModel.toString());
        items.addAll(catModel.data.datas);
        setState(() {
          items = items;
@@ -61,9 +61,7 @@ class _ArticleListPageState extends State<ArticleListPage> {
       await getArticleRequest();
       _hasMore = (_pageIndex <= _pageTotal);
       if (this.mounted) {
-        setState(() {
-          isLoading = false;
-        });
+        setState(() => isLoading = false);
       }
 //      backElasticEffect();
     } else if (!isLoading && !_hasMore) {
@@ -77,9 +75,9 @@ class _ArticleListPageState extends State<ArticleListPage> {
   Future getArticleRequest() async {
     /// 获取新的数据
     CommonService().getSystemTreeContent((ArticleModel catModel) {
-      print("---------->>>>>"+catModel.toString());
       _pageTotal = catModel.data.pageCount;
       items.addAll(catModel.data.datas);
+      _hasMore = (_pageIndex <= _pageTotal);
     },_pageIndex,widget.id);
   }
 

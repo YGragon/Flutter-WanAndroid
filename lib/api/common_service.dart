@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_wanandroid/api/Api.dart';
 import 'package:flutter_wanandroid/model/article.dart';
 import 'package:flutter_wanandroid/model/banner.dart';
 import 'package:flutter_wanandroid/model/cat.dart';
+import 'package:flutter_wanandroid/model/navi_bean.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/net/dio_manager.dart';
 
@@ -12,6 +15,7 @@ class CommonService{
     Map<String,String> map = new Map();
     List<String> cookies = User().cookie;
     map["Cookie"] = cookies.toString();
+    map["responseType"] = "ResponseType.json";
     return Options(headers: map);
   }
 
@@ -47,22 +51,14 @@ class CommonService{
   /// 获取导航列表数据
   void getNaviList(Function callback) async {
     DioManager.singleton.dio.get(Api.NAVI_LIST, options: _getOptions()).then((response) {
-//      var responseData = response.data;
-//      var catJson = responseData['data'];
-//      var id = catJson['id'];
-//      var parentChapterId = catJson['parentChapterId'];
-//      var order = catJson['order'];
-//      var name = catJson['name'];
-//      // 这里的了link 只是占位，不能使用
-//      var link = catJson['name'];
-//      var cat = new Cat(id: id,parentChapterId: parentChapterId,order: order,name: name,link: link);
-//      callback(cat);
-      callback(CatModel(response.data));
+      print("获取导航列表数据 ："+response.toString());
+      callback(NaviBeanModel(response.toString()));
     });
   }
   /// 获取项目分类
   void getProjectTree(Function callback) async {
     DioManager.singleton.dio.get(Api.PROJECT_TREE, options: _getOptions()).then((response) {
+      print("获取项目分类 response.data："+response.data.toString());
       callback(CatModel(response.data));
     });
   }

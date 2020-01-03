@@ -34,28 +34,32 @@ class Cat {
   int id;
   /// 导航的 id
   int cid;
+  int courseId;
+  int order;
   int superChapterId;
   int parentChapterId;
-  int order;
+  int visible;
+  bool userControlSetTop;
   String name;
   String title;
   String link;
   List<Cat> cats;
-  List<Article> articles;
 
 
-  Cat.fromParams({this.id, this.superChapterId, this.parentChapterId, this.order, this.name, this.title, this.link});
+  Cat.fromParams({this.id, this.cid, this.courseId, this.order, this.superChapterId, this.parentChapterId, this.visible, this.userControlSetTop, this.name, this.title, this.link});
   Cat.fromJson(jsonRes) {
     superChapterId = jsonRes['superChapterId'] == null ? -1 : jsonRes['superChapterId'];
     parentChapterId = jsonRes['parentChapterId'] == null ? -1 : jsonRes['parentChapterId'];
     order = jsonRes['order'];
     id = jsonRes['id'];
     cid = jsonRes['cid'] == null ? -1 : jsonRes['cid'];
+    courseId = jsonRes['courseId'] == null ? -1 : jsonRes['courseId'];
+    userControlSetTop = jsonRes['userControlSetTop'];
+    visible = jsonRes['visible'];
     name = jsonRes['name'] == null ? null : jsonRes['name'];
     link = jsonRes['link'] == null ? null : jsonRes['link'];
     title = jsonRes['title'] == null ? null : jsonRes['title'];
     cats = jsonRes['children'] == null ? null :[];
-    articles = jsonRes['data'] == null ? null :[];
 
 
     /// 获取项目、体系下的集合
@@ -63,15 +67,12 @@ class Cat {
       cats.add(dataItem == null ? null : new Cat.fromJson(dataItem));
     }
 
-    /// 导航的信息
-    for (var dataItem in articles == null ? [] : jsonRes['articles']){
-      articles.add(dataItem == null ? null : new Article.fromJson(dataItem));
-    }
   }
 
   String toString() {
     return '{"superChapterId": $superChapterId,"parentChapterId": $parentChapterId,"order": $order,'
-        '"id": $id,"link": ${link != null?'${json.encode(link)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'},'
-        '"name": ${name != null?'${json.encode(name)}':'null'},"cats": $cats,"articles": $articles}';
+        '"id": $id,"courseId": ${courseId != null?'${json.encode(courseId)}':'-1'},"userControlSetTop": ${userControlSetTop != null?'${json.encode(userControlSetTop)}':'false'},'
+        '"visible": ${visible != null?'${json.encode(visible)}':'0'},"link": ${link != null?'${json.encode(link)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'},'
+        '"name": ${name != null?'${json.encode(name)}':'null'},"cats": $cats}';
   }
 }

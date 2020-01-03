@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/components/cate_card.dart';
 import 'package:flutter_wanandroid/model/cat.dart';
+import 'package:flutter_wanandroid/model/navi_bean.dart';
 
 /// 猫耳布局
 /// 展示 体系、项目、导航 三大分类
@@ -21,8 +22,8 @@ class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
   String data = '无';
 
   List<Cat> categorieTrees = [];
-  List<Cat> categorieNavs = [];
   List<Cat> categorieProjects = [];
+  List<NaviData> categorieNavs = [];
 
   @override
   bool get wantKeepAlive => true;
@@ -45,8 +46,9 @@ class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
       });
     });
     /// 获取导航数据
-    CommonService().getNaviList((CatModel catModel) {
-      categorieNavs.addAll(catModel.data);
+    CommonService().getNaviList((NaviBeanModel naviBean) {
+      print("获取导航列表数据========>>> ："+naviBean.datas.toString());
+      categorieNavs.addAll(naviBean.datas);
       setState(() {
         categorieNavs = categorieNavs;
       });
@@ -64,9 +66,9 @@ class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
   Widget buildGrid() {
     // 存放最后的widget
     List<Widget> tiles = [];
-    tiles.add(new CateCard(category: "体系", categorieLists: categorieTrees));
-    tiles.add(new CateCard(category: "导航", categorieLists: categorieNavs));
-    tiles.add(new CateCard(category: "项目", categorieLists: categorieProjects));
+    tiles.add(new CateCard(category: "体系", categorieLists: categorieTrees,naviLists: categorieNavs));
+    tiles.add(new CateCard(category: "导航", categorieLists: categorieTrees,naviLists: categorieNavs));
+    tiles.add(new CateCard(category: "项目", categorieLists: categorieProjects,naviLists:categorieNavs ));
     return new ListView(
       children: tiles,
     );

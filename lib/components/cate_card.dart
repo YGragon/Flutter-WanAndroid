@@ -1,14 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/components/cate_card_container.dart';
+import 'package:flutter_wanandroid/model/navi_bean.dart';
 import 'package:flutter_wanandroid/model/cat.dart';
 
 class CateCard extends StatefulWidget {
   // 猫耳标题
   final String category;
   final List<Cat> categorieLists;
+  final List<NaviData> naviLists;
 
-  CateCard({@required this.category, this.categorieLists});
+  CateCard({@required this.category, this.categorieLists, this.naviLists});
 
   @override
   _CateCardState createState() => _CateCardState();
@@ -89,20 +93,37 @@ class _CateCardState extends State<CateCard> {
 
   Widget _buildWidgetContainer() {
     /// 没有数据显示空页面
-    if (widget.categorieLists.length == 0) {
-      return Container();
+    if(widget.category == "导航"){
+      if (widget.naviLists.length == 0) {
+        return Container();
+      }
+      /// 有数据显示网格布局
+      return Container(
+        padding: const EdgeInsets.only(bottom: 10.0, top: 5.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/paimaiLogo.png'),
+              alignment: Alignment.bottomRight),
+        ),
+        child: CateCardContainer(categories: widget.naviLists, columnCount: 3, type: 0, isWidgetPoint: false),
+      );
+    }else{
+      if (widget.categorieLists.length == 0) {
+        return Container();
+      }
+      /// 有数据显示网格布局
+      return Container(
+        padding: const EdgeInsets.only(bottom: 10.0, top: 5.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/paimaiLogo.png'),
+              alignment: Alignment.bottomRight),
+        ),
+        child: CateCardContainer(categories: widget.categorieLists, columnCount: 3, type: 1, isWidgetPoint: false),
+      );
     }
 
-    /// 有数据显示网格布局
-    return Container(
-      padding: const EdgeInsets.only(bottom: 10.0, top: 5.0),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/paimaiLogo.png'),
-            alignment: Alignment.bottomRight),
-      ),
-      child: CateCardContainer(
-          categories: widget.categorieLists, columnCount: 3, isWidgetPoint: false),
-    );
+
+
   }
 }

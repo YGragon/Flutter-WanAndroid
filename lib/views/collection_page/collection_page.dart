@@ -1,6 +1,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/components/search_input.dart';
 import 'package:flutter_wanandroid/event/event_bus.dart';
 import 'package:flutter_wanandroid/event/event_model.dart';
 import 'package:flutter_wanandroid/model/collect.dart';
@@ -112,29 +113,59 @@ class CollectionPageState extends State<CollectionPage> with AutomaticKeepAliveC
       ),
     );
   }
+  /// 联想搜索，显示搜索结果列表
+  Widget buildSearchInput(BuildContext context){
+    return new SearchInput((value)  async{
+      if (value != '') {
+        // TODO 发起网络请求，搜索结果
+        print("---------------->>>>>>>"+value);
+        // List<WidgetPoint> list = await widgetControl.search(value);
+
+        // return list
+        //     .map((item) => new MaterialSearchResult<String>(
+        //           value: item.name,
+        //           icon: WidgetName2Icon.icons[item.name] ?? null,
+        //           text: 'widget',
+        //           onTap: () {
+        //             // item 点击
+        //             onWidgetTap(item, context);
+        //           },
+        //         ))
+        //     .toList();
+      } else {
+        return null;
+      }
+    }, (value){},(){});
+  }
 
   @override
   Widget build(BuildContext context) {
     if (_collectionList.length == 0) {
-      return ListView(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Image.asset(
-                'assets/images/nothing.png',
-                fit: BoxFit.contain,
-                width: MediaQuery.of(context).size.width / 2,
-              ),
-              Text('暂无收藏，赶紧去收藏一个吧!'),
-            ],
-          ),
-        ],
+      return Scaffold(
+        appBar: new AppBar(title: buildSearchInput(context),),
+        body: ListView(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Image.asset(
+                  'assets/images/nothing.png',
+                  fit: BoxFit.contain,
+                  width: MediaQuery.of(context).size.width / 2,
+                ),
+                Text('暂无收藏，赶紧去收藏一个吧!'),
+              ],
+            ),
+          ],
+        ),
       );
     }
-    return ListView.builder(
-      itemBuilder: _renderList,
-      itemCount: _collectionList.length + 1,
-      controller: _scrollController,
+    return  Scaffold(
+      appBar: new AppBar(title: buildSearchInput(context),),
+      body:ListView.builder(
+        itemBuilder: _renderList,
+        itemCount: _collectionList.length + 1,
+        controller: _scrollController,
+      ),
     );
   }
 

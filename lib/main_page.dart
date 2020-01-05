@@ -11,7 +11,6 @@ import 'package:flutter_wanandroid/views/mine_page/mine_page.dart';
 import 'package:flutter_wanandroid/views/photo_page/photo_page.dart';
 
 import 'package:flutter_wanandroid/model/search_history.dart';
-import 'package:flutter_wanandroid/components/search_input.dart';
 
 
 const int ThemeColor = 0xFFC91B3A;
@@ -76,30 +75,6 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
     searchHistoryList = SearchHistoryList.fromJSON(json);
   }
 
-  /// 联想搜索，显示搜索结果列表
-  Widget buildSearchInput(BuildContext context){
-    return new SearchInput((value)  async{
-          if (value != '') {
-            // TODO 发起网络请求，搜索结果
-            print("---------------->>>>>>>"+value);
-            // List<WidgetPoint> list = await widgetControl.search(value);
-
-            // return list
-            //     .map((item) => new MaterialSearchResult<String>(
-            //           value: item.name,
-            //           icon: WidgetName2Icon.icons[item.name] ?? null,
-            //           text: 'widget',
-            //           onTap: () {
-            //             // item 点击
-            //             onWidgetTap(item, context);
-            //           },
-            //         ))
-            //     .toList();
-          } else {
-            return null;
-          }
-    }, (value){},(){});  
-  }
 
 
 
@@ -108,7 +83,6 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
     var db = Provider.db;
 
     return new Scaffold(
-      appBar: new AppBar(title: buildSearchInput(context),),
       body: new TabBarView(controller: controller, children: <Widget>[
         new HomePage(),
         new CatPage(),

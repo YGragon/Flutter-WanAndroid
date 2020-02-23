@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_wanandroid/utils/image.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/about_page/about_page.dart';
 import 'package:flutter_wanandroid/widgets/list_item.dart';
@@ -89,7 +90,7 @@ class MinePageState extends State<MinePage> {
                                   child: ExtendedImage.network(
                                     "https://hbimg.huabanimg.com/2955e079403940e85df439dab8baab2dea441c042e0a2-Ndy7fz_fw658",
                                     fit: BoxFit.fill,
-                                  ),
+                                  )
                                 ),
                               ),
                               preferredSize: Size(80.0, 80.0),

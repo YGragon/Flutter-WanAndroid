@@ -1,6 +1,12 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_wanandroid/utils/toast.dart';
+import 'package:flutter_wanandroid/views/about_page/about_page.dart';
+import 'package:flutter_wanandroid/widgets/list_item.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MinePage extends StatefulWidget {
   @override
@@ -9,122 +15,198 @@ class MinePage extends StatefulWidget {
   }
 }
 
-class MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin {
-  var userAvatar =
-      "https://cn.bing.com/sa/simg/hpb/LaDigue_EN-CA1115245085_1920x1080.jpg";
-  var userName = "longyi";
-
-  var titles = [
-    "积分排行榜",
-    "关于页面",
-    "退出登录",
-    "广场",
-    "发布",
-    "测试",
-    "测试",
-    "测试",
-    "测试",
-    "测试",
-    "测试",
-    "测试",
-    "测试",
-    "测试",
-    "测试"
-  ];
-
-  @override
-  bool get wantKeepAlive => true;
-
-  // Text组件需要用SliverToBoxAdapter包裹，才能作为CustomScrollView的子组件
-  Widget renderTitle(String userName) {
-    return SliverToBoxAdapter(
-      child: Stack(
-        children: <Widget>[
-          Image.network(userAvatar, fit: BoxFit.cover),
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                print("用户信息 or 登录");
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  userAvatar == null
-                      ? new Image.asset(
-                          "images/ic_avatar_default.png",
-                          width: 60.0,
-                          height: 60.0,
-                        )
-                      : new Container(
-                          width: 60.0,
-                          height: 60.0,
-                          margin: EdgeInsets.fromLTRB(0, 70, 0, 0),
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
-                              image: new DecorationImage(
-                                  image: new NetworkImage(userAvatar),
-                                  fit: BoxFit.cover),
-                              border: new Border.all(
-                                  color: Colors.white, width: 2.0)),
-                        ),
-                  new Container(
-                    margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                    child: new Text(
-                      userName == null ? '点击头像登录' : userName,
-                      style: new TextStyle(color: Colors.white, fontSize: 16.0),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+class MinePageState extends State<MinePage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-        reverse: false,
-        shrinkWrap: false,
-        slivers: <Widget>[
-          renderTitle(userName),
-          SliverFixedExtentList(
-            delegate: new SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-              String title = titles[index];
-              return new Container(
-                  alignment: Alignment.centerLeft,
-                  child: new InkWell(
-                    onTap: () {
-                      print("点击了： $title");
-                    },
-                    child: new Column(
-                      children: <Widget>[
-                        new Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-                          child: new Row(
-                            children: <Widget>[
-                              new Expanded(
-                                  child: new Text(
-                                title,
-                              )),
-                            ],
-                          ),
-                        ),
-                        new Divider(
-                          height: 1.0,
-                        )
-                      ],
-                    ),
-                  ));
-            }, childCount: titles.length),
-            itemExtent: 50.0,
+    return Stack(
+      children: <Widget>[
+        Container(
+          height: double.infinity,
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
-        ]);
+        ),
+        EasyRefresh.custom(
+          slivers: <Widget>[
+            SliverList(
+              delegate: SliverChildListDelegate([
+                // 顶部栏
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      width: double.infinity,
+                      height: 220.0,
+                      color: Colors.white,
+                    ),
+                    ClipPath(
+                      clipper: TopBarClipper(
+                          MediaQuery.of(context).size.width, 200.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 200.0,
+                        child: Container(
+                          width: double.infinity,
+                          height: 240.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                    // 名字
+                    Container(
+                      margin: EdgeInsets.only(top: 40.0),
+                      child: Center(
+                        child: Text(
+                          '龙衣',
+                          style: TextStyle(
+                              fontSize: 30.0, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    // 图标
+                    Container(
+                      margin: EdgeInsets.only(top: 100.0),
+                      child: Center(
+                          child: Container(
+                            width: 100.0,
+                            height: 100.0,
+                            child: PreferredSize(
+                              child: Container(
+                                child: ClipOval(
+                                  child: ExtendedImage.network(
+                                    "https://hbimg.huabanimg.com/2955e079403940e85df439dab8baab2dea441c042e0a2-Ndy7fz_fw658",
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              preferredSize: Size(80.0, 80.0),
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
+                // 内容
+                Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                  padding: EdgeInsets.all(10.0),
+                  child: Card(
+                      color: Colors.blue,
+                      child: Container(
+                        padding: EdgeInsets.all(10.0),
+                        child: Column(
+                          children: <Widget>[
+                            ListItem(
+                              icon: Icon(
+                                Icons.score,
+                                color: Colors.white,
+                              ),
+                              title: "积分排行榜",
+                              titleColor: Colors.white,
+                              describeColor: Colors.white,
+                              onPressed: () {
+                                ToastUtil.showBasicToast("积分排行榜");
+                              },
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
+                Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                  padding: EdgeInsets.all(10.0),
+                  child: Card(
+                      color: Colors.deepOrange,
+                      child: Container(
+                        padding: EdgeInsets.all(10.0),
+                        child: Column(
+                          children: <Widget>[
+                            ListItem(
+                              icon: Icon(
+                                Icons.info,
+                                color: Colors.white,
+                              ),
+                              title: "关于页面",
+                              titleColor: Colors.white,
+                              describeColor: Colors.white,
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage()));
+                              },
+                            )
+                          ],
+                        ),
+                      )),
+                ),
+                Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                  padding: EdgeInsets.all(10.0),
+                  child: Card(
+                      color: Colors.pink,
+                      child: Container(
+                        padding: EdgeInsets.all(10.0),
+                        child: Column(
+                          children: <Widget>[
+
+                            ListItem(
+                              icon: Icon(
+                                Icons.exit_to_app,
+                                color: Colors.white,
+                              ),
+                              title: "退出登录",
+                              titleColor: Colors.white,
+                              describeColor: Colors.white,
+                              onPressed: () {
+                                ToastUtil.showBasicToast("退出登录");
+                              },
+                            )
+                          ],
+                        ),
+                      )),
+                ),
+              ]),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// 顶部栏裁剪
+class TopBarClipper extends CustomClipper<Path> {
+  // 宽高
+  double width;
+  double height;
+
+  TopBarClipper(this.width, this.height);
+
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.moveTo(0.0, 0.0);
+    path.lineTo(width, 0.0);
+    path.lineTo(width, height / 2);
+    path.lineTo(0.0, height);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

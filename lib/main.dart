@@ -13,6 +13,8 @@ var db;
 
 
 void main() async {
+  // 初始化之前出现白屏
+  WidgetsFlutterBinding.ensureInitialized();
   // 创建数据库
   final provider = new Provider();
   // 数据库初始化

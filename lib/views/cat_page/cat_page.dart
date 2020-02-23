@@ -41,25 +41,34 @@ class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
     }
     /// 获取体系数据
     CommonService().getSystemTree((CatModel catModel) {
-      categorieTrees.addAll(catModel.data);
-      setState(() {
-        categorieTrees = categorieTrees;
-      });
+      if(mounted){
+        categorieTrees.addAll(catModel.data);
+        setState(() {
+          categorieTrees = categorieTrees;
+        });
+      }
+
     });
     /// 获取导航数据
     CommonService().getNaviList((NaviBeanModel naviBean) {
-      print("获取导航列表数据========>>> ："+naviBean.datas.toString());
-      categorieNavs.addAll(naviBean.datas);
-      setState(() {
-        categorieNavs = categorieNavs;
-      });
+      if(mounted){
+        print("获取导航列表数据========>>> ："+naviBean.datas.toString());
+        categorieNavs.addAll(naviBean.datas);
+        setState(() {
+          categorieNavs = categorieNavs;
+        });
+      }
+
     });
     /// 获取项目数据
     CommonService().getProjectTree((CatModel catModel) {
-      categorieProjects.addAll(catModel.data);
-      setState(() {
-        categorieProjects = categorieProjects;
-      });
+      if(mounted){
+        categorieProjects.addAll(catModel.data);
+        setState(() {
+          categorieProjects = categorieProjects;
+        });
+      }
+
     });
   }
 

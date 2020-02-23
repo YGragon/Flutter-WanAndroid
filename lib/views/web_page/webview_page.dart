@@ -9,7 +9,9 @@ class WebViewPage extends StatefulWidget{
   final int id;
   final String title;
   final String link;
-
+  //重定向到主构造函数
+  WebViewPage.alongXAxis(String title, String link) : this(0, title, link);
+  // 主构造函数
   WebViewPage(this.id, this.title, this.link);
   _WebViewPageState createState() => _WebViewPageState();
 

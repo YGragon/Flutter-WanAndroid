@@ -1,13 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/components/disclaimer_msg.dart';
 import 'package:flutter_wanandroid/components/list_view_item.dart';
 import 'package:flutter_wanandroid/components/list_refresh.dart' as listComp;
 import 'package:flutter_wanandroid/components/pagination.dart';
 import 'package:flutter_wanandroid/components/search_input.dart';
-import 'package:flutter_wanandroid/model/article.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -87,7 +85,7 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
       );
 
   }
-  /// 联想搜索，显示搜索结果列表
+  /// TODO 抽取出去 联想搜索，显示搜索结果列表
   Widget buildSearchInput(BuildContext context){
     return new SearchInput((value)  async{
       if (value != '') {

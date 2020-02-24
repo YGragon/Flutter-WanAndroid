@@ -16,14 +16,14 @@ talk is cheap，show me the picture
 
 
 
-![home](C:\Users\Aller\AndroidStudioProjects\flutter\flutter_wanandroid\screenshot\home.png)
+![home](..\screenshot\home.png)
 
-![home](C:\Users\Aller\AndroidStudioProjects\flutter\flutter_wanandroid\screenshot\cat.png)
+![cat](..\screenshot\cat.png)
 
-![home](C:\Users\Aller\AndroidStudioProjects\flutter\flutter_wanandroid\screenshot\collect.png)
+![collect](..\screenshot\collect.png)
 
 usercenter user [UserProfilePage](https://github.com/xuelongqy/flutter_easyrefresh/blob/v2/example/lib/page/sample/user_profile.dart) UI
 
-![home](C:\Users\Aller\AndroidStudioProjects\flutter\flutter_wanandroid\screenshot\mine.png)
+![mine](..\screenshot\mine.png)
 
-![home](C:\Users\Aller\AndroidStudioProjects\flutter\flutter_wanandroid\screenshot\web.png)
+![web](..\screenshot\web.png)

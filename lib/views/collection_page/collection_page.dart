@@ -113,7 +113,7 @@ class CollectionPageState extends State<CollectionPage> with AutomaticKeepAliveC
       ),
     );
   }
-  /// 联想搜索，显示搜索结果列表
+  /// TODO 抽取出去 联想搜索，显示搜索结果列表
   Widget buildSearchInput(BuildContext context){
     return new SearchInput((value)  async{
       if (value != '') {

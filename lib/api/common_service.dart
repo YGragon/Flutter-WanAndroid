@@ -6,6 +6,7 @@ import 'package:flutter_wanandroid/model/article.dart';
 import 'package:flutter_wanandroid/model/banner.dart';
 import 'package:flutter_wanandroid/model/cat.dart';
 import 'package:flutter_wanandroid/model/navi_bean.dart';
+import 'package:flutter_wanandroid/model/project_model.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/net/dio_manager.dart';
 
@@ -63,9 +64,10 @@ class CommonService{
     });
   }
   /// 获取项目列表
-//  void getProjectList(Function callback,int _page,int _id) async {
-//    DioManager.singleton.dio.get(Api.PROJECT_LIST+"$_page/json?cid=$_id", options: _getOptions()).then((response) {
-//      callback(ProjectTreeListModel(response.data));
-//    });
-//  }
+  void getProjectList(Function callback,int _page,int _id) async {
+    DioManager.singleton.dio.get(Api.PROJECT_LIST+"$_page/json?cid=$_id", options: _getOptions()).then((response) {
+      print("数据："+response.toString());
+      callback(ProjectModel.fromJson(json.decode(response.toString())));
+    });
+  }
 }

@@ -16,14 +16,14 @@ talk is cheap，show me the picture
 
 
 
-![home](../screenshot/home.png)
+![home](/screenshot/home.png)
 
-![cat](../screenshot/cat.png)
+![cat](/screenshot/cat.png)
 
-![collect](../screenshot/collect.png)
+![collect](/screenshot/collect.png)
 
 usercenter user [UserProfilePage](https://github.com/xuelongqy/flutter_easyrefresh/blob/v2/example/lib/page/sample/user_profile.dart) UI
 
-![mine](../screenshot/mine.png)
+![mine](/screenshot/mine.png)
 
-![web](../screenshot/web.png)
+![web](/screenshot/web.png)

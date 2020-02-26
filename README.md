@@ -22,6 +22,8 @@ talk is cheap，show me the picture
 
 ![collect](/screenshot/collect.png)
 
+![project](/screenshot/project.png)
+
 usercenter user [UserProfilePage](https://github.com/xuelongqy/flutter_easyrefresh/blob/v2/example/lib/page/sample/user_profile.dart) UI
 
 ![mine](/screenshot/mine.png)

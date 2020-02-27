@@ -17,24 +17,6 @@ class SearchHistoryList {
   static SearchHistoryList _instance;
   static List<SearchHistory> _searchHistoryList = [];
 
-  static SearchHistoryList _getInstance(SpUtil sp) {
-    if (_instance == null) {
-      if(sp == null){
-        _sp = loadSpUtil();
-      }else{
-        _sp = sp;
-
-      }
-      String json = _sp.get(SharedPreferencesKeys.searchHistory);
-      _instance = new SearchHistoryList.fromJSON(json);
-    }
-    return _instance;
-  }
-
-  static loadSpUtil(){
-    return SpUtil.getInstance();
-  }
-
   /// [] 为可选参数
   factory SearchHistoryList([SpUtil sp]) {
     if (sp == null && _instance == null) {
@@ -42,6 +24,23 @@ class SearchHistoryList {
     }
     return _getInstance(sp);
   }
+
+  static SearchHistoryList _getInstance(SpUtil sp) {
+    if (_instance == null) {
+      print("sp---->"+sp.toString());
+      _sp = sp;
+      String json = sp.get(SharedPreferencesKeys.searchHistory);
+      _instance = new SearchHistoryList.fromJSON(json);
+
+      }
+    return _instance;
+  }
+
+//  static loadSpUtil(){
+//    return SpUtil.getInstance();
+//  }
+
+
 
 //  List<SearchHistory> _searchHistoryList = [];
 

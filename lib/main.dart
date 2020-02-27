@@ -5,6 +5,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_wanandroid/main_page.dart';
+import 'package:flutter_wanandroid/model/search_history.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/navigation_service.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
@@ -53,7 +54,7 @@ Future<Null> main() async {
   // 获取 SP 对象
   sp = await SpUtil.getInstance();
   // 得到单例对象的 搜索 管理对象
-  //  new SearchHistoryList(sp);
+    new SearchHistoryList(sp);
 
   // 无 context 跳转页面
   navigationService = NavigationService();

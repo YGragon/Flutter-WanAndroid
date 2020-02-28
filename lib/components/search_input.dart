@@ -2,6 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_wanandroid/api/common_service.dart';
+import 'package:flutter_wanandroid/model/article.dart';
+import 'package:flutter_wanandroid/model/project_model.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:meta/meta.dart';
 // import 'package:flutter_wanandroid/resources/widget_name_to_icon.dart';
@@ -11,6 +16,7 @@ import '../model/search_history.dart';
 typedef String FormFieldFormatter<T>(T v);
 typedef bool MaterialSearchFilter<T>(T v, String c);
 typedef int MaterialSearchSort<T>(T a, T b, String c);
+/// 返回结果被命名在 MaterialResultsFinder 中
 typedef Future<List<MaterialSearchResult>> MaterialResultsFinder(String c);
 typedef void OnSubmit(String value);
 
@@ -249,7 +255,6 @@ class _MaterialSearchState<T> extends State<MaterialSearch> {
   @override
   void initState() {
     super.initState();
-
     if (widget.getResults != null) {
       _getResultsDebounced();
     }
@@ -257,7 +262,6 @@ class _MaterialSearchState<T> extends State<MaterialSearch> {
     _controller.addListener(() {
       setState(() {
         _criteria = _controller.value.text;
-        print("监听输入框的内容："+_criteria);
         if (widget.getResults != null) {
           _getResultsDebounced();
         }
@@ -290,7 +294,6 @@ class _MaterialSearchState<T> extends State<MaterialSearch> {
       });
 
       /// 查询 widget 是否存在
-      print("开始获取widget："+_criteria);
       var results = await widget.getResults(_criteria);
 
       if (!mounted) {
@@ -412,12 +415,12 @@ class _MaterialSearchState<T> extends State<MaterialSearch> {
 /// 搜索结果 item 布局
 class MaterialSearchResult<T> extends StatelessWidget {
   const MaterialSearchResult(
-      {Key key, this.value, this.text, this.icon, this.onTap})
+      {Key key, this.value, this.author, this.icon, this.onTap})
       : super(key: key);
 
   final String value;
   final VoidCallback onTap;
-  final String text;
+  final String author;
   final IconData icon;
 
   @override
@@ -437,10 +440,10 @@ class MaterialSearchResult<T> extends StatelessWidget {
                 null,
             /// widget 组件名称
             new Expanded(
-                child: new Text(value,
-                    style: Theme.of(context).textTheme.subhead)),
+                child: Html(data: value,)),
             /// widget 字
-            new Text(text, style: Theme.of(context).textTheme.subhead)
+//            new Text(author)
+            new Text('')
           ],
         ),
       ),

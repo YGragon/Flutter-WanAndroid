@@ -13,4 +13,6 @@ class Api{
   static const String PROJECT_TREE = "http://www.wanandroid.com/project/tree/json";
   /// 项目列表
   static const String PROJECT_LIST = "http://www.wanandroid.com/project/list/";
+  /// 搜索列表
+  static const String SEARCH_LIST = "https://www.wanandroid.com/article/query/";
 }

@@ -7,6 +7,7 @@ import 'package:flutter_wanandroid/event/event_model.dart';
 import 'package:flutter_wanandroid/model/collect.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
+import 'package:flutter_wanandroid/views/search_page/search_page.dart';
 
 class CollectionPage extends StatefulWidget{
   @override
@@ -113,36 +114,12 @@ class CollectionPageState extends State<CollectionPage> with AutomaticKeepAliveC
       ),
     );
   }
-  /// TODO 抽取出去 联想搜索，显示搜索结果列表
-  Widget buildSearchInput(BuildContext context){
-    return new SearchInput((value)  async{
-      if (value != '') {
-        // TODO 发起网络请求，搜索结果
-        print("---------------->>>>>>>"+value);
-        // List<WidgetPoint> list = await widgetControl.search(value);
-
-        // return list
-        //     .map((item) => new MaterialSearchResult<String>(
-        //           value: item.name,
-        //           icon: WidgetName2Icon.icons[item.name] ?? null,
-        //           text: 'widget',
-        //           onTap: () {
-        //             // item 点击
-        //             onWidgetTap(item, context);
-        //           },
-        //         ))
-        //     .toList();
-      } else {
-        return null;
-      }
-    }, (value){},(){});
-  }
 
   @override
   Widget build(BuildContext context) {
     if (_collectionList.length == 0) {
       return Scaffold(
-        appBar: new AppBar(title: buildSearchInput(context),),
+        appBar: new AppBar(title: SearchPage(),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -160,7 +137,7 @@ class CollectionPageState extends State<CollectionPage> with AutomaticKeepAliveC
       );
     }
     return  Scaffold(
-      appBar: new AppBar(title: buildSearchInput(context),),
+      appBar: new AppBar(title: SearchPage(),),
       body:ListView.builder(
         itemBuilder: _renderList,
         itemCount: _collectionList.length + 1,

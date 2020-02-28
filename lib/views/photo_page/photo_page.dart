@@ -6,6 +6,7 @@ import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/components/search_input.dart';
 import 'package:flutter_wanandroid/model/project_model.dart';
 import 'package:flutter_wanandroid/views/photo_page/item_card.dart';
+import 'package:flutter_wanandroid/views/search_page/search_page.dart';
 
 class PhotoPage extends StatefulWidget {
   @override
@@ -24,17 +25,6 @@ class _PhotoPageState extends State<PhotoPage> {
   List<DatasListBean> items = new List();
   var _scrollController = new ScrollController(initialScrollOffset: 0);
 
-  /// TODO 抽取出去 联想搜索，显示搜索结果列表
-  Widget buildSearchInput(BuildContext context) {
-    return new SearchInput((value) async {
-      if (value != '') {
-        // TODO 发起网络请求，搜索结果
-        print("---------------->>>>>>>" + value);
-      } else {
-        return null;
-      }
-    }, (value) {}, () {});
-  }
 
   @override
   void initState() {
@@ -78,9 +68,7 @@ class _PhotoPageState extends State<PhotoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: new AppBar(
-          title: buildSearchInput(context),
-        ),
+        appBar: new AppBar(title: SearchPage(),),
         body: Column(
           children: <Widget>[
             Expanded(

@@ -70,4 +70,12 @@ class CommonService{
       callback(ProjectModel.fromJson(json.decode(response.toString())));
     });
   }
+
+  /// 获取搜索列表
+  void getSearchList(Function callback, String k, int _page) async {
+    DioManager.singleton.dio.post(Api.SEARCH_LIST+"$_page/json?k=$k", options:_getOptions()).then((response){
+      print("搜索数据："+response.toString());
+      callback(ArticleModel(response.data));
+    });
+  }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_wanandroid/components/cate_card.dart';
 import 'package:flutter_wanandroid/components/search_input.dart';
 import 'package:flutter_wanandroid/model/cat.dart';
 import 'package:flutter_wanandroid/model/navi_bean.dart';
+import 'package:flutter_wanandroid/views/search_page/search_page.dart';
 
 /// 猫耳布局
 /// 展示 体系、项目、导航 三大分类
@@ -84,36 +85,13 @@ class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  /// TODO 抽取出去 联想搜索，显示搜索结果列表
-  Widget buildSearchInput(BuildContext context){
-    return new SearchInput((value)  async{
-      if (value != '') {
-        // TODO 发起网络请求，搜索结果
-        print("---------------->>>>>>>"+value);
-        // List<WidgetPoint> list = await widgetControl.search(value);
 
-        // return list
-        //     .map((item) => new MaterialSearchResult<String>(
-        //           value: item.name,
-        //           icon: WidgetName2Icon.icons[item.name] ?? null,
-        //           text: 'widget',
-        //           onTap: () {
-        //             // item 点击
-        //             onWidgetTap(item, context);
-        //           },
-        //         ))
-        //     .toList();
-      } else {
-        return null;
-      }
-    }, (value){},(){});
-  }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: new AppBar(title: buildSearchInput(context),),
+      appBar: new AppBar(title: SearchPage(),),
       body:  Container(
         color: Theme.of(context).backgroundColor,
         child: this.buildGrid(),

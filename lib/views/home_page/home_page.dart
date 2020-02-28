@@ -5,7 +5,7 @@ import 'package:flutter_wanandroid/components/disclaimer_msg.dart';
 import 'package:flutter_wanandroid/components/list_view_item.dart';
 import 'package:flutter_wanandroid/components/list_refresh.dart' as listComp;
 import 'package:flutter_wanandroid/components/pagination.dart';
-import 'package:flutter_wanandroid/components/search_input.dart';
+import 'package:flutter_wanandroid/views/search_page/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -85,36 +85,12 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
       );
 
   }
-  /// TODO 抽取出去 联想搜索，显示搜索结果列表
-  Widget buildSearchInput(BuildContext context){
-    return new SearchInput((value)  async{
-      if (value != '') {
-        // TODO 发起网络请求，搜索结果
-        print("---------------->>>>>>>"+value);
-        // List<WidgetPoint> list = await widgetControl.search(value);
-
-        // return list
-        //     .map((item) => new MaterialSearchResult<String>(
-        //           value: item.name,
-        //           icon: WidgetName2Icon.icons[item.name] ?? null,
-        //           text: 'widget',
-        //           onTap: () {
-        //             // item 点击
-        //             onWidgetTap(item, context);
-        //           },
-        //         ))
-        //     .toList();
-      } else {
-        return null;
-      }
-    }, (value){},(){});
-  }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: new AppBar(title: buildSearchInput(context),),
+      appBar: new AppBar(title: SearchPage(),),
       body: new Column(
           children: <Widget>[
 //          new Stack(

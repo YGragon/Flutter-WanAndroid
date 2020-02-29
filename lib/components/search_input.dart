@@ -7,6 +7,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/model/article.dart';
 import 'package:flutter_wanandroid/model/project_model.dart';
+import 'package:flutter_wanandroid/routers/routes.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:meta/meta.dart';
 // import 'package:flutter_wanandroid/resources/widget_name_to_icon.dart';
@@ -494,12 +495,13 @@ class _History extends State<History> {
 
       list.add(InkWell(
         onTap: () {
-          Application.router.navigateTo(context, "${value.targetRouter}",
-              transition: TransitionType.inFromRight);
+          Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent("0")}&title=${Uri.encodeComponent("详情")}&link=${Uri.encodeComponent(value.targetRouter)}');
         },
+        // 历史搜索的名称
         child: Chip(
           avatar: icon,
-          label: Text("${value.name}"),
+//          label: Text("${value.name}"),
+          label: Html(data: value.name,),
         ),
       ));
     });

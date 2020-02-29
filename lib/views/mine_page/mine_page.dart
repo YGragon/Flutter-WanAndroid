@@ -6,6 +6,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/utils/image.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/about_page/about_page.dart';
+import 'package:flutter_wanandroid/views/login_page/login_page.dart';
 import 'package:flutter_wanandroid/widgets/list_item.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,7 +18,6 @@ class MinePage extends StatefulWidget {
 }
 
 class MinePageState extends State<MinePage> {
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -69,33 +69,38 @@ class MinePageState extends State<MinePage> {
                     // 名字
                     Container(
                       margin: EdgeInsets.only(top: 40.0),
-                      child: Center(
-                        child: Text(
-                          '龙衣',
-                          style: TextStyle(
-                              fontSize: 30.0, color: Colors.white),
+                      child: new InkWell(
+                        onTap: (){
+                          print("跳转登录页面");
+                          Navigator.push(context, new MaterialPageRoute(builder: (context) => new LoginPage()));
+                        },
+                        child: Center(
+                          child: Text(
+                            '龙衣',
+                            style:
+                                TextStyle(fontSize: 30.0, color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
-                    // 图标
+                    // 头像
                     Container(
                       margin: EdgeInsets.only(top: 100.0),
                       child: Center(
                           child: Container(
-                            width: 100.0,
-                            height: 100.0,
-                            child: PreferredSize(
-                              child: Container(
-                                child: ClipOval(
-                                  child: ExtendedImage.network(
-                                    "https://hbimg.huabanimg.com/2955e079403940e85df439dab8baab2dea441c042e0a2-Ndy7fz_fw658",
-                                    fit: BoxFit.fill,
-                                  )
-                                ),
-                              ),
-                              preferredSize: Size(80.0, 80.0),
-                            ),
-                          )),
+                        width: 100.0,
+                        height: 100.0,
+                        child: PreferredSize(
+                          child: Container(
+                            child: ClipOval(
+                                child: ExtendedImage.network(
+                              "https://hbimg.huabanimg.com/2955e079403940e85df439dab8baab2dea441c042e0a2-Ndy7fz_fw658",
+                              fit: BoxFit.fill,
+                            )),
+                          ),
+                          preferredSize: Size(80.0, 80.0),
+                        ),
+                      )),
                     ),
                   ],
                 ),
@@ -145,7 +150,10 @@ class MinePageState extends State<MinePage> {
                               titleColor: Colors.white,
                               describeColor: Colors.white,
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AboutPage()));
                               },
                             )
                           ],
@@ -162,7 +170,6 @@ class MinePageState extends State<MinePage> {
                         padding: EdgeInsets.all(10.0),
                         child: Column(
                           children: <Widget>[
-
                             ListItem(
                               icon: Icon(
                                 Icons.exit_to_app,

@@ -11,6 +11,7 @@ import 'package:flutter_wanandroid/model/article.dart';
 import 'package:flutter_wanandroid/model/search_history.dart';
 import 'package:flutter_wanandroid/net/dio_manager.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
+import 'package:flutter_wanandroid/routers/routes.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 
 class SearchPage extends StatefulWidget{
@@ -46,7 +47,13 @@ class _SearchPageState extends State<SearchPage>{
     searchHistoryList.add(SearchHistory(name: article.title, targetRouter: article.link));
     print("searchHistoryList ${searchHistoryList.toString()}");
     print("点击搜索结果");
+
+    toWebPage(article);
 //    Application.router.navigateTo(context, "$targetRouter");
+  }
+  /// 点击跳转web页面
+  void toWebPage(Article article){
+    Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent("0")}&title=${Uri.encodeComponent("详情")}&link=${Uri.encodeComponent(article.link)}');
   }
 
   Future<List<Article>> postSearch(String name) async {

@@ -59,9 +59,11 @@ class _PhotoPageState extends State<PhotoPage> {
     /// 获取新的数据
     CommonService().getProjectList((ProjectModel _projectModel) {
       _pageTotal = _projectModel.data.total;
-      setState(() {
-        items.addAll(_projectModel.data.datas);
-      });
+      if(mounted){
+        setState(() {
+          items.addAll(_projectModel.data.datas);
+        });
+      }
     }, _page, _projectId);
   }
 

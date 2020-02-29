@@ -15,4 +15,10 @@ class Api{
   static const String PROJECT_LIST = "http://www.wanandroid.com/project/list/";
   /// 搜索列表
   static const String SEARCH_LIST = "https://www.wanandroid.com/article/query/";
+  /// 登录接口
+  static const String LOGIN = "https://www.wanandroid.com/user/login";
+  /// 注册接口
+  static const String REGISTER = "https://www.wanandroid.com/user/register";
+  /// 退出接口
+  static const String LOGOUT = "https://www.wanandroid.com/user/logout/json";
 }

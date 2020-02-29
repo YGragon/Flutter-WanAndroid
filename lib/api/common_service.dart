@@ -8,6 +8,7 @@ import 'package:flutter_wanandroid/model/cat.dart';
 import 'package:flutter_wanandroid/model/navi_bean.dart';
 import 'package:flutter_wanandroid/model/project_model.dart';
 import 'package:flutter_wanandroid/model/user.dart';
+import 'package:flutter_wanandroid/model/user_model.dart';
 import 'package:flutter_wanandroid/net/dio_manager.dart';
 
 class CommonService{
@@ -76,6 +77,22 @@ class CommonService{
     DioManager.singleton.dio.post(Api.SEARCH_LIST+"$_page/json?k=$k", options:_getOptions()).then((response){
       print("搜索数据："+response.toString());
       callback(ArticleModel(response.data));
+    });
+  }
+
+  /// 登录接口
+  void login(Function callback, String username, String password) async {
+    DioManager.singleton.dio.post(Api.LOGIN+"?username=$username&password=$password", options:_getOptions()).then((response){
+      print("登录结果："+response.toString());
+      callback(UserModel(response.data));
+    });
+  }
+
+  /// 注册接口
+  void register(Function callback, String username, String password,String repassword) async {
+    DioManager.singleton.dio.post(Api.REGISTER+"?username=$username&password=$password&repassword=$repassword", options:_getOptions()).then((response){
+      print("注册结果："+response.toString());
+      callback(UserModel(response.data));
     });
   }
 }

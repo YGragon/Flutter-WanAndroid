@@ -24,25 +24,31 @@ class UserModel {
 
 class UserData {
 
+  bool admin;
   int id;
   int type;
   String email;
   String icon;
   String password;
   String token;
+  String nickname;
+  String publicName;
   String username;
   List<dynamic> chapterTops;
   List<int> collectIds;
 
-  UserData.fromParams({this.id, this.type, this.email, this.icon, this.password, this.token, this.username, this.chapterTops, this.collectIds});
+  UserData.fromParams({this.admin, this.id, this.type, this.email, this.icon, this.password, this.token, this.nickname,this.publicName,this.username, this.chapterTops, this.collectIds});
 
   UserData.fromJson(jsonRes) {
+    admin = jsonRes['admin'];
     id = jsonRes['id'];
     type = jsonRes['type'];
     email = jsonRes['email'];
     icon = jsonRes['icon'];
     password = jsonRes['password'];
     token = jsonRes['token'];
+    nickname = jsonRes['nickname'];
+    publicName = jsonRes['publicName'];
     username = jsonRes['username'];
     chapterTops = jsonRes['chapterTops'] == null ? null : [];
 

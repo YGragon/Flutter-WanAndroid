@@ -1,5 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/api/common_service.dart';
+import 'package:flutter_wanandroid/model/user_model.dart';
+import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/register_page/register_page.dart';
+import 'package:flutter_wanandroid/widgets/loading/dialog_manager.dart';
+import 'package:flutter_wanandroid/widgets/loading/loading_dialog.dart';
 import 'package:groovin_material_icons/groovin_material_icons.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String _name, _password;
   bool _isObscure = true;
+  bool _isLoading = false;
   Color _eyeColor;
   List _loginMethod = [
     {
@@ -26,36 +34,47 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('登录'),
-      ),
-        body: Form(
-            key: _formKey,
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 22.0),
-              children: <Widget>[
+        appBar: AppBar(
+          title: Text('登录'),
+        ),
+        body: _bodyLayout(context));
+  }
 
-                SizedBox(height: 50.0),
-                buildNameTextField(),
-                SizedBox(height: 30.0),
-                buildPasswordTextField(context),
-                SizedBox(height: 30.0),
-                buildForgetPasswordText(context),
-                SizedBox(height: 40.0),
-                buildLoginButton(context),
-                SizedBox(height: 60.0),
-                buildOtherLoginText(),
-                buildOtherMethod(context),
-                buildRegisterText(context),
-              ],
-            )));
+  Widget _bodyLayout(BuildContext context){
+    if(_isLoading){
+      return Center(
+        child: Container(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }else{
+      return Form(
+          key: _formKey,
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 22.0),
+            children: <Widget>[
+              SizedBox(height: 50.0),
+              buildNameTextField(),
+              SizedBox(height: 30.0),
+              buildPasswordTextField(context),
+              SizedBox(height: 30.0),
+              buildForgetPasswordText(context),
+              SizedBox(height: 40.0),
+              buildLoginButton(context),
+              SizedBox(height: 60.0),
+              buildOtherLoginText(),
+              buildOtherMethod(context),
+              buildRegisterText(context),
+            ],
+          ));
+    }
   }
 
   Align buildRegisterText(BuildContext context) {
     return Align(
       alignment: Alignment.center,
       child: Padding(
-        padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
+        padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -66,7 +85,10 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
-                Navigator.push(context, new MaterialPageRoute(builder: (context) => new RegisterPage()));
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => new RegisterPage()));
               },
             ),
           ],
@@ -80,22 +102,22 @@ class _LoginPageState extends State<LoginPage> {
       alignment: MainAxisAlignment.center,
       children: _loginMethod
           .map((item) => Builder(
-        builder: (context) {
-          return IconButton(
-              icon: Icon(item['icon'],
-                  color: Theme.of(context).iconTheme.color),
-              onPressed: () {
-                //TODO : 第三方登录方法
-                Scaffold.of(context).showSnackBar(new SnackBar(
-                  content: new Text("${item['title']}登录"),
-                  action: new SnackBarAction(
-                    label: "取消",
-                    onPressed: () {},
-                  ),
-                ));
-              });
-        },
-      ))
+                builder: (context) {
+                  return IconButton(
+                      icon: Icon(item['icon'],
+                          color: Theme.of(context).iconTheme.color),
+                      onPressed: () {
+                        //TODO : 第三方登录方法
+                        Scaffold.of(context).showSnackBar(new SnackBar(
+                          content: new Text("${item['title']}登录"),
+                          action: new SnackBarAction(
+                            label: "取消",
+                            onPressed: () {},
+                          ),
+                        ));
+                      });
+                },
+              ))
           .toList(),
     );
   }
@@ -124,8 +146,21 @@ class _LoginPageState extends State<LoginPage> {
             if (_formKey.currentState.validate()) {
               ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState.save();
-              //TODO 执行登录方法
-              print('_name:$_name , assword:$_password');
+              DialogManager.showBasicDialog(context, "正在登录中...");
+              CommonService().login((UserModel _userModel) {
+                if (_userModel.errorCode == 0) {
+                  ToastUtil.showBasicToast("登录成功");
+                  /// 关闭弹窗
+                  Navigator.pop(context);
+                  /// 关闭登录页面
+                  Future.delayed(Duration(milliseconds: 200), () {
+                    Navigator.pop(context);
+                  });
+                }else if(_userModel.errorCode == -1){
+                  ToastUtil.showBasicToast(_userModel.errorMsg);
+                  Navigator.pop(context);
+                }
+              }, _name, _password);
             }
           },
           shape: StadiumBorder(side: BorderSide()),
@@ -145,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(fontSize: 14.0, color: Colors.grey),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            ToastUtil.showBasicToast("忘记密码");
           },
         ),
       ),
@@ -179,17 +214,17 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  TextFormField buildNameTextField(){
+  TextFormField buildNameTextField() {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: "用户名",),
-      validator: (String value){
-        if(value.length < 3 || value.length > 10){
-          return '请输入3-10位字符长度的用户名';
+        labelText: "用户名",
+      ),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return '请输入用户名';
         }
       },
       onSaved: (String value) => _name = value,
     );
   }
-
 }

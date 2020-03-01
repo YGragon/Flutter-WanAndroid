@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
+import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/model/user_model.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/register_page/register_page.dart';
@@ -150,6 +151,7 @@ class _LoginPageState extends State<LoginPage> {
               CommonService().login((UserModel _userModel) {
                 if (_userModel.errorCode == 0) {
                   ToastUtil.showBasicToast("登录成功");
+                  User().saveUserName(_userModel);
                   /// 关闭弹窗
                   Navigator.pop(context);
                   /// 关闭登录页面

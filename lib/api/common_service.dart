@@ -95,4 +95,12 @@ class CommonService{
       callback(UserModel(response.data));
     });
   }
+
+  /// 退出接口
+  void logout(Function callback) async {
+    DioManager.singleton.dio.get(Api.LOGOUT, options:_getOptions()).then((response){
+      print("退出结果："+response.toString());
+      callback(UserModel(response.data));
+    });
+  }
 }

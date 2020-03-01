@@ -3,7 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_wanandroid/api/common_service.dart';
+import 'package:flutter_wanandroid/model/user.dart';
+import 'package:flutter_wanandroid/model/user_model.dart';
 import 'package:flutter_wanandroid/utils/image.dart';
+import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/about_page/about_page.dart';
 import 'package:flutter_wanandroid/views/login_page/login_page.dart';
@@ -18,6 +22,46 @@ class MinePage extends StatefulWidget {
 }
 
 class MinePageState extends State<MinePage> {
+
+  String _userName = "未登录";
+  String _getUserName(){
+    if(mounted){
+
+      SpUtil.getInstance().then((_sp) {
+        String username = _sp.getString(SharedPreferencesKeys.userName);
+        print("用户username：" + username.toString());
+        if (username != null && username.isNotEmpty) {
+          User().setLogin(true);
+          setState(() {
+            _userName = username;
+          });
+        } else {
+          User().setLogin(false);
+          setState(() {
+            _userName = "未登录";
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _getUserName();
+    super.initState();
+  }
+
+  @override
+  void deactivate() {
+
+    var bool = ModalRoute.of(context).isCurrent;
+    print("页面返回："+bool.toString());
+    if (bool) {
+      _getUserName();
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -70,17 +114,22 @@ class MinePageState extends State<MinePage> {
                     Container(
                       margin: EdgeInsets.only(top: 40.0),
                       child: new InkWell(
-                        onTap: (){
-                          print("跳转登录页面");
-                          Navigator.push(context, new MaterialPageRoute(builder: (context) => new LoginPage()));
+                        onTap: () {
+                          if(User().isUserLogin()){
+                            print("显示用户信息");
+                          }else{
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => new LoginPage()));
+                          }
+
                         },
                         child: Center(
-                          child: Text(
-                            '龙衣',
-                            style:
-                                TextStyle(fontSize: 30.0, color: Colors.white),
-                          ),
-                        ),
+                            child: Text(
+                              _userName,
+                              style: TextStyle(fontSize: 30.0, color: Colors.white),
+                        )),
                       ),
                     ),
                     // 头像
@@ -179,7 +228,7 @@ class MinePageState extends State<MinePage> {
                               titleColor: Colors.white,
                               describeColor: Colors.white,
                               onPressed: () {
-                                ToastUtil.showBasicToast("退出登录");
+                                _logout();
                               },
                             )
                           ],
@@ -192,6 +241,22 @@ class MinePageState extends State<MinePage> {
         ),
       ],
     );
+  }
+
+  /// 退出登录
+  void _logout() {
+    CommonService().logout((UserModel _userModel) {
+      if (_userModel.errorCode == 0) {
+        ToastUtil.showBasicToast("您已退出登录");
+        /// 删除本地缓存
+        SpUtil.getInstance().then((_sp){
+          _sp.remove(SharedPreferencesKeys.userName);
+        });
+        _getUserName();
+      } else if (_userModel.errorCode == -1) {
+        ToastUtil.showBasicToast(_userModel.errorMsg);
+      }
+    });
   }
 }
 

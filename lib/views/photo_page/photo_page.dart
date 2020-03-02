@@ -7,6 +7,7 @@ import 'package:flutter_wanandroid/components/search_input.dart';
 import 'package:flutter_wanandroid/model/project_model.dart';
 import 'package:flutter_wanandroid/views/photo_page/item_card.dart';
 import 'package:flutter_wanandroid/views/search_page/search_page.dart';
+import 'package:flutter_wanandroid/widgets/loading/dialog_manager.dart';
 
 class PhotoPage extends StatefulWidget {
   @override
@@ -42,6 +43,13 @@ class _PhotoPageState extends State<PhotoPage> {
     });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+
+  }
+
   /// 下拉刷新数据
   Future<Null> _refreshData() async {
     _page = 0;
@@ -56,6 +64,9 @@ class _PhotoPageState extends State<PhotoPage> {
 
   /// 获取项目数据
   void _getProjectData(bool _isAdd) async {
+    Future.delayed(Duration(milliseconds: 200)).then((e) {
+      DialogManager.showBasicDialog(context, "正在加载中...");
+    });
     /// 获取新的数据
     CommonService().getProjectList((ProjectModel _projectModel) {
       _pageTotal = _projectModel.data.total;
@@ -64,6 +75,8 @@ class _PhotoPageState extends State<PhotoPage> {
           items.addAll(_projectModel.data.datas);
         });
       }
+      /// 关闭弹窗
+      Navigator.pop(context);
     }, _page, _projectId);
   }
 

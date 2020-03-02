@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
@@ -26,6 +27,17 @@ class TileCard extends StatelessWidget {
         this.niceDate});
 
 
+  Widget _buildBottomLayout(BuildContext context,String msg){
+    return Container(
+      child: Text(
+        msg,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          fontSize: ScreenUtil().setSp(30),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +52,7 @@ class TileCard extends StatelessWidget {
           children: <Widget>[
             // 图片
             Container(
-              color: Colors.deepOrange,
+              color: Colors.grey,
               child: ExtendedImage.network(
                 envelopePic,
                 fit: BoxFit.fitWidth,
@@ -48,47 +60,23 @@ class TileCard extends StatelessWidget {
             ),
             // 描述
             Container(
-              padding:
-              EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
-              margin: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(10)),
-              child: Text(
-                '$desc',
-                style: TextStyle(
-                    fontSize: ScreenUtil().setSp(40),
-                    fontWeight: FontWeight.bold),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
+              margin: EdgeInsets.all(6.0),
+              child: Html(data: title,defaultTextStyle: TextStyle(height: 1.50),)
             ),
             // 作者，时间
             Container(
               padding: EdgeInsets.only(
                   left: ScreenUtil().setWidth(20),
                   bottom: ScreenUtil().setWidth(20)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  // 作者
-                  Container(
-                    child: Text(
-                      '$author',
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(30),
-                      ),
-                    ),
-                  ),
-                  // 时间
-                  Container(
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(50)),
-                    child: Text(
-                      '$niceDate',
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(30),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                // 作者
+                _buildBottomLayout(context,'👲 '+author),
+                // 时间
+                _buildBottomLayout(context,'🔔'+niceDate),
+              ],
+            )
             )
           ],
         ),

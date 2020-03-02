@@ -11,6 +11,7 @@ import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/about_page/about_page.dart';
 import 'package:flutter_wanandroid/views/login_page/login_page.dart';
+import 'package:flutter_wanandroid/views/my_collect_list_page/my_collect_list_page.dart';
 import 'package:flutter_wanandroid/widgets/list_item.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,9 +28,7 @@ class MinePageState extends State<MinePage> {
   String _getUserName(){
     if(mounted){
 
-      SpUtil.getInstance().then((_sp) {
-        String username = _sp.getString(SharedPreferencesKeys.userName);
-        print("用户username：" + username.toString());
+      User().getUserInfo().then((username){
         if (username != null && username.isNotEmpty) {
           User().setLogin(true);
           setState(() {
@@ -59,7 +58,6 @@ class MinePageState extends State<MinePage> {
     if (bool) {
       _getUserName();
     }
-
   }
 
   @override
@@ -154,87 +152,29 @@ class MinePageState extends State<MinePage> {
                   ],
                 ),
                 // 内容
-                Container(
-                  width: double.infinity,
-                  color: Colors.white,
-                  padding: EdgeInsets.all(10.0),
-                  child: Card(
-                      color: Colors.blue,
-                      child: Container(
-                        padding: EdgeInsets.all(10.0),
-                        child: Column(
-                          children: <Widget>[
-                            ListItem(
-                              icon: Icon(
-                                Icons.score,
-                                color: Colors.white,
-                              ),
-                              title: "积分排行榜",
-                              titleColor: Colors.white,
-                              describeColor: Colors.white,
-                              onPressed: () {
-                                ToastUtil.showBasicToast("积分排行榜");
-                              },
-                            ),
-                          ],
-                        ),
-                      )),
-                ),
-                Container(
-                  width: double.infinity,
-                  color: Colors.white,
-                  padding: EdgeInsets.all(10.0),
-                  child: Card(
-                      color: Colors.deepOrange,
-                      child: Container(
-                        padding: EdgeInsets.all(10.0),
-                        child: Column(
-                          children: <Widget>[
-                            ListItem(
-                              icon: Icon(
-                                Icons.info,
-                                color: Colors.white,
-                              ),
-                              title: "关于页面",
-                              titleColor: Colors.white,
-                              describeColor: Colors.white,
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AboutPage()));
-                              },
-                            )
-                          ],
-                        ),
-                      )),
-                ),
-                Container(
-                  width: double.infinity,
-                  color: Colors.white,
-                  padding: EdgeInsets.all(10.0),
-                  child: Card(
-                      color: Colors.pink,
-                      child: Container(
-                        padding: EdgeInsets.all(10.0),
-                        child: Column(
-                          children: <Widget>[
-                            ListItem(
-                              icon: Icon(
-                                Icons.exit_to_app,
-                                color: Colors.white,
-                              ),
-                              title: "退出登录",
-                              titleColor: Colors.white,
-                              describeColor: Colors.white,
-                              onPressed: () {
-                                _logout();
-                              },
-                            )
-                          ],
-                        ),
-                      )),
-                ),
+                _buildItem(context, Colors.blue,Icons.favorite,"我的收藏",(){
+                  if(User().isUserLogin()){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyCollectListPage()));
+                  }else{
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginPage()));
+                  }
+
+                }),
+                _buildItem(context, Colors.deepOrange,Icons.info,"关于页面",(){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AboutPage()));
+                }),
+                _buildItem(context, Colors.pink,Icons.exit_to_app,"退出登录",(){
+                  _logout();
+                })
               ]),
             ),
           ],
@@ -249,15 +189,43 @@ class MinePageState extends State<MinePage> {
       if (_userModel.errorCode == 0) {
         ToastUtil.showBasicToast("您已退出登录");
         /// 删除本地缓存
-        SpUtil.getInstance().then((_sp){
-          _sp.remove(SharedPreferencesKeys.userName);
-        });
+       User().clearUserInfor();
         _getUserName();
       } else if (_userModel.errorCode == -1) {
         ToastUtil.showBasicToast(_userModel.errorMsg);
       }
     });
   }
+}
+
+Widget _buildItem(BuildContext context,Color color, IconData icons, String title, [Function callback]){
+
+  return Container(
+    width: double.infinity,
+    color: Colors.white,
+    padding: EdgeInsets.all(10.0),
+    child: Card(
+        color: color,
+        child: Container(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            children: <Widget>[
+              ListItem(
+                icon: Icon(
+                  icons,
+                  color: Colors.white,
+                ),
+                title: title,
+                titleColor: Colors.white,
+                describeColor: Colors.white,
+                onPressed: () {
+                  callback();
+                },
+              )
+            ],
+          ),
+        )),
+  );
 }
 
 // 顶部栏裁剪

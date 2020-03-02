@@ -16,6 +16,7 @@ class CommonService{
   Options _getOptions() {
     Map<String,String> map = new Map();
     List<String> cookies = User().cookie;
+    print("网络请求携带 cookie:"+cookies.toString());
     map["Cookie"] = cookies.toString();
     map["responseType"] = "ResponseType.json";
     return Options(headers: map);
@@ -84,7 +85,7 @@ class CommonService{
   void login(Function callback, String username, String password) async {
     DioManager.singleton.dio.post(Api.LOGIN+"?username=$username&password=$password", options:_getOptions()).then((response){
       print("登录结果："+response.toString());
-      callback(UserModel(response.data));
+      callback(UserModel(response.data),response);
     });
   }
 
@@ -101,6 +102,14 @@ class CommonService{
     DioManager.singleton.dio.get(Api.LOGOUT, options:_getOptions()).then((response){
       print("退出结果："+response.toString());
       callback(UserModel(response.data));
+    });
+  }
+
+  /// 我的收藏接口
+  void getMyCollectList(Function callback,int page) async {
+    DioManager.singleton.dio.get(Api.MY_COLLECT+"/$page/json", options:_getOptions()).then((response){
+      print("我的收藏："+response.toString());
+      callback(ArticleModel(response.data));
     });
   }
 }

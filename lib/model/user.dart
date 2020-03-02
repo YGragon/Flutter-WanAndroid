@@ -26,12 +26,13 @@ class User {
 
   void saveUserInfo(UserModel _userModel, Response response) {
     List<String> cookies = response.headers["set-cookie"];
+    print("cookie---->:"+cookies.toString());
     cookie = cookies;
     userName = _userModel.data.username;
     _saveInfo();
   }
 
-  Future<Null> getUserInfo() async {
+  Future<String> getUserInfo() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     List<String> cookies = sp.getStringList("cookies");
     if (cookies != null) {
@@ -41,6 +42,7 @@ class User {
     if (username != null) {
       userName = username;
     }
+    return userName;
   }
 
   _saveInfo() async {

@@ -21,4 +21,6 @@ class Api{
   static const String REGISTER = "https://www.wanandroid.com/user/register";
   /// 退出接口
   static const String LOGOUT = "https://www.wanandroid.com/user/logout/json";
+  /// 我的收藏接口
+  static const String MY_COLLECT = "https://www.wanandroid.com/lg/collect/list/";
 }

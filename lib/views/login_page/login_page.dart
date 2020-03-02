@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/model/user.dart';
@@ -148,10 +149,11 @@ class _LoginPageState extends State<LoginPage> {
               ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState.save();
               DialogManager.showBasicDialog(context, "正在登录中...");
-              CommonService().login((UserModel _userModel) {
+              CommonService().login((UserModel _userModel,Response response) {
                 if (_userModel.errorCode == 0) {
                   ToastUtil.showBasicToast("登录成功");
-                  User().saveUserName(_userModel);
+                  print("response："+response.toString());
+                  User().saveUserInfo(_userModel,response);
                   /// 关闭弹窗
                   Navigator.pop(context);
                   /// 关闭登录页面

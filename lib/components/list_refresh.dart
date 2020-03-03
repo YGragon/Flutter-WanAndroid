@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/model/article.dart';
+import 'package:flutter_wanandroid/widgets/loading/dialog_manager.dart';
 
 class ListRefresh extends StatefulWidget {
   final renderItem;
@@ -76,12 +77,16 @@ class _ListRefreshState extends State<ListRefresh> {
 
 // 伪装吐出新数据
   Future getArticleRequest() async {
+    Future.delayed(Duration(milliseconds: 200)).then((e) {
+      DialogManager.showBasicDialog(context, "正在加载中...");
+    });
     /// 获取新的数据
     CommonService().getArticleList((ArticleModel _articleModel){
       _pageTotal = _articleModel.data.total;
       setState(() {
         items.addAll(_articleModel.data.datas);
       });
+      Navigator.pop(context);
     }, _pageIndex);
   }
 // 下拉加载的事件，清空之前list内容，取前X个

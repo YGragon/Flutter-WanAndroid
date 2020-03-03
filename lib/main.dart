@@ -91,15 +91,36 @@ Future<Null> main() async {
   });
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _MyAppState();
-}
+class MyApp extends StatelessWidget {
+//  @override
+//  State<StatefulWidget> createState() => _MyAppState();
+//}
+//
+//class _MyAppState extends State<MyApp> {
 
-class _MyAppState extends State<MyApp> {
+//  @override
+//  void initState() {
+//    if(Platform.isAndroid){
+//      FlutterCrashPlugin.setUp('43eed8b173');
+//    }else if(Platform.isIOS){
+//      FlutterCrashPlugin.setUp('088aebe0d5');
+//    }
+//    final router = new Router();
+//    // 初始化路由
+//    Routes.configureRoutes(router);
+//
+//    Application.router = router;
+//
+//    super.initState();
+//  }
+//
+//  showWelcomePage() {
+//    // 暂时关掉欢迎介绍，直接跳转首页
+//    return MainPage();
+//  }
 
   @override
-  void initState() {
+  Widget build(BuildContext context) {
     if(Platform.isAndroid){
       FlutterCrashPlugin.setUp('43eed8b173');
     }else if(Platform.isIOS){
@@ -111,16 +132,11 @@ class _MyAppState extends State<MyApp> {
 
     Application.router = router;
 
-    super.initState();
-  }
+    _showWelcomePage() {
+      // 暂时关掉欢迎介绍，直接跳转首页
+      return MainPage();
+    }
 
-  showWelcomePage() {
-    // 暂时关掉欢迎介绍，直接跳转首页
-    return MainPage();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'title',
       navigatorKey: navigationService.navigatorKey,
@@ -138,7 +154,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       home: new Scaffold(
-          body: showWelcomePage()
+          body: _showWelcomePage()
       ),
       // 生成路由的回调函数，当导航的命名路由的时候，会使用这个来生成界面
       onGenerateRoute: Application.router.generator,

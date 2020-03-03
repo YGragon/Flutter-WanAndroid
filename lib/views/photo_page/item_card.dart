@@ -72,9 +72,7 @@ class TileCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 // 作者
-                _buildBottomLayout(context,'👲 '+author),
-                // 时间
-                _buildBottomLayout(context,'🔔'+niceDate),
+                _buildBottomLayout(context,'👲 作者：'+author),
               ],
             )
             )

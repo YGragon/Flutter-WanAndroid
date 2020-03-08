@@ -18,11 +18,15 @@ import 'package:url_launcher/url_launcher.dart';
 class MinePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
+    print("minePage-createState");
     return new MinePageState();
   }
 }
 
 class MinePageState extends State<MinePage> {
+  MinePageState(){
+    print("minePage-constructor");
+  }
 
   String _userName = "未登录";
   String _getUserName(){
@@ -48,11 +52,13 @@ class MinePageState extends State<MinePage> {
   void initState() {
     _getUserName();
     super.initState();
+    print("minePage-initState");
   }
 
   @override
   void deactivate() {
-
+    super.deactivate();
+    print("minePage-deactivate");
     var bool = ModalRoute.of(context).isCurrent;
     print("页面返回："+bool.toString());
     if (bool) {
@@ -61,7 +67,26 @@ class MinePageState extends State<MinePage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    print("minePage-deactivate");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("minePage-didChangeDependencies");
+  }
+
+  @override
+  void didUpdateWidget(MinePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print("minePage-didUpdateWidget");
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print("minePage-build");
     return Stack(
       children: <Widget>[
         Container(

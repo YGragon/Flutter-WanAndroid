@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/components/search_input.dart';
 import 'package:flutter_wanandroid/model/project_model.dart';
+import 'package:flutter_wanandroid/routers/navigation_service.dart';
 import 'package:flutter_wanandroid/views/photo_page/item_card.dart';
 import 'package:flutter_wanandroid/views/search_page/search_page.dart';
 import 'package:flutter_wanandroid/widgets/loading/dialog_manager.dart';
@@ -65,7 +66,7 @@ class _PhotoPageState extends State<PhotoPage> {
   /// 获取项目数据
   void _getProjectData(bool _isAdd) async {
     Future.delayed(Duration(milliseconds: 200)).then((e) {
-      DialogManager.showBasicDialog(context, "正在加载中...");
+      DialogManager.showBasicDialog(NavigationService().navigatorKey.currentContext, "正在加载中...");
     });
     /// 获取新的数据
     CommonService().getProjectList((ProjectModel _projectModel) {
@@ -76,7 +77,7 @@ class _PhotoPageState extends State<PhotoPage> {
         });
       }
       /// 关闭弹窗
-      Navigator.pop(context);
+      Navigator.pop(NavigationService().navigatorKey.currentContext);
     }, _page, _projectId);
   }
 

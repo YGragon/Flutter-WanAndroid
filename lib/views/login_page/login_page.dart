@@ -8,15 +8,20 @@ import 'package:flutter_wanandroid/model/user_model.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/register_page/register_page.dart';
 import 'package:flutter_wanandroid/widgets/loading/dialog_manager.dart';
-import 'package:flutter_wanandroid/widgets/loading/loading_dialog.dart';
 import 'package:groovin_material_icons/groovin_material_icons.dart';
 
 class LoginPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginPageState createState(){
+    print("loginPage-createState");
+   return _LoginPageState();
+  }
 }
 
 class _LoginPageState extends State<LoginPage> {
+  _LoginPageState(){
+    print("loginPage-constructor");
+  }
   final _formKey = GlobalKey<FormState>();
   String _name, _password;
   bool _isObscure = true;
@@ -32,9 +37,38 @@ class _LoginPageState extends State<LoginPage> {
       "icon": GroovinMaterialIcons.qqchat,
     }
   ];
+  @override
+  void initState() {
+    super.initState();
+    print("loginPage-initState");
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    print("loginPage-deactivate");
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    print("loginPage-deactivate");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("loginPage-didChangeDependencies");
+  }
+
+  @override
+  void didUpdateWidget(LoginPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print("loginPage-didUpdateWidget");
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("loginPage-build");
     return Scaffold(
         appBar: AppBar(
           title: Text('登录'),

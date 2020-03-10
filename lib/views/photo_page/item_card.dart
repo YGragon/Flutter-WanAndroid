@@ -8,7 +8,7 @@ import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
 
 /// 瀑布流item
-class TileCard extends StatelessWidget {
+class TileCard extends StatelessWidget with WidgetsBindingObserver {
   final String envelopePic;
   final String title;
   final String desc;
@@ -26,6 +26,14 @@ class TileCard extends StatelessWidget {
         this.link,
         this.niceDate});
 
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    print("TileCard $state");
+    if (state == AppLifecycleState.resumed) {
+      // do sth
+    }
+  }
 
   Widget _buildBottomLayout(BuildContext context,String msg){
     return Container(

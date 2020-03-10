@@ -23,7 +23,7 @@ class MinePage extends StatefulWidget {
   }
 }
 
-class MinePageState extends State<MinePage> {
+class MinePageState extends State<MinePage> with WidgetsBindingObserver {
   MinePageState(){
     print("minePage-constructor");
   }
@@ -53,6 +53,16 @@ class MinePageState extends State<MinePage> {
     _getUserName();
     super.initState();
     print("minePage-initState");
+    WidgetsBinding.instance.addObserver(this);//注册监听器
+
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      print("单次Frame绘制回调");//只回调一次
+    });
+
+
+    WidgetsBinding.instance.addPersistentFrameCallback((_){
+      print("实时Frame绘制回调");//每帧都回调
+    });
   }
 
   @override
@@ -70,6 +80,7 @@ class MinePageState extends State<MinePage> {
   void dispose() {
     super.dispose();
     print("minePage-deactivate");
+    WidgetsBinding.instance.removeObserver(this);//移除监听器
   }
 
   @override
@@ -82,6 +93,14 @@ class MinePageState extends State<MinePage> {
   void didUpdateWidget(MinePage oldWidget) {
     super.didUpdateWidget(oldWidget);
     print("minePage-didUpdateWidget");
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    print("$state");
+    if (state == AppLifecycleState.resumed) {
+      // do sth
+    }
   }
 
   @override

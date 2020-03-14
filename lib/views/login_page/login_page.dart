@@ -12,14 +12,14 @@ import 'package:groovin_material_icons/groovin_material_icons.dart';
 
 class LoginPage extends StatefulWidget {
   @override
-  _LoginPageState createState(){
+  _LoginPageState createState() {
     print("loginPage-createState");
-   return _LoginPageState();
+    return _LoginPageState();
   }
 }
 
 class _LoginPageState extends State<LoginPage> {
-  _LoginPageState(){
+  _LoginPageState() {
     print("loginPage-constructor");
   }
   final _formKey = GlobalKey<FormState>();
@@ -37,6 +37,9 @@ class _LoginPageState extends State<LoginPage> {
       "icon": GroovinMaterialIcons.qqchat,
     }
   ];
+
+  bool flag = false; //维护复选框状态
+
   @override
   void initState() {
     super.initState();
@@ -48,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     super.deactivate();
     print("loginPage-deactivate");
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -76,14 +80,14 @@ class _LoginPageState extends State<LoginPage> {
         body: _bodyLayout(context));
   }
 
-  Widget _bodyLayout(BuildContext context){
-    if(_isLoading){
+  Widget _bodyLayout(BuildContext context) {
+    if (_isLoading) {
       return Center(
         child: Container(
           child: CircularProgressIndicator(),
         ),
       );
-    }else{
+    } else {
       return Form(
           key: _formKey,
           child: ListView(
@@ -94,7 +98,14 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 30.0),
               buildPasswordTextField(context),
               SizedBox(height: 30.0),
-              buildForgetPasswordText(context),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  buildRememberPasswordText(context),
+                  buildForgetPasswordText(context),
+                ],
+              ),
+
               SizedBox(height: 40.0),
               buildLoginButton(context),
               SizedBox(height: 60.0),
@@ -183,18 +194,20 @@ class _LoginPageState extends State<LoginPage> {
               ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState.save();
               DialogManager.showBasicDialog(context, "正在登录中...");
-              CommonService().login((UserModel _userModel,Response response) {
+              CommonService().login((UserModel _userModel, Response response) {
                 if (_userModel.errorCode == 0) {
                   ToastUtil.showBasicToast("登录成功");
-                  print("response："+response.toString());
-                  User().saveUserInfo(_userModel,response);
+                  print("response：" + response.toString());
+                  User().saveUserInfo(_userModel, response);
+
                   /// 关闭弹窗
                   Navigator.pop(context);
+
                   /// 关闭登录页面
                   Future.delayed(Duration(milliseconds: 200), () {
                     Navigator.pop(context);
                   });
-                }else if(_userModel.errorCode == -1){
+                } else if (_userModel.errorCode == -1) {
                   ToastUtil.showBasicToast(_userModel.errorMsg);
                   Navigator.pop(context);
                 }
@@ -202,6 +215,43 @@ class _LoginPageState extends State<LoginPage> {
             }
           },
           shape: StadiumBorder(side: BorderSide()),
+        ),
+      ),
+    );
+  }
+
+  Padding buildRememberPasswordText(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: Row(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Checkbox(
+                  value: flag,
+                  onChanged: (value) {
+                    print("value:$value");
+                    setState(() {
+                      flag = value;
+                    });
+                  },
+                  activeColor: Colors.red, //选中时的颜色
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  flag ? "记住密码" : "不记住密码",
+                  style: TextStyle(fontSize: 14.0, color: Colors.grey),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );

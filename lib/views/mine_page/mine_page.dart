@@ -55,14 +55,14 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
     print("minePage-initState");
     WidgetsBinding.instance.addObserver(this);//注册监听器
 
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      print("单次Frame绘制回调");//只回调一次
-    });
-
-
-    WidgetsBinding.instance.addPersistentFrameCallback((_){
-      print("实时Frame绘制回调");//每帧都回调
-    });
+//    WidgetsBinding.instance.addPostFrameCallback((_){
+//      print("单次Frame绘制回调");//只回调一次
+//    });
+//
+//
+//    WidgetsBinding.instance.addPersistentFrameCallback((_){
+//      print("实时Frame绘制回调");//每帧都回调
+//    });
   }
 
   @override

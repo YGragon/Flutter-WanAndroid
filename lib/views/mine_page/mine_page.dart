@@ -11,6 +11,7 @@ import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/about_page/about_page.dart';
 import 'package:flutter_wanandroid/views/login_page/login_page.dart';
+import 'package:flutter_wanandroid/views/login_page/login_page_test.dart';
 import 'package:flutter_wanandroid/views/my_collect_list_page/my_collect_list_page.dart';
 import 'package:flutter_wanandroid/widgets/list_item.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -177,21 +178,18 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
                     // 头像
                     Container(
                       margin: EdgeInsets.only(top: 100.0),
-                      child: Center(
+                      child:  Center(
                           child: Container(
-                        width: 100.0,
-                        height: 100.0,
-                        child: PreferredSize(
-                          child: Container(
-                            child: ClipOval(
-                                child: ExtendedImage.network(
-                              "https://hbimg.huabanimg.com/2955e079403940e85df439dab8baab2dea441c042e0a2-Ndy7fz_fw658",
-                              fit: BoxFit.fill,
-                            )),
-                          ),
-                          preferredSize: Size(80.0, 80.0),
-                        ),
-                      )),
+                              width: 100.0,
+                              height: 100.0,
+                              child: ClipOval(
+                                  child: ExtendedImage.network(
+                                    "https://hbimg.huabanimg.com/2955e079403940e85df439dab8baab2dea441c042e0a2-Ndy7fz_fw658",
+                                    fit: BoxFit.fill,
+                                  )
+                              )
+                          )
+                      )
                     ),
                   ],
                 ),
@@ -280,6 +278,8 @@ class TopBarClipper extends CustomClipper<Path> {
 
   TopBarClipper(this.width, this.height);
 
+  /// 获取剪裁区域的接口
+  /// 返回斜对角的图形 path
   @override
   Path getClip(Size size) {
     Path path = Path();
@@ -289,7 +289,8 @@ class TopBarClipper extends CustomClipper<Path> {
     path.lineTo(0.0, height);
     return path;
   }
-
+  /// 接口决定是否重新剪裁
+  /// 如果在应用中，剪裁区域始终不会发生变化时应该返回 false，这样就不会触发重新剪裁，避免不必要的性能开销。
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;

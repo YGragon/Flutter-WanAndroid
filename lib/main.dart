@@ -18,7 +18,6 @@ import 'package:flutter_wanandroid/widgets/error/flutter_crash_plugin.dart';
 const int ThemeColor = 0xFFC91B3A;
 SpUtil sp;
 var db;
-NavigationService navigationService;
 
 
 bool get isInDebugMode {
@@ -39,7 +38,7 @@ Future<Null> _reportError(dynamic error, dynamic stackTrace) async {
 
 /// 无 context 跳转错误页面
 _showErrorPage(){
-  navigationService.navigateTo(MaterialPageRoute(
+  NavigationService.navigatorKey.currentState.push(MaterialPageRoute(
     builder: (context) => ErrorPage(),
   ));
 }
@@ -56,8 +55,6 @@ Future<Null> main() async {
   // 得到单例对象的 搜索 管理对象
     new SearchHistoryList(sp);
 
-  // 无 context 跳转页面
-  navigationService = NavigationService();
 
   db = Provider.db;
 
@@ -139,7 +136,7 @@ class MyApp extends StatelessWidget {
 
     return new MaterialApp(
       title: 'title',
-      navigatorKey: navigationService.navigatorKey,
+      navigatorKey: NavigationService.navigatorKey,
       theme: new ThemeData(
         primaryColor: Color(ThemeColor),
         backgroundColor: Color(0xFFEFEFEF),

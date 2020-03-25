@@ -14,7 +14,9 @@ class Routes {
   static String naviList = '/navi-list';
   static String projectList = '/project-list';
   static String webViewPage = '/web-view-page';
+  static String thirdPage = '/third-page';
   static String errorPage = '/error-page';
+  static String hhhh = '/page';
 
   static void configureRoutes(Router router) {
     // 首页
@@ -26,7 +28,9 @@ class Routes {
     router.define(category,handler:categoryHandler);
     router.define(treeList,handler:treeListHandler);
     router.define(naviList,handler:naviListHandler);
+    router.define(thirdPage,handler:thirdHandler);
     router.define(projectList,handler:projectHandler);
+    router.define(errorPage,handler:pageNotFoundHandler);
 
   }
 }

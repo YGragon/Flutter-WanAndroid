@@ -10,6 +10,8 @@ import 'package:flutter_wanandroid/views/cat_page/cat_page.dart';
 import 'package:flutter_wanandroid/views/cat_page/cat_sub_page.dart';
 import 'package:flutter_wanandroid/views/collection_page/collection_page.dart';
 import 'package:flutter_wanandroid/views/home_page/home_page.dart';
+import 'package:flutter_wanandroid/views/login_page/login_page_test.dart';
+import 'package:flutter_wanandroid/views/page_not_found.dart';
 import 'package:flutter_wanandroid/views/web_page/webview_page.dart';
 
 
@@ -54,12 +56,18 @@ var projectHandler = new Handler(
 
   },
 );
+var pageNotFoundHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return new PageNotFound();
+    });
 
-//var widgetNotFoundHandler = new Handler(
-//    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-//      return new WidgetNotFound();
-//    });
+var thirdHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    String msg = params['msg']?.first;
+    return new ThridPage(msg);
 
+  },
+);
 
 
 var webViewPageHand = new Handler(

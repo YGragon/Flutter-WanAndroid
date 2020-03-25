@@ -11,6 +11,7 @@ import 'package:flutter_wanandroid/routers/navigation_service.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
 import 'package:flutter_wanandroid/utils/provider.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
+import 'package:flutter_wanandroid/views/page_not_found.dart';
 import 'package:flutter_wanandroid/widgets/error/error_page.dart';
 import 'package:flutter_wanandroid/widgets/error/flutter_crash_plugin.dart';
 
@@ -155,6 +156,8 @@ class MyApp extends StatelessWidget {
       ),
       // 生成路由的回调函数，当导航的命名路由的时候，会使用这个来生成界面
       onGenerateRoute: Application.router.generator,
+      // 页面找不到显示的 404 页面
+      onUnknownRoute: (RouteSettings setting) => MaterialPageRoute(builder: (context) => PageNotFound()),
     );
   }
 }

@@ -28,7 +28,7 @@ class Routes {
     router.define(category,handler:categoryHandler);
     router.define(treeList,handler:treeListHandler);
     router.define(naviList,handler:naviListHandler);
-    router.define(thirdPage,handler:thirdHandler);
+//    router.define(thirdPage,handler:thirdHandler);
     router.define(projectList,handler:projectHandler);
     router.define(errorPage,handler:pageNotFoundHandler);
 

@@ -61,13 +61,13 @@ var pageNotFoundHandler = new Handler(
       return new PageNotFound();
     });
 
-var thirdHandler = new Handler(
-  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    String msg = params['msg']?.first;
-    return new ThridPage(msg);
-
-  },
-);
+//var thirdHandler = new Handler(
+//  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+//    String msg = params['msg']?.first;
+//    return new ThridPage(msg);
+//
+//  },
+//);
 
 
 var webViewPageHand = new Handler(

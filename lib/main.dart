@@ -19,7 +19,7 @@ import 'package:flutter_wanandroid/widgets/error/flutter_crash_plugin.dart';
 
 import 'event/event_theme.dart';
 
-// 主题颜色为红色
+// 主题颜色默认为红色
 int ThemeColor = 0xFFC91B3A;
 
 SpUtil sp;
@@ -35,9 +35,6 @@ Future<Null> _reportError(dynamic error, dynamic stackTrace) async {
   print('崩溃异常信息: $error');
 
   print('Reporting to Bugly...');
-//  _showErrorPage();
-
-//  FlutterCrashPlugin.postException(error, stackTrace);
 }
 
 /// 无 context 跳转错误页面
@@ -134,8 +131,8 @@ class _MyAppState extends State<MyApp> {
 
     // iOS浅色主题
     final ThemeData kIOSTheme = ThemeData(
-        brightness: Brightness.dark,//亮色主题
-        accentColor: Color(0xFF888888),//(按钮)Widget前景色为白色
+        brightness: Brightness.dark,//深色主题
+        accentColor: Color(0xFF888888),//(按钮)Widget前景色为灰色色
         primaryColor: Colors.blue,//主题色为蓝色
         backgroundColor: Color(0xFFEFEFEF), // 背景色为灰色
         iconTheme:IconThemeData(color: Colors.grey, size: 35.0),//icon主题为灰色
@@ -144,12 +141,12 @@ class _MyAppState extends State<MyApp> {
 
     // Android深色主题
     final ThemeData kAndroidTheme = ThemeData(
-        brightness: Brightness.light,//深色主题
-        accentColor: Color(0xFF888888),//(按钮)Widget前景色为黑色
-        primaryColor: Color(ThemeColor),//主题色Wie青色
+        brightness: Brightness.light,//亮色主题
+        accentColor: Color(0xFF888888),//(按钮)Widget前景色为灰色
+        primaryColor: Color(ThemeColor),//主题色默认为红色
         backgroundColor: Color(0xFFEFEFEF), // 背景色为灰色
-        iconTheme:IconThemeData(color: Color(ThemeColor), size: 35.0),//icon主题色为蓝色
-        textTheme: TextTheme(body1: TextStyle(color: Color(0xFF888888), fontSize: 16.0))//文本主题色为红色
+        iconTheme:IconThemeData(color: Color(ThemeColor), size: 35.0),//icon主题色为红色色
+        textTheme: TextTheme(body1: TextStyle(color: Color(0xFF888888), fontSize: 16.0))//文本主题色为灰色
     );
 
 

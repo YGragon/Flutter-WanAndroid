@@ -1,9 +1,11 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 
 class Application {
   static Router router;
+  static EventBus eventBus;
   static TabController controller;
   static SpUtil sharePeferences;
 

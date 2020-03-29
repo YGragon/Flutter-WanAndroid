@@ -77,44 +77,6 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
     searchHistoryList = SearchHistoryList.fromJSON(json);
   }
 
-//  ///  搜索列表中的 item 点击
-//  void onWidgetTap(WidgetPoint widgetPoint, BuildContext context) {
-//    List widgetDemosList = new WidgetDemoList().getDemos();
-//    String targetName = widgetPoint.name;
-//    String targetRouter = '/category/error/404';
-//    widgetDemosList.forEach((item) {
-//      if (item.name == targetName) {
-//        targetRouter = item.routerName;
-//      }
-//    });
-//    searchHistoryList.add(SearchHistory(name: targetName, targetRouter: targetRouter));
-//    print("searchHistoryList ${searchHistoryList.toString()}");
-//    Application.router.navigateTo(context, "$targetRouter");
-//  }
-//
-//  /// 联想搜索，显示搜索结果列表
-//  Widget buildSearchInput(BuildContext context) {
-//    return new SearchInput((value) async {
-//      if (value != '') {
-////        List<WidgetPoint> list = await widgetControl.search(value);
-//
-//        return list
-//            .map((item) => new MaterialSearchResult<String>(
-//          value: item.name,
-//          icon: Icons.link,
-//          text: item.author,
-//          onTap: () {
-//            // item 点击
-//            onWidgetTap(item, context);
-//          },
-//        ))
-//            .toList();
-//      } else {
-//        return null;
-//      }
-//    }, (value) {}, () {});
-//  }
-
 
   @override
   Widget build(BuildContext context) {

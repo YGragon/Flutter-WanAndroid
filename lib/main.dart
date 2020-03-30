@@ -5,6 +5,7 @@ import 'package:event_bus/event_bus.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_wanandroid/main_page.dart';
 import 'package:flutter_wanandroid/model/search_history.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_wanandroid/widgets/error/error_page.dart';
 import 'package:flutter_wanandroid/widgets/error/flutter_crash_plugin.dart';
 
 import 'event/event_theme.dart';
+import 'generated/i18n.dart';
 
 // 主题颜色默认为红色
 int ThemeColor = 0xFFC91B3A;
@@ -154,6 +156,15 @@ class _MyAppState extends State<MyApp> {
       title: 'Wan-Android',
       navigatorKey: NavigationService.navigatorKey,
       theme: defaultTargetPlatform == TargetPlatform.iOS ? kIOSTheme :kAndroidTheme,//根据平台选择不同主题
+      localizationsDelegates: [
+        S.delegate,//应用程序的翻译回调
+        // 本地化的代理类
+        GlobalMaterialLocalizations.delegate,//Material组件的翻译回调
+        GlobalWidgetsLocalizations.delegate,//普通Widget的翻译回调
+      ],
+      supportedLocales: S.delegate.supportedLocales,//支持语系
+      // title的国际化回调
+      onGenerateTitle: (context){ return S.of(context).app_title; },
       home: new Scaffold(body: _showWelcomePage()),
       // 生成路由的回调函数，当导航的命名路由的时候，会使用这个来生成界面
       onGenerateRoute: Application.router.generator,

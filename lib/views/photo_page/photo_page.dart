@@ -98,6 +98,7 @@ class _PhotoPageState extends State<PhotoPage> {
                     mainAxisSpacing: 10.0,
                     crossAxisSpacing: 4.0,
                     itemBuilder: (context, index) => TileCard(
+                        id: '${items[index].id}',
                         envelopePic: '${items[index].envelopePic}',
                         title: '${items[index].title}',
                         desc: '${items[index].desc}',

@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_wanandroid/model/constant.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
 
 /// 瀑布流item
 class TileCard extends StatelessWidget with WidgetsBindingObserver {
+  final String id;
   final String envelopePic;
   final String title;
   final String desc;
@@ -18,7 +20,9 @@ class TileCard extends StatelessWidget with WidgetsBindingObserver {
   final String niceDate;
 
   TileCard(
-      {this.envelopePic,
+      {
+        this.id,
+        this.envelopePic,
         this.title,
         this.desc,
         this.author,
@@ -52,7 +56,17 @@ class TileCard extends StatelessWidget with WidgetsBindingObserver {
     return Card(
       child: InkWell(
         onTap: (){
-          Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent("0")}&title=${Uri.encodeComponent(title)}&link=${Uri.encodeComponent(link)}');
+          // 跳转 WebView
+          Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent(id)}&title=${Uri.encodeComponent(title)}&link=${Uri.encodeComponent(link)}');
+          // 跳转 Hero 实现的动画效果
+//          Application.router.navigateTo(context,
+//              '${Routes.photoDetailPage}?id=${Uri.encodeComponent(id)}'
+//                  '&title=${Uri.encodeComponent(title)}'
+//                  '&desc=${Uri.encodeComponent(desc)}'
+//                  '&projectLink=${Uri.encodeComponent(projectLink)}'
+//                  '&envelopePic=${Uri.encodeComponent(envelopePic)}'
+//                  '&niceDate=${Uri.encodeComponent(niceDate)}'
+//                  '&author=${Uri.encodeComponent(author)}');
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,10 +75,13 @@ class TileCard extends StatelessWidget with WidgetsBindingObserver {
             // 图片
             Container(
               color: Colors.grey,
-              child: ExtendedImage.network(
-                envelopePic,
-                fit: BoxFit.fitWidth,
-              ),
+              child:Hero(
+                tag: '${Constant.heroPhotoDetail} $id',
+                child:  ExtendedImage.network(
+                  envelopePic,
+                  fit: BoxFit.fitWidth,
+                ),
+              )
             ),
             // 描述
             Container(

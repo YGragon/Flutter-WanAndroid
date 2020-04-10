@@ -16,6 +16,7 @@ class Routes {
   static String webViewPage = '/web-view-page';
   static String thirdPage = '/third-page';
   static String errorPage = '/error-page';
+  static String photoDetailPage = '/photo-detail-page';
   static String hhhh = '/page';
 
   static void configureRoutes(Router router) {
@@ -31,6 +32,7 @@ class Routes {
 //    router.define(thirdPage,handler:thirdHandler);
     router.define(projectList,handler:projectHandler);
     router.define(errorPage,handler:pageNotFoundHandler);
+    router.define(photoDetailPage,handler:photoDetailPageHand);
 
   }
 }

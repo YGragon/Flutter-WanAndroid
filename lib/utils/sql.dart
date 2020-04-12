@@ -31,6 +31,12 @@ class Sql extends BaseModel {
   Future<int> delete(String value,String key) async{
     return await this.db.delete(tableName,where:'$key = ?',whereArgs:[value]);
   }
+  /// 更新数据
+  Future<Map<String, dynamic>> update(Map<String, dynamic> json) async {
+    var id = await this.db.update(tableName, json);
+    json['id'] = id;
+    return json;
+  }
 
   /// 获取数据
   Future<List> getByCondition({Map<dynamic, dynamic> conditions}) async {

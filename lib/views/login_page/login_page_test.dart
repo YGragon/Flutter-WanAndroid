@@ -1,4 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+
+import 'package:path/path.dart';
 
 class AnimationTestPage extends StatefulWidget {
   @override
@@ -7,127 +13,125 @@ class AnimationTestPage extends StatefulWidget {
   }
 }
 
-class _AnimationTestPageState extends State<AnimationTestPage>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation animation;
+Database dataBase;
 
+StringBuffer sb = new StringBuffer();
+String mContext = '';
+
+Future<void> initDataBase() async {
+  dataBase = await openDatabase(
+    join(await getDatabasesPath(), 'students_database.db'),
+    onCreate: (db, version) => db.execute(
+        "CREATE TABLE students(id TEXT PRIMARY KEY, name TEXT, score INTEGER)"),
+    onUpgrade: (db, oldVersion, newVersion) {
+      //dosth for migration
+      print("old:$oldVersion,new:$newVersion");
+    },
+    version: 1,
+  );
+  print("database:$dataBase");
+}
+
+Future<void> insertStudent(Student std) async {
+  print("database1:${dataBase.path}");
+  await dataBase.insert(
+    'students',
+    std.toJson(),
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
+}
+
+Future<List<Student>> students() async {
+  final List<Map<String, dynamic>> maps = await dataBase.query('students');
+  return List.generate(maps.length, (i) => Student.fromJson(maps[i]));
+}
+
+insertData() async {
+  var student1 = Student(id: '0', name: '张三', score: 90);
+  var student2 = Student(id: '1', name: '李四', score: 80);
+  var student3 = Student(id: '2', name: '王五', score: 85);
+
+  // Insert a dog into the database.
+  await insertStudent(student1);
+  await insertStudent(student2);
+  await insertStudent(student3);
+}
+
+
+class _AnimationTestPageState extends State<AnimationTestPage> {
   @override
   void initState() {
+    initDataBase();
     super.initState();
-
-    // 创建动画周期为1秒的AnimationController对象
-    controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
-
-    // 创建线性变化的 Animation 对象
-    animation = Tween(begin: 10.0, end: 100.0).animate(controller);
-
-    //让动画重复执行
-    controller.repeat(reverse: true);
   }
 
   @override
   void dispose() {
-    controller.dispose(); // 释放资源
+    dataBase.close();
     super.dispose();
   }
+
+  getStudents() async {
+    await students()
+        .then((list) => list.forEach((s) => sb.writeln(s.toJson().toString())));
+    setState(() {
+      mContext = sb.toString();
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("AnimationTest"),
+          title: Text("Database"),
         ),
         body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-//              RaisedButton(
-//                onPressed: () {
-//                  Navigator.of(context).push(
-//                      MaterialPageRoute(builder: (_) => Page1())); //点击后打开第二个页面
-//                },
-//                child: Text('Hero'),
-//              ),
-              Center(
-                  child: AnimatedFadeFlutterLogo(
-                      controller: controller) // 初始化 AnimatedWidget 时传入animation对象
-                  ),
-              Center(
-                  child: AnimatedFlutterLogoBuilder(
-                    child: Image.network(
-                        'https://hbimg.huabanimg.com/fced2db29a9354db4747822b819b247d88adbb9be837-bB3TR0_fw658'),
-                    controller: controller,
-                    animation: animation,
-                  ))
+              RaisedButton(
+                child: Text('写入数据'),
+                onPressed: () {
+                  insertData();
+                },
+              ),
+              RaisedButton(
+                child: Text('读取数据'),
+                onPressed: () {
+                  getStudents();
+                },
+              ),
+              Text("读取出来的数据：$mContext")
             ],
           ),
         ));
   }
 }
-class AnimatedFlutterLogoBuilder extends StatelessWidget{
-  final Widget child;
-  final AnimationController controller;
-  final Animation<double> animation;
 
-  AnimatedFlutterLogoBuilder({this.child,this.controller,this.animation});
+class Student {
+  String id;
+  String name;
+  int score;
 
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: animation, // 传入动画对象
-        child: child,
-        // 动画构建回调
-        builder: (context, child) => FadeTransition(
-          opacity: controller,
-          child: Container(
-            width: animation.value, //使用动画的当前状态更新UI
-            height: animation.value,
-            child: child, // 即 AnimatedBuilder 中的 child
-          ),
-        ));
-  }
-}
-
-/// 使用 AnimatedWidget 创建动画
-class AnimatedFlutterLogo extends AnimatedWidget {
-  // AnimatedWidget 需要在初始化时传入animation对象，所以构造函数不能少
-  AnimatedFlutterLogo({Key key, Animation<double> animation})
-      : super(key: key, listenable: animation);
-
-  Widget build(BuildContext context) {
-    // 取出动画对象
-    final Animation<double> animation = listenable;
-    return Center(
-      child: Container(
-        height: animation.value, //根据动画对象的当前状态更新宽高
-        width: animation.value,
-        child: Image.network(
-            'https://hbimg.huabanimg.com/fced2db29a9354db4747822b819b247d88adbb9be837-bB3TR0_fw658'),
-      ),
+  Student({
+    this.id,
+    this.name,
+    this.score,
+  });
+  factory Student.fromJson(Map<String, dynamic> parsedJson) {
+    return Student(
+      id: parsedJson['id'],
+      name: parsedJson['name'],
+      score: parsedJson['score'],
     );
   }
-}
 
-/// 使用 AnimatedWidget 创建动画
-class AnimatedFadeFlutterLogo extends AnimatedWidget {
-  // AnimatedWidget 需要在初始化时传入animation对象，所以构造函数不能少
-  AnimatedFadeFlutterLogo({Key key, AnimationController controller})
-      : super(key: key, listenable: controller);
-
-  Widget build(BuildContext context) {
-    // 取出动画对象
-    final AnimationController controller = listenable;
-    // 创建线性变化的 Animation 对象
-    var animation = Tween(begin: 10.0, end: 100.0).animate(controller);
-    //让动画重复执行
-    return Center(
-      child: FadeTransition(
-        opacity: controller,
-        child: AnimatedFlutterLogo(animation: animation,),
-      ),
-    );
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'score': score,
+    };
   }
 }
-

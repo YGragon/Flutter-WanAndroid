@@ -10,7 +10,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -48,6 +48,8 @@ dependencies:
   flutter_html: ^0.11.1
   # google 图标
   groovin_material_icons: ^1.1.5
+  # 获取临时目录和文档目录
+  path_provider: ^1.6.5
 
 dev_dependencies:
   flutter_test:

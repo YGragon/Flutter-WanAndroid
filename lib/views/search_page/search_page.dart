@@ -9,7 +9,7 @@ import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/components/search_input.dart';
 import 'package:flutter_wanandroid/model/article.dart';
 import 'package:flutter_wanandroid/model/search_history.dart';
-import 'package:flutter_wanandroid/net/dio_manager.dart';
+import 'package:flutter_wanandroid/api/dio_manager.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';

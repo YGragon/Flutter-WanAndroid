@@ -9,7 +9,7 @@ import 'package:flutter_wanandroid/model/navi_bean.dart';
 import 'package:flutter_wanandroid/model/project_model.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/model/user_model.dart';
-import 'package:flutter_wanandroid/net/dio_manager.dart';
+import 'package:flutter_wanandroid/api/dio_manager.dart';
 
 class CommonService{
 

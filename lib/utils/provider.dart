@@ -6,11 +6,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-const createSql = {
-  'collectio': """
-    
-  """
-};
+
 
 class Provider {
   static Database db;

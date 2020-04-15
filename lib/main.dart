@@ -22,7 +22,7 @@ import 'event/event_theme.dart';
 import 'generated/i18n.dart';
 
 // 主题颜色默认为红色
-int ThemeColor = 0xFFC91B3A;
+int mThemeColor = 0xFFC91B3A;
 
 SpUtil sp;
 var db;
@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> {
     // 监听数据变化
     Application.eventBus.on<ThemeEvent>().listen((event) {
       setState(() {
-        ThemeColor = event.themeColor;
+        mThemeColor = event.themeColor;
       });
     });
     super.initState();
@@ -145,9 +145,9 @@ class _MyAppState extends State<MyApp> {
     final ThemeData kAndroidTheme = ThemeData(
         brightness: Brightness.light,//亮色主题
         accentColor: Color(0xFF888888),//(按钮)Widget前景色为灰色
-        primaryColor: Color(ThemeColor),//主题色默认为红色
+        primaryColor: Color(mThemeColor),//主题色默认为红色
         backgroundColor: Color(0xFFEFEFEF), // 背景色为灰色
-        iconTheme:IconThemeData(color: Color(ThemeColor), size: 35.0),//icon主题色为红色色
+        iconTheme:IconThemeData(color: Color(mThemeColor), size: 35.0),//icon主题色为红色色
         textTheme: TextTheme(body1: TextStyle(color: Color(0xFF888888), fontSize: 16.0))//文本主题色为灰色
     );
 
@@ -165,7 +165,7 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: S.delegate.supportedLocales,//支持语系
       // title的国际化回调
       onGenerateTitle: (context){ return S.of(context).app_title; },
-      home: new Scaffold(body: _showWelcomePage()),
+      home:Scaffold(body: _showWelcomePage()),
       // 生成路由的回调函数，当导航的命名路由的时候，会使用这个来生成界面
       onGenerateRoute: Application.router.generator,
       // 页面找不到显示的 404 页面

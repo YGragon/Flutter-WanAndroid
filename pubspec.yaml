@@ -29,7 +29,11 @@ dependencies:
   url_launcher: ^4.0.1
   # 本地存储、收藏功能
   shared_preferences: ^0.4.3
-  dio: ^1.0.6
+  # 网络请求库
+  dio: ^3.0.9
+  # cookie 管理
+  cookie_jar: ^1.0.1
+  dio_cookie_manager: 1.0.0
   flutter_webview_plugin: ^0.3.0+2
   # 日期格式化
   #  intl: 0.15.7

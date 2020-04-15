@@ -1,4 +1,6 @@
 class Api{
+  /// baseUrl
+  static const String BASE_URL = "http://www.wanandroid.com/";
   /// 首页 banner
   static const String HOME_BANNER = "http://www.wanandroid.com/banner/json";
   /// 首页文章列表
@@ -23,4 +25,6 @@ class Api{
   static const String LOGOUT = "https://www.wanandroid.com/user/logout/json";
   /// 我的收藏接口
   static const String MY_COLLECT = "https://www.wanandroid.com/lg/collect/list/";
+  /// 积分排行榜
+  static const String COIN_RANK = "$BASE_URL coin/rank/";
 }

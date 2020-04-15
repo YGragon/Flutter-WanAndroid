@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-
-import 'package:path/path.dart';
+import 'package:flutter_wanandroid/api/dio_manager.dart';
+import 'package:flutter_wanandroid/routers/navigation_service.dart';
+import 'package:flutter_wanandroid/widgets/loading/dialog_manager.dart';
 
 class AnimationTestPage extends StatefulWidget {
   @override
@@ -13,96 +14,39 @@ class AnimationTestPage extends StatefulWidget {
   }
 }
 
-Database dataBase;
-
-StringBuffer sb = new StringBuffer();
 String mContext = '';
 
-Future<void> initDataBase() async {
-  dataBase = await openDatabase(
-    join(await getDatabasesPath(), 'students_database.db'),
-    onCreate: (db, version) => db.execute(
-        "CREATE TABLE students(id TEXT PRIMARY KEY, name TEXT, score INTEGER)"),
-    onUpgrade: (db, oldVersion, newVersion) {
-      //dosth for migration
-      print("old:$oldVersion,new:$newVersion");
-    },
-    version: 1,
-  );
-  print("database:$dataBase");
-}
-
-Future<void> insertStudent(Student std) async {
-  print("database1:${dataBase.path}");
-  await dataBase.insert(
-    'students',
-    std.toJson(),
-    conflictAlgorithm: ConflictAlgorithm.replace,
-  );
-}
-
-Future<List<Student>> students() async {
-  final List<Map<String, dynamic>> maps = await dataBase.query('students');
-  return List.generate(maps.length, (i) => Student.fromJson(maps[i]));
-}
-
-insertData() async {
-  var student1 = Student(id: '0', name: '张三', score: 90);
-  var student2 = Student(id: '1', name: '李四', score: 80);
-  var student3 = Student(id: '2', name: '王五', score: 85);
-
-  // Insert a dog into the database.
-  await insertStudent(student1);
-  await insertStudent(student2);
-  await insertStudent(student3);
-}
-
-
 class _AnimationTestPageState extends State<AnimationTestPage> {
-  @override
-  void initState() {
-    initDataBase();
-    super.initState();
+  void getHttp(BuildContext context) async {
+    DioManager().get("http://www.baidu.com", showLoading: () {
+      DialogManager.showBasicDialog(context, "正在加载中...");
+    }, hideLoading: () {
+      /// 关闭弹窗
+      Navigator.pop(context);
+    }, success: (data) {
+      setState(() {
+        mContext = data.toString();
+      });
+    }, error: (e) {});
   }
-
-  @override
-  void dispose() {
-    dataBase.close();
-    super.dispose();
-  }
-
-  getStudents() async {
-    await students()
-        .then((list) => list.forEach((s) => sb.writeln(s.toJson().toString())));
-    setState(() {
-      mContext = sb.toString();
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Database"),
+          title: Text("Dio"),
         ),
         body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               RaisedButton(
-                child: Text('写入数据'),
+                child: Text('请求网络'),
                 onPressed: () {
-                  insertData();
+                  getHttp(context);
                 },
               ),
-              RaisedButton(
-                child: Text('读取数据'),
-                onPressed: () {
-                  getStudents();
-                },
-              ),
-              Text("读取出来的数据：$mContext")
+              Text("请求网络返回的数据：\n$mContext")
             ],
           ),
         ));

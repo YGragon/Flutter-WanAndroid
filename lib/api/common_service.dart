@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter_wanandroid/api/Api.dart';
 import 'package:flutter_wanandroid/model/article.dart';
 import 'package:flutter_wanandroid/model/banner.dart';

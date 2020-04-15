@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_wanandroid/components/search_input.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
+import 'package:flutter_wanandroid/routers/navigation_service.dart';
 import 'package:flutter_wanandroid/utils/provider.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/views/cat_page/cat_page.dart';
@@ -83,7 +84,8 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
     //设置适配尺寸 (填入设计稿中设备的屏幕尺寸) 此处假如设计稿是按iPhone6的尺寸设计的(iPhone6 750*1334)
     //ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
     ScreenUtil.init(context);
-
+    /// 保存全局context
+    NavigationService.mContext = context;
     return new Scaffold(
       body: new TabBarView(controller: controller, children: <Widget>[
         new HomePage(),

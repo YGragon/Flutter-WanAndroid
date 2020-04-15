@@ -10,6 +10,7 @@ import 'package:flutter_wanandroid/utils/image.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/about_page/about_page.dart';
+import 'package:flutter_wanandroid/views/coin_rank_page/coin_rank_page.dart';
 import 'package:flutter_wanandroid/views/login_page/login_page.dart';
 import 'package:flutter_wanandroid/views/login_page/login_page_test.dart';
 import 'package:flutter_wanandroid/views/my_collect_list_page/my_collect_list_page.dart';
@@ -204,8 +205,15 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AnimationTestPage()));
+                            builder: (context) => LoginPage()));
                   }
+
+                }),
+                _buildItem(context, Colors.deepPurpleAccent,Icons.score,"积分排行榜",(){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CoinRankPage()));
 
                 }),
                 _buildItem(context, Colors.deepOrange,Icons.info,"关于页面",(){

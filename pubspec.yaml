@@ -54,6 +54,8 @@ dependencies:
   groovin_material_icons: ^1.1.5
   # 获取临时目录和文档目录
   path_provider: ^1.6.5
+  # provider 依赖注入和状态管理
+  provider: ^4.0.5
 
 dev_dependencies:
   flutter_test:

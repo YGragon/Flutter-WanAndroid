@@ -1,11 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/api/dio_manager.dart';
-import 'package:flutter_wanandroid/routers/navigation_service.dart';
-import 'package:flutter_wanandroid/widgets/loading/dialog_manager.dart';
+import 'package:flutter/services.dart';
 
 class AnimationTestPage extends StatefulWidget {
   @override
@@ -15,41 +11,65 @@ class AnimationTestPage extends StatefulWidget {
 }
 
 String mContext = '';
-
+  const platform = const MethodChannel('com.flutter.method.channel');
 class _AnimationTestPageState extends State<AnimationTestPage> {
-  void getHttp(BuildContext context) async {
-    DioManager().get("http://www.baidu.com", showLoading: () {
-      DialogManager.showBasicDialog(context, "正在加载中...");
-    }, hideLoading: () {
-      /// 关闭弹窗
-      Navigator.pop(context);
-    }, success: (data) {
-      setState(() {
-        mContext = data.toString();
-      });
-    }, error: (e) {});
+// Get battery level.
+  String _batteryLevel = 'Unknown battery level.';
+
+  Future<Null> _getBatteryLevel() async {
+    String batteryLevel;
+    try {
+      final int result = await platform.invokeMethod('getBatteryLevel');
+      batteryLevel = 'Battery level at $result % .';
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Dio"),
+          title: Text("MethodChannel"),
         ),
         body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               RaisedButton(
-                child: Text('请求网络'),
+                child: Text('MethodChannel'),
                 onPressed: () {
-                  getHttp(context);
+                  _getBatteryLevel();
                 },
               ),
-              Text("请求网络返回的数据：\n$mContext")
+              new Text(_batteryLevel),
+              RaisedButton(
+                child: Text('打开应用商店'),
+                onPressed: () {
+                  _openMarket();
+                },
+              ),
             ],
           ),
         ));
+  }
+
+  Future _openMarket() async {
+    try {
+      final int result = await platform.invokeMethod('openAppStore',<String, dynamic>{
+        'appId': "123456",
+        'packageName': "com.meizu.mstore",
+      });
+
+      print("result:$result");
+    } on PlatformException catch (e) {
+      print("result:${e.message}");
+    }
   }
 }
 

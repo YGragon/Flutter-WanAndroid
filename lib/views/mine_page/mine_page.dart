@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
+import 'package:flutter_wanandroid/model/store.dart';
+import 'package:flutter_wanandroid/model/theme.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/model/user_model.dart';
 import 'package:flutter_wanandroid/utils/image.dart';
@@ -15,7 +17,6 @@ import 'package:flutter_wanandroid/views/login_page/login_page.dart';
 import 'package:flutter_wanandroid/views/login_page/login_page_test.dart';
 import 'package:flutter_wanandroid/views/my_collect_list_page/my_collect_list_page.dart';
 import 'package:flutter_wanandroid/widgets/list_item.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MinePage extends StatefulWidget {
   @override
@@ -26,15 +27,14 @@ class MinePage extends StatefulWidget {
 }
 
 class MinePageState extends State<MinePage> with WidgetsBindingObserver {
-  MinePageState(){
+  MinePageState() {
     print("minePage-constructor");
   }
 
   String _userName = "未登录";
-  String _getUserName(){
-    if(mounted){
-
-      User().getUserInfo().then((username){
+  String _getUserName() {
+    if (mounted) {
+      User().getUserInfo().then((username) {
         if (username != null && username.isNotEmpty) {
           User().setLogin(true);
           setState(() {
@@ -55,16 +55,7 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
     _getUserName();
     super.initState();
     print("minePage-initState");
-    WidgetsBinding.instance.addObserver(this);//注册监听器
-
-//    WidgetsBinding.instance.addPostFrameCallback((_){
-//      print("单次Frame绘制回调");//只回调一次
-//    });
-//
-//
-//    WidgetsBinding.instance.addPersistentFrameCallback((_){
-//      print("实时Frame绘制回调");//每帧都回调
-//    });
+    WidgetsBinding.instance.addObserver(this); //注册监听器
   }
 
   @override
@@ -72,7 +63,7 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
     super.deactivate();
     print("minePage-deactivate");
     var bool = ModalRoute.of(context).isCurrent;
-    print("页面返回："+bool.toString());
+    print("页面返回：" + bool.toString());
     if (bool) {
       _getUserName();
     }
@@ -82,7 +73,7 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
   void dispose() {
     super.dispose();
     print("minePage-deactivate");
-    WidgetsBinding.instance.removeObserver(this);//移除监听器
+    WidgetsBinding.instance.removeObserver(this); //移除监听器
   }
 
   @override
@@ -159,70 +150,64 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
                       margin: EdgeInsets.only(top: 40.0),
                       child: new InkWell(
                         onTap: () {
-                          if(User().isUserLogin()){
+                          if (User().isUserLogin()) {
                             print("显示用户信息");
-                          }else{
+                          } else {
                             Navigator.push(
                                 context,
                                 new MaterialPageRoute(
                                     builder: (context) => new LoginPage()));
                           }
-
                         },
                         child: Center(
                             child: Text(
-                              _userName,
-                              style: TextStyle(fontSize: 30.0, color: Colors.white),
+                          _userName,
+                          style: TextStyle(fontSize: 30.0, color: Colors.white),
                         )),
                       ),
                     ),
                     // 头像
                     Container(
-                      margin: EdgeInsets.only(top: 100.0),
-                      child:  Center(
-                          child: Container(
-                              width: 100.0,
-                              height: 100.0,
-                              child: ClipOval(
-                                  child: ExtendedImage.network(
-                                    "https://hbimg.huabanimg.com/2955e079403940e85df439dab8baab2dea441c042e0a2-Ndy7fz_fw658",
-                                    fit: BoxFit.fill,
-                                  )
-                              )
-                          )
-                      )
-                    ),
+                        margin: EdgeInsets.only(top: 100.0),
+                        child: Center(
+                            child: Container(
+                                width: 100.0,
+                                height: 100.0,
+                                child: ClipOval(
+                                    child: ExtendedImage.network(
+                                  "https://hbimg.huabanimg.com/2955e079403940e85df439dab8baab2dea441c042e0a2-Ndy7fz_fw658",
+                                  fit: BoxFit.fill,
+                                ))))),
                   ],
                 ),
                 // 内容
-                _buildItem(context, Colors.blue,Icons.favorite,"我的收藏",(){
-                  if(User().isUserLogin()){
+                _buildItem(context, Colors.blue, Icons.favorite, "我的收藏", () {
+                  if (User().isUserLogin()) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => MyCollectListPage()));
-                  }else{
+                  } else {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ProviderTestPage()));
                   }
-
                 }),
-                _buildItem(context, Colors.deepPurpleAccent,Icons.score,"积分排行榜",(){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CoinRankPage()));
-
+                _buildItem(
+                    context, Colors.deepPurpleAccent, Icons.score, "积分排行榜", () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CoinRankPage()));
                 }),
-                _buildItem(context, Colors.deepOrange,Icons.info,"关于页面",(){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AboutPage()));
+                _buildItem(context, Colors.deepOrange, Icons.info, "关于页面", () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AboutPage()));
                 }),
-                _buildItem(context, Colors.pink,Icons.exit_to_app,"退出登录",(){
+                _buildItem(context, Colors.pink, Icons.exit_to_app, "修改主题色",
+                    () {
+                  _showChangeThemeDialog();
+                }),
+                _buildItem(context, Colors.pink, Icons.exit_to_app, "退出登录", () {
                   _logout();
                 })
               ]),
@@ -238,18 +223,61 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
     CommonService().logout((UserModel _userModel) {
       if (_userModel.errorCode == 0) {
         ToastUtil.showBasicToast("您已退出登录");
+
         /// 删除本地缓存
-       User().clearUserInfor();
+        User().clearUserInfor();
         _getUserName();
       } else if (_userModel.errorCode == -1) {
         ToastUtil.showBasicToast(_userModel.errorMsg);
       }
     });
   }
+
+  /// 修改主题色
+  void _showChangeThemeDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            title: Text('选择主题颜色'),
+            content: Container(
+              height: 300,
+              child: ListView.builder(
+                itemCount: ThemeModel.materialColors.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                      onTap: () {
+                        Store.value<ThemeModel>(context).changeTheme(index);
+                        Navigator.of(context).pop();
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          Container(
+                              padding: EdgeInsets.all(10.0),
+                              color: ThemeModel.materialColors[index],
+                              height: 40),
+                          Opacity(
+                            opacity: index == SpUtil.getThemeColorIndex()
+                                ? 1.0
+                                : 0.0,
+                            child: Center(
+                              child: Icon(Icons.done, color: Colors.white),
+                            ),
+                          )
+                        ],
+                      ));
+                },
+              ),
+            ));
+      },
+    );
+  }
 }
 
-Widget _buildItem(BuildContext context,Color color, IconData icons, String title, [Function callback]){
-
+Widget _buildItem(
+    BuildContext context, Color color, IconData icons, String title,
+    [Function callback]) {
   return Container(
     width: double.infinity,
     color: Colors.white,
@@ -297,6 +325,7 @@ class TopBarClipper extends CustomClipper<Path> {
     path.lineTo(0.0, height);
     return path;
   }
+
   /// 接口决定是否重新剪裁
   /// 如果在应用中，剪裁区域始终不会发生变化时应该返回 false，这样就不会触发重新剪裁，避免不必要的性能开销。
   @override

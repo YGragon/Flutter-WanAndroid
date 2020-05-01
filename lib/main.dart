@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_wanandroid/main_page.dart';
 import 'package:flutter_wanandroid/model/search_history.dart';
+import 'package:flutter_wanandroid/model/theme.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/navigation_service.dart';
 import 'package:flutter_wanandroid/routers/routes.dart';
@@ -17,9 +18,11 @@ import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/views/page_not_found.dart';
 import 'package:flutter_wanandroid/widgets/error/error_page.dart';
 import 'package:flutter_wanandroid/widgets/error/flutter_crash_plugin.dart';
+import 'package:provider/provider.dart';
 
 import 'event/event_theme.dart';
 import 'generated/i18n.dart';
+import 'model/store.dart';
 
 // 主题颜色默认为红色
 int mThemeColor = 0xFFC91B3A;
@@ -53,7 +56,7 @@ Future<Null> main() async {
   // 初始化之前出现白屏
   WidgetsFlutterBinding.ensureInitialized();
   // 创建数据库
-  final provider = new Provider();
+  final provider = new DBProvider();
   // 数据库初始化
   await provider.init(true);
   // 获取 SP 对象
@@ -61,7 +64,7 @@ Future<Null> main() async {
   // 得到单例对象的 搜索 管理对象
   new SearchHistoryList(sp);
 
-  db = Provider.db;
+  db = DBProvider.db;
 
   // This captures errors reported by the Flutter framework.
   FlutterError.onError = (FlutterErrorDetails details) async {
@@ -86,7 +89,10 @@ Future<Null> main() async {
   };
 
   runZoned<Future<Null>>(() async {
-    runApp(new MyApp());
+    /// 全局 provider 初始化
+    runApp(
+        Store.init(MyApp())
+    );
   }, onError: (error, stackTrace) async {
     await _reportError(error, stackTrace);
   });
@@ -131,46 +137,29 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
-    // iOS浅色主题
-    final ThemeData kIOSTheme = ThemeData(
-        brightness: Brightness.dark,//深色主题
-        accentColor: Color(0xFF888888),//(按钮)Widget前景色为灰色色
-        primaryColor: Colors.blue,//主题色为蓝色
-        backgroundColor: Color(0xFFEFEFEF), // 背景色为灰色
-        iconTheme:IconThemeData(color: Colors.grey, size: 35.0),//icon主题为灰色
-        textTheme: TextTheme(body1: TextStyle(color: Colors.black, fontSize: 16.0))//文本主题为黑色
-    );
-
-    // Android深色主题
-    final ThemeData kAndroidTheme = ThemeData(
-        brightness: Brightness.light,//亮色主题
-        accentColor: Color(0xFF888888),//(按钮)Widget前景色为灰色
-        primaryColor: Color(mThemeColor),//主题色默认为红色
-        backgroundColor: Color(0xFFEFEFEF), // 背景色为灰色
-        iconTheme:IconThemeData(color: Color(mThemeColor), size: 35.0),//icon主题色为红色色
-        textTheme: TextTheme(body1: TextStyle(color: Color(0xFF888888), fontSize: 16.0))//文本主题色为灰色
-    );
-
-
-    return new MaterialApp(
-      title: 'Wan-Android',
-      navigatorKey: NavigationService.navigatorKey,
-      theme: defaultTargetPlatform == TargetPlatform.iOS ? kIOSTheme :kAndroidTheme,//根据平台选择不同主题
-      localizationsDelegates: [
-        S.delegate,//应用程序的翻译回调
-        // 本地化的代理类
-        GlobalMaterialLocalizations.delegate,//Material组件的翻译回调
-        GlobalWidgetsLocalizations.delegate,//普通Widget的翻译回调
-      ],
-      supportedLocales: S.delegate.supportedLocales,//支持语系
-      // title的国际化回调
-      onGenerateTitle: (context){ return S.of(context).app_title; },
-      home:Scaffold(body: _showWelcomePage()),
-      // 生成路由的回调函数，当导航的命名路由的时候，会使用这个来生成界面
-      onGenerateRoute: Application.router.generator,
-      // 页面找不到显示的 404 页面
-      onUnknownRoute: (RouteSettings setting) =>
-          MaterialPageRoute(builder: (context) => PageNotFound()),
+    return Consumer<ThemeModel>(
+      builder: (context, themeModel, _) {
+        return MaterialApp(
+            title: 'Wan-Android',
+            navigatorKey: NavigationService.navigatorKey,
+            theme: themeModel.themeDate,//根据平台选择不同主题
+            localizationsDelegates: [
+              S.delegate,//应用程序的翻译回调
+              // 本地化的代理类
+              GlobalMaterialLocalizations.delegate,//Material组件的翻译回调
+              GlobalWidgetsLocalizations.delegate,//普通Widget的翻译回调
+            ],
+            supportedLocales: S.delegate.supportedLocales,//支持语系
+            // title的国际化回调
+            onGenerateTitle: (context){ return S.of(context).app_title; },
+            home:Scaffold(body: _showWelcomePage()),
+            // 生成路由的回调函数，当导航的命名路由的时候，会使用这个来生成界面
+            onGenerateRoute: Application.router.generator,
+            // 页面找不到显示的 404 页面
+            onUnknownRoute: (RouteSettings setting) =>
+                MaterialPageRoute(builder: (context) => PageNotFound()),
+          );
+      },
     );
   }
 }

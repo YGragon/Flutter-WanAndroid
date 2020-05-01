@@ -37,12 +37,12 @@ class SpUtil {
     return false;
   }
   // 判断是否存在数据
-  bool hasKey(String key) {
+  static bool hasKey(String key) {
     Set keys = getKeys();
     return keys.contains(key);
   }
 
-  Set<String> getKeys() {
+  static Set<String> getKeys() {
     if (_beforeCheck()) return null;
     return _spf.getKeys();
   }
@@ -106,7 +106,17 @@ class SpUtil {
     return _spf.get(key);
   }
 
-
+  /// 保存主题颜色，颜色值在 ThemeModel 中
+  static Future<bool> saveThemeColorIndex(int value) {
+    return _spf.setInt('key_theme_color', value);
+  }
+  /// 获取主题颜色，颜色值在 ThemeModel 中
+  static int getThemeColorIndex() {
+    if (hasKey('key_theme_color')) {
+      return _spf.getInt('key_theme_color');
+    }
+    return 0;
+  }
 
   Future<bool> remove(String key) {
     if (_beforeCheck()) return null;

@@ -17,7 +17,7 @@ class Sql extends BaseModel {
   final String tableName;
   Sql.setTable(String name)
       : tableName = name,
-        super(Provider.db);
+        super(DBProvider.db);
 
   // sdf
   Future<List> get() async{

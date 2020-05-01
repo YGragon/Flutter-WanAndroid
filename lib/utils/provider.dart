@@ -7,8 +7,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 
-
-class Provider {
+/// 数据库提供者
+class DBProvider {
   static Database db;
 
   // 获取数据库中所有的表

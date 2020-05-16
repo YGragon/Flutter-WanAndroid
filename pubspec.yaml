@@ -56,6 +56,10 @@ dependencies:
   path_provider: ^1.6.5
   # provider 依赖注入和状态管理
   provider: ^4.0.5
+  # 相机
+  camera: ^0.5.8+1
+  # 视频
+  video_player: ^0.10.11
 
 dev_dependencies:
   flutter_test:

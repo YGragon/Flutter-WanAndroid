@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
@@ -29,6 +30,7 @@ int mThemeColor = 0xFFC91B3A;
 
 SpUtil sp;
 var db;
+List<CameraDescription> cameras = [];
 
 bool get isInDebugMode {
   bool inDebugMode = false;
@@ -65,7 +67,8 @@ Future<Null> main() async {
   new SearchHistoryList(sp);
 
   db = DBProvider.db;
-
+  // 获取可用摄像头列表，cameras为全局变量
+  cameras = await availableCameras();
   // This captures errors reported by the Flutter framework.
   FlutterError.onError = (FlutterErrorDetails details) async {
     if (isInDebugMode) {

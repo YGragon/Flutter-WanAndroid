@@ -191,7 +191,7 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProviderTestPage()));
+                            builder: (context) => CameraExampleHome()));
                   }
                 }),
                 _buildItem(

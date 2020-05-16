@@ -15,7 +15,10 @@ class PhotoPage extends StatefulWidget {
   _PhotoPageState createState() => new _PhotoPageState();
 }
 
-class _PhotoPageState extends State<PhotoPage> {
+class _PhotoPageState extends State<PhotoPage>  with AutomaticKeepAliveClientMixin{
+  @override
+  bool get wantKeepAlive => true;
+
   // 当前页码
   int _page = 1;
   // 每页请求的个数
@@ -83,6 +86,7 @@ class _PhotoPageState extends State<PhotoPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         appBar: new AppBar(title: SearchPage(),),
         body: Column(

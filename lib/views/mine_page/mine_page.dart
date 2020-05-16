@@ -26,7 +26,11 @@ class MinePage extends StatefulWidget {
   }
 }
 
-class MinePageState extends State<MinePage> with WidgetsBindingObserver {
+class MinePageState extends State<MinePage> with WidgetsBindingObserver,AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
   MinePageState() {
     print("minePage-constructor");
   }
@@ -98,6 +102,7 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     print("minePage-build");
     return Stack(
       children: <Widget>[
@@ -191,7 +196,7 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CameraExampleHome()));
+                            builder: (context) => LoginPage()));
                   }
                 }),
                 _buildItem(

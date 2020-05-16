@@ -117,6 +117,7 @@ class CollectionPageState extends State<CollectionPage> with AutomaticKeepAliveC
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (_collectionList.length == 0) {
       return Scaffold(
         appBar: new AppBar(title: SearchPage(),),

@@ -57,7 +57,6 @@ class _SplashPageState extends State<SplashPage> {
   /// 获取 splash 图片
   void getSplashImage(){
     CommonService().splash((String imageUrl) {
-      print("图片：$imageUrl");
       setState(() {
         mImagesUrl = "https://cn.bing.com/" + imageUrl ;
         print("图片mImagesUrl：$mImagesUrl");

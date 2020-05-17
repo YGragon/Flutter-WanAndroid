@@ -18,9 +18,9 @@ class SplashPage extends StatefulWidget{
 
 class _SplashPageState extends State<SplashPage> {
   // splash 默认图片
-  var mImagesUrl = 'https://cdn.pixabay.com/photo/2020/05/15/11/34/fairy-5173313_960_720.jpg';
+  var mImagesUrl = '';
   Timer _timer;
-  int _countdownTime = 5;
+  int _countdownTime = 3;
 
   @override
   void initState() {
@@ -68,35 +68,33 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints.expand(),
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            child:  ExtendedImage.network(
-              mImagesUrl,
-              fit: BoxFit.fill,
-            ),
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          child:  ExtendedImage.network(
+            mImagesUrl,
+            enableLoadState: false,
+            fit: BoxFit.fill,
           ),
-          Positioned(
-            right: 38.0,
-            bottom:50.0,
-            child: RaisedButton(
-              color: Colors.blue, // 按钮背景色
-              highlightColor: Colors.blue[700],// 按钮高亮后的背景色
-              colorBrightness: Brightness.dark,// 使用深色主题，保证按钮文字颜色为浅色
-              splashColor: Colors.grey,// 点击时，水波动画中水波的颜色
-              child: Text('$_countdownTime s'),// 文本
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)), //圆角矩形
-              onPressed: () {},
-            ),
+        ),
+        Positioned(
+          right: 38.0,
+          bottom:50.0,
+          child: RaisedButton(
+            color: Colors.blue, // 按钮背景色
+            highlightColor: Colors.blue[700],// 按钮高亮后的背景色
+            colorBrightness: Brightness.dark,// 使用深色主题，保证按钮文字颜色为浅色
+            splashColor: Colors.grey,// 点击时，水波动画中水波的颜色
+            child: Text('$_countdownTime s'),// 文本
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)), //圆角矩形
+            onPressed: () {},
           ),
-        ],)
-    );
+        ),
+      ],);
   }
 
 

@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 
-// ValueKey<String> key;
 
 class HomePage extends StatefulWidget {
   @override
@@ -30,7 +29,6 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
     super.initState();
     if (key == null) {
       key = GlobalKey<DisclaimerMsgState>();
-      // key = const Key('__RIKEY1__');
       //获取sharePre
       _unKnow = _prefs.then((SharedPreferences prefs) {
         return (prefs.getBool('disclaimer::Boolean') ?? false);
@@ -69,7 +67,6 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
       Column(
         children: <Widget>[
           Stack(
-            //alignment: const FractionalOffset(0.9, 0.1),//方法一
               children: <Widget>[
                 // banner
                 Pagination(),
@@ -93,19 +90,8 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
       appBar: new AppBar(title: SearchPage(),),
       body: new Column(
           children: <Widget>[
-//          new Stack(
-            //alignment: const FractionalOffset(0.9, 0.1),//方法一
-//            children: <Widget>[
-//            Pagination(),
-//            Positioned(//方法二
-//              top: 10.0,
-//              left: 0.0,
-//              child: DisclaimerMsg(key:key,pWidget:this)
-//            ),
-//          ]),
             SizedBox(height: 2, child:Container(color: Theme.of(context).primaryColor)),
             new Expanded(
-              //child: new List(),
                 child: listComp.ListRefresh(makeCard,headerView)
             )
           ]

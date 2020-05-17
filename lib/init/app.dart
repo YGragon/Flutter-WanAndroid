@@ -19,15 +19,9 @@ class App{
   //运行app
   static void run() {
     WidgetsFlutterBinding.ensureInitialized();
-
-
     /// 全局 provider 初始化
-    runZoned<Future<Null>>(() async {
-      /// 全局 provider 初始化
-      SPUtils.init().then((value) => runApp(Store.init(MyApp())));
-      initApp();
-
-    });
+    SPUtils.init().then((value) => runApp(Store.init(MyApp())));
+    initApp();
 
 
   }

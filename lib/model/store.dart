@@ -13,7 +13,7 @@ class Store {
     //多个Provider
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeModel(ThemeModel.getDefaultTheme())),
+        ChangeNotifierProvider(create: (_) => AppTheme(AppTheme.getDefaultTheme())),
       ],
       child: child,
     );

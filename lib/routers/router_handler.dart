@@ -4,26 +4,48 @@ import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_wanandroid/components/navi_list.dart';
 import 'package:flutter_wanandroid/components/project_list.dart';
-import 'package:flutter_wanandroid/model/cat.dart';
+import 'package:flutter_wanandroid/main_page.dart';
 import 'package:flutter_wanandroid/views/article_list_page/article_list_page.dart';
-import 'package:flutter_wanandroid/views/cat_page/cat_page.dart';
-import 'package:flutter_wanandroid/views/cat_page/cat_sub_page.dart';
 import 'package:flutter_wanandroid/views/collection_page/collection_page.dart';
 import 'package:flutter_wanandroid/views/home_page/home_page.dart';
-import 'package:flutter_wanandroid/views/login_page/login_page_test.dart';
+import 'package:flutter_wanandroid/views/login_page/login_page.dart';
 import 'package:flutter_wanandroid/views/page_not_found.dart';
 import 'package:flutter_wanandroid/views/photo_detail_page/photo_detail_page.dart';
+import 'package:flutter_wanandroid/views/register_page/register_page.dart';
 import 'package:flutter_wanandroid/views/web_page/webview_page.dart';
 
+/// 命名路由参数传递，对应着 router.dart
 
 
-// app的首页
+/// home 页面
 var homeHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    return new HomePage();
+    return HomePage();
   },
 );
 
+/// app的首页
+var rootHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return MainPage();
+  },
+);
+
+/// 登录页面
+var loginHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return LoginPage();
+  },
+);
+
+/// 注册页面
+var registerHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return RegisterPage();
+  },
+);
+
+/// 分类页面
 var categoryHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     String name = params["type"]?.first;
@@ -41,6 +63,7 @@ var treeListHandler = new Handler(
   },
 );
 
+/// 导航页面
 var naviListHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     String id = params['id']?.first;
@@ -49,6 +72,7 @@ var naviListHandler = new Handler(
   },
 );
 
+/// 项目页面
 var projectHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     String id = params['id']?.first;
@@ -57,20 +81,14 @@ var projectHandler = new Handler(
 
   },
 );
+/// 找不到页面
 var pageNotFoundHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return new PageNotFound();
     });
 
-//var thirdHandler = new Handler(
-//  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-//    String msg = params['msg']?.first;
-//    return new ThridPage(msg);
-//
-//  },
-//);
 
-
+/// 网页展示
 var webViewPageHand = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       String id = params['id']?.first;

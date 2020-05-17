@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/model/article.dart';
-import 'package:flutter_wanandroid/model/collect.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
-import 'package:flutter_wanandroid/routers/routes.dart';
+import 'package:flutter_wanandroid/routers/router_path.dart';
 import 'package:flutter_wanandroid/views/login_page/login_page.dart';
 
 class MyCollectListPage extends StatefulWidget {
@@ -97,7 +96,7 @@ class _MyCollectListPageState extends State<MyCollectListPage> {
           // 需要转义 Uri.encodeComponent
           var collection = _collectionList[index];
           Application.router.navigateTo(context,
-              '${Routes.webViewPage}?id=${Uri.encodeComponent(collection.id.toString())}&title=${Uri.encodeComponent(collection.title)}&link=${Uri.encodeComponent(collection.link)}');
+              '${RouterPath.webViewPage}?id=${Uri.encodeComponent(collection.id.toString())}&title=${Uri.encodeComponent(collection.title)}&link=${Uri.encodeComponent(collection.link)}');
         },
       ),
     );

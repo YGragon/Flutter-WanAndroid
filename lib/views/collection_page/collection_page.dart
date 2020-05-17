@@ -1,12 +1,11 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/components/search_input.dart';
 import 'package:flutter_wanandroid/event/event_bus.dart';
 import 'package:flutter_wanandroid/event/event_model.dart';
 import 'package:flutter_wanandroid/model/collect.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
-import 'package:flutter_wanandroid/routers/routes.dart';
+import 'package:flutter_wanandroid/routers/router_path.dart';
 import 'package:flutter_wanandroid/views/search_page/search_page.dart';
 
 class CollectionPage extends StatefulWidget{
@@ -108,7 +107,7 @@ class CollectionPageState extends State<CollectionPage> with AutomaticKeepAliveC
             // 需要转义 Uri.encodeComponent
           var collection = _collectionList[index - 1];
             Application.router.navigateTo(context,
-                '${Routes.webViewPage}?id=${Uri.encodeComponent(collection.id)}&title=${Uri.encodeComponent(collection.title)}&link=${Uri.encodeComponent(collection.link)}');
+                '${RouterPath.webViewPage}?id=${Uri.encodeComponent(collection.id)}&title=${Uri.encodeComponent(collection.title)}&link=${Uri.encodeComponent(collection.link)}');
 
         },
       ),

@@ -6,29 +6,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter_wanandroid/resources/shared_preferences_keys.dart';
 
 /// 用来做shared_preferences的存储
-class SpUtil {
-  static SpUtil _instance;
-  static Future<SpUtil> get instance async {
-    return await getInstance();
-  }
+class SPUtils {
+  /// 内部构造方法，可避免外部暴露构造函数，进行实例化
+  SPUtils._internal();
 
   static SharedPreferences _spf;
 
-
-  SpUtil._();
-
-  Future _init() async {
-    _spf = await SharedPreferences.getInstance();
-  }
-
-  static Future<SpUtil> getInstance() async  {
-    if (_instance == null) {
-      _instance = new SpUtil._();
-      await _instance._init();
-
+  static Future<SharedPreferences> init() async {
+    if (_spf == null) {
+      _spf = await SharedPreferences.getInstance();
     }
-    return _instance;
+    return _spf;
   }
+
 
   static bool _beforeCheck() {
     if (_spf == null) {
@@ -47,61 +37,61 @@ class SpUtil {
     return _spf.getKeys();
   }
 
-  get(String key) {
+  static get(String key) {
     if (_beforeCheck()) return null;
     return _spf.get(key);
   }
 
-  getString(String key) {
+  static getString(String key) {
     if (_beforeCheck()) return null;
     return _spf.getString(key);
   }
 
-  Future<bool> putString(String key, String value) {
+  static Future<bool> putString(String key, String value) {
     if (_beforeCheck()) return null;
     return _spf.setString(key, value);
   }
 
-  bool getBool(String key) {
+  static bool getBool(String key) {
     if (_beforeCheck()) return null;
     return _spf.getBool(key);
   }
 
-  Future<bool> putBool(String key, bool value) {
+  static Future<bool> putBool(String key, bool value) {
     if (_beforeCheck()) return null;
     return _spf.setBool(key, value);
   }
 
-  int getInt(String key) {
+  static int getInt(String key) {
     if (_beforeCheck()) return null;
     return _spf.getInt(key);
   }
 
-  Future<bool> putInt(String key, int value) {
+  static Future<bool> putInt(String key, int value) {
     if (_beforeCheck()) return null;
     return _spf.setInt(key, value);
   }
 
-  double getDouble(String key) {
+  static double getDouble(String key) {
     if (_beforeCheck()) return null;
     return _spf.getDouble(key);
   }
 
-  Future<bool> putDouble(String key, double value) {
+  static Future<bool> putDouble(String key, double value) {
     if (_beforeCheck()) return null;
     return _spf.setDouble(key, value);
   }
 
-  List<String> getStringList(String key) {
+  static List<String> getStringList(String key) {
     return _spf.getStringList(key);
   }
 
-  Future<bool> putStringList(String key, List<String> value) {
+  static Future<bool> putStringList(String key, List<String> value) {
     if (_beforeCheck()) return null;
     return _spf.setStringList(key, value);
   }
 
-  dynamic getDynamic(String key) {
+  static dynamic getDynamic(String key) {
     if (_beforeCheck()) return null;
     return _spf.get(key);
   }
@@ -118,12 +108,12 @@ class SpUtil {
     return 0;
   }
 
-  Future<bool> remove(String key) {
+  static Future<bool> remove(String key) {
     if (_beforeCheck()) return null;
     return _spf.remove(key);
   }
 
-  Future<bool> clear() {
+  static Future<bool> clear() {
     if (_beforeCheck()) return null;
     return _spf.clear();
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/routers/routes.dart';
+import 'package:flutter_wanandroid/routers/router_path.dart';
 
 import '../../routers/application.dart';
 import '../../utils/shared_preferences.dart';
@@ -28,7 +28,7 @@ final pages = [
     'assets/images/house.png',
   ),
 ];
-SpUtil sp;
+SPUtils sp;
 
 class Page extends StatelessWidget {
   final PageViewModel viewModel;
@@ -50,16 +50,15 @@ class Page extends StatelessWidget {
     return RaisedButton.icon(
         onPressed: () async {
           if (type == 'start') {
-            await SpUtil.getInstance()
-              ..putBool(SharedPreferencesKeys.showWelcome, false);
+            SPUtils.putBool(SharedPreferencesKeys.showWelcome, false);
             _goHomePage(context);
           } else if (type == 'goGithub') {
             if(txt == 'Flutter-WanAndroid'){
               Application.router.navigateTo(context,
-                  '${Routes.webViewPage}?id=${Uri.encodeComponent("0")}&title=${Uri.encodeComponent(txt)}&link=${Uri.encodeComponent("https://github.com/dongxi346/Flutter-WanAndroid")}');
+                  '${RouterPath.webViewPage}?id=${Uri.encodeComponent("0")}&title=${Uri.encodeComponent(txt)}&link=${Uri.encodeComponent("https://github.com/dongxi346/Flutter-WanAndroid")}');
             }else{
               Application.router.navigateTo(context,
-                  '${Routes.webViewPage}?id=${Uri.encodeComponent("0")}&title=${Uri.encodeComponent(txt)}&link=${Uri.encodeComponent("https://github.com/alibaba/flutter-go")}');
+                  '${RouterPath.webViewPage}?id=${Uri.encodeComponent("0")}&title=${Uri.encodeComponent(txt)}&link=${Uri.encodeComponent("https://github.com/alibaba/flutter-go")}');
             }
           }
         },

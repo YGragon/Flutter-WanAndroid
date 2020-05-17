@@ -1,18 +1,11 @@
-import 'package:event_bus/event_bus.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/api/Api.dart';
 import 'package:flutter_wanandroid/api/dio_manager.dart';
-import 'package:flutter_wanandroid/components/search_input.dart';
-import 'package:flutter_wanandroid/event/event_bus.dart';
-import 'package:flutter_wanandroid/event/event_model.dart';
 import 'package:flutter_wanandroid/model/coin.dart';
-import 'package:flutter_wanandroid/model/collect.dart';
-import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/navigation_service.dart';
-import 'package:flutter_wanandroid/routers/routes.dart';
-import 'package:flutter_wanandroid/views/search_page/search_page.dart';
 import 'package:flutter_wanandroid/widgets/loading/dialog_manager.dart';
 /// 排行榜页面
 class CoinRankPage extends StatefulWidget{

@@ -5,7 +5,7 @@ import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 
 /// provider 主题修改
 
-class ThemeModel with ChangeNotifier{
+class AppTheme with ChangeNotifier{
 
   static final List<MaterialColor> materialColors = [
     Colors.blue,
@@ -23,7 +23,7 @@ class ThemeModel with ChangeNotifier{
   ];
 
   MaterialColor _mThemeColor;
-  ThemeModel(this._mThemeColor);
+  AppTheme(this._mThemeColor);
 
 //  defaultTargetPlatform == TargetPlatform.iOS ? kIOSTheme :kAndroidTheme,
   MaterialColor get themeColor => _mThemeColor ;
@@ -54,7 +54,7 @@ class ThemeModel with ChangeNotifier{
 
   /// 获取默认主题
   static MaterialColor getDefaultTheme() {
-    return materialColors[SpUtil.getThemeColorIndex()];
+    return materialColors[SPUtils.getThemeColorIndex()];
   }
 
 
@@ -62,7 +62,7 @@ class ThemeModel with ChangeNotifier{
   void changeTheme(int colorIndex){
     _mThemeColor = materialColors[colorIndex];
     /// 保存主题索引值
-    SpUtil.saveThemeColorIndex(colorIndex);
+    SPUtils.saveThemeColorIndex(colorIndex);
     notifyListeners();
   }
 }

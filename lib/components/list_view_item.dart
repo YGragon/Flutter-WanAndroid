@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/routers/routes.dart';
+import 'package:flutter_wanandroid/routers/router_path.dart';
 import '../routers/application.dart';
 import 'dart:core';
 
@@ -24,7 +24,7 @@ class ListViewItem extends StatelessWidget {
       child: ListTile(
         onTap: () {
           // _launchURL(itemUrl, context);
-          Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent(itemId.toString())}&title=${Uri.encodeComponent(itemTitle)}&link=${Uri.encodeComponent(itemUrl)}');
+          Application.router.navigateTo(context, '${RouterPath.webViewPage}?id=${Uri.encodeComponent(itemId.toString())}&title=${Uri.encodeComponent(itemTitle)}&link=${Uri.encodeComponent(itemUrl)}');
         },
         title: Padding(
           child: Text(

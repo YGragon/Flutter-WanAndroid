@@ -54,9 +54,7 @@ class User {
 
   /// sp 保存用户名
   void saveUserName(UserModel _userModel) {
-    SpUtil.getInstance().then((_sp) {
-      _sp.putString(SharedPreferencesKeys.userName, _userModel.data.username);
-    });
+    SPUtils.putString(SharedPreferencesKeys.userName, _userModel.data.username);
   }
 
   /// 获取用户名

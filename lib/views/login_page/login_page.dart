@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/model/user_model.dart';
+import 'package:flutter_wanandroid/routers/application.dart';
+import 'package:flutter_wanandroid/routers/router_path.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/register_page/register_page.dart';
 import 'package:flutter_wanandroid/widgets/loading/dialog_manager.dart';
@@ -13,7 +15,6 @@ import 'package:groovin_material_icons/groovin_material_icons.dart';
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() {
-    print("loginPage-createState");
     return _LoginPageState();
   }
 }
@@ -40,35 +41,6 @@ class _LoginPageState extends State<LoginPage> {
 
   bool flag = false; //维护复选框状态
 
-  @override
-  void initState() {
-    super.initState();
-    print("loginPage-initState");
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-    print("loginPage-deactivate");
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    print("loginPage-deactivate");
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print("loginPage-didChangeDependencies");
-  }
-
-  @override
-  void didUpdateWidget(LoginPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    print("loginPage-didUpdateWidget");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,6 +150,7 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
+  /// 点击登录
   Align buildLoginButton(BuildContext context) {
     return Align(
       child: SizedBox(
@@ -199,14 +172,9 @@ class _LoginPageState extends State<LoginPage> {
                   ToastUtil.showBasicToast("登录成功");
                   print("response：" + response.toString());
                   User().saveUserInfo(_userModel, response);
+                  /// 跳转首页
+                  Navigator.pushReplacementNamed(context, RouterPath.root);
 
-                  /// 关闭弹窗
-                  Navigator.pop(context);
-
-                  /// 关闭登录页面
-                  Future.delayed(Duration(milliseconds: 200), () {
-                    Navigator.pop(context);
-                  });
                 } else if (_userModel.errorCode == -1) {
                   ToastUtil.showBasicToast(_userModel.errorMsg);
                   Navigator.pop(context);

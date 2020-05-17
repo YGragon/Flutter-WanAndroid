@@ -14,7 +14,6 @@ import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/views/about_page/about_page.dart';
 import 'package:flutter_wanandroid/views/coin_rank_page/coin_rank_page.dart';
 import 'package:flutter_wanandroid/views/login_page/login_page.dart';
-import 'package:flutter_wanandroid/views/login_page/login_page_test.dart';
 import 'package:flutter_wanandroid/views/my_collect_list_page/my_collect_list_page.dart';
 import 'package:flutter_wanandroid/widgets/list_item.dart';
 
@@ -248,11 +247,11 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
             content: Container(
               height: 300,
               child: ListView.builder(
-                itemCount: ThemeModel.materialColors.length,
+                itemCount: AppTheme.materialColors.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                       onTap: () {
-                        Store.value<ThemeModel>(context).changeTheme(index);
+                        Store.value<AppTheme>(context).changeTheme(index);
                         Navigator.of(context).pop();
                       },
                       child: Stack(
@@ -260,10 +259,10 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
                         children: <Widget>[
                           Container(
                               padding: EdgeInsets.all(10.0),
-                              color: ThemeModel.materialColors[index],
+                              color: AppTheme.materialColors[index],
                               height: 40),
                           Opacity(
-                            opacity: index == SpUtil.getThemeColorIndex()
+                            opacity: index == SPUtils.getThemeColorIndex()
                                 ? 1.0
                                 : 0.0,
                             child: Center(

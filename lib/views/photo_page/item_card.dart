@@ -6,7 +6,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_wanandroid/model/constant.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
-import 'package:flutter_wanandroid/routers/routes.dart';
+import 'package:flutter_wanandroid/routers/router_path.dart';
 
 /// 瀑布流item
 class TileCard extends StatelessWidget with WidgetsBindingObserver {
@@ -57,7 +57,7 @@ class TileCard extends StatelessWidget with WidgetsBindingObserver {
       child: InkWell(
         onTap: (){
           // 跳转 WebView
-          Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent(id)}&title=${Uri.encodeComponent(title)}&link=${Uri.encodeComponent(link)}');
+          Application.router.navigateTo(context, '${RouterPath.webViewPage}?id=${Uri.encodeComponent(id)}&title=${Uri.encodeComponent(title)}&link=${Uri.encodeComponent(link)}');
           // 跳转 Hero 实现的动画效果
 //          Application.router.navigateTo(context,
 //              '${Routes.photoDetailPage}?id=${Uri.encodeComponent(id)}'

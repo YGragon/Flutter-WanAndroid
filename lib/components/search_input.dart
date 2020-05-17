@@ -1,16 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fluro/fluro.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_wanandroid/api/common_service.dart';
-import 'package:flutter_wanandroid/model/article.dart';
-import 'package:flutter_wanandroid/model/project_model.dart';
-import 'package:flutter_wanandroid/routers/routes.dart';
-import 'package:flutter_wanandroid/utils/shared_preferences.dart';
+import 'package:flutter_wanandroid/routers/router_path.dart';
 import 'package:meta/meta.dart';
-// import 'package:flutter_wanandroid/resources/widget_name_to_icon.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
 import '../model/search_history.dart';
 
@@ -495,7 +488,7 @@ class _History extends State<History> {
 
       list.add(InkWell(
         onTap: () {
-          Application.router.navigateTo(context, '${Routes.webViewPage}?id=${Uri.encodeComponent("0")}&title=${Uri.encodeComponent("详情")}&link=${Uri.encodeComponent(value.targetRouter)}');
+          Application.router.navigateTo(context, '${RouterPath.webViewPage}?id=${Uri.encodeComponent("0")}&title=${Uri.encodeComponent("详情")}&link=${Uri.encodeComponent(value.targetRouter)}');
         },
         // 历史搜索的名称
         child: Chip(

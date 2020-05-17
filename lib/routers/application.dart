@@ -3,16 +3,10 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 
+/// 全局变量
 class Application {
   static Router router;
   static EventBus eventBus;
-  static TabController controller;
-  static SpUtil sharePeferences;
 
-  static Map<String, String> github = {
-    'widgetsURL':'https://github.com/alibaba/flutter-go/blob/develop/lib/widgets/',
-    //'develop':'https://github.com/alibaba-paimai-frontend/flutter-common-widgets-app/tree/develop/lib/widgets/',
-    //'master':'https://github.com/alibaba-paimai-frontend/flutter-common-widgets-app/tree/master/lib/widgets/'
-  };
 
 }

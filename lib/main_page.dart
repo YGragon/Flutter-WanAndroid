@@ -2,10 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_wanandroid/components/search_input.dart';
-import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/navigation_service.dart';
-import 'package:flutter_wanandroid/utils/provider.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/views/cat_page/cat_page.dart';
 import 'package:flutter_wanandroid/views/collection_page/collection_page.dart';
@@ -27,7 +24,6 @@ class MainPage extends StatefulWidget {
 
 class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMixin {
 
-  SpUtil sp;
 
   TabController controller;
   SearchHistoryList searchHistoryList;
@@ -48,7 +44,6 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
   void initState() {
     super.initState();
 
-    initSearchHistory();
     controller = new TabController(
         initialIndex: 0, vsync: this, length: 5); // 这里的length 决定有多少个底导 submenus
     for (int i = 0; i < tabData.length; i++) {
@@ -61,7 +56,6 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
         _onTabChange();
       }
     });
-    Application.controller = controller;
   }
 
   @override
@@ -70,13 +64,7 @@ class _MyHomePageState extends State<MainPage> with SingleTickerProviderStateMix
     super.dispose();
   }
 
-  /// 初始化搜索历史列表
-  initSearchHistory() async {
-    sp = await SpUtil.getInstance();
-    String json = sp.getString(SharedPreferencesKeys.searchHistory);
-    print("json----------------->>>>> $json");
-    searchHistoryList = SearchHistoryList.fromJSON(json);
-  }
+
 
 
   @override

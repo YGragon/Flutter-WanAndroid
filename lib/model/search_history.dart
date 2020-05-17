@@ -13,36 +13,25 @@ class SearchHistory {
 }
 
 class SearchHistoryList {
-  static SpUtil _sp;
   static SearchHistoryList _instance;
   static List<SearchHistory> _searchHistoryList = [];
 
-  /// [] 为可选参数
-  factory SearchHistoryList([SpUtil sp]) {
-    if (sp == null && _instance == null) {
+  factory SearchHistoryList() {
+    if (_instance == null) {
       print(new ArgumentError(['SearchHistoryList need instantiatied SpUtil at first timte ']));
     }
-    return _getInstance(sp);
+    return _getInstance();
   }
 
-  static SearchHistoryList _getInstance(SpUtil sp) {
+  static SearchHistoryList _getInstance() {
     if (_instance == null) {
-      print("sp---->"+sp.toString());
-      _sp = sp;
-      String json = sp.get(SharedPreferencesKeys.searchHistory);
+      String json = SPUtils.get(SharedPreferencesKeys.searchHistory);
+      print("SearchHistoryList json---->"+json.toString());
       _instance = new SearchHistoryList.fromJSON(json);
-
-      }
+    }
     return _instance;
   }
 
-//  static loadSpUtil(){
-//    return SpUtil.getInstance();
-//  }
-
-
-
-//  List<SearchHistory> _searchHistoryList = [];
 
   // 存放的最大数量
   int _count = 10;
@@ -64,12 +53,12 @@ class SearchHistoryList {
   }
 
   clear() {
-    _sp.remove(SharedPreferencesKeys.searchHistory);
+    SPUtils.remove(SharedPreferencesKeys.searchHistory);
     _searchHistoryList = [];
   }
 
   save() {
-    _sp.putString(SharedPreferencesKeys.searchHistory, this.toJson());
+    SPUtils.putString(SharedPreferencesKeys.searchHistory, this.toJson());
   }
 
   add(SearchHistory item) {

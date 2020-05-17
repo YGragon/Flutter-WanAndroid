@@ -53,7 +53,6 @@ class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
     /// 获取导航数据
     CommonService().getNaviList((NaviBeanModel naviBean) {
       if(mounted){
-        print("获取导航列表数据========>>> ："+naviBean.datas.toString());
         categorieNavs.addAll(naviBean.datas);
         setState(() {
           categorieNavs = categorieNavs;

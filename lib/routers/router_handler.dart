@@ -5,10 +5,15 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter_wanandroid/components/navi_list.dart';
 import 'package:flutter_wanandroid/components/project_list.dart';
 import 'package:flutter_wanandroid/main_page.dart';
+import 'package:flutter_wanandroid/model/cat.dart';
+import 'package:flutter_wanandroid/views/about_page/about_page.dart';
 import 'package:flutter_wanandroid/views/article_list_page/article_list_page.dart';
+import 'package:flutter_wanandroid/views/cat_page/cat_sub_page.dart';
+import 'package:flutter_wanandroid/views/coin_rank_page/coin_rank_page.dart';
 import 'package:flutter_wanandroid/views/collection_page/collection_page.dart';
 import 'package:flutter_wanandroid/views/home_page/home_page.dart';
 import 'package:flutter_wanandroid/views/login_page/login_page.dart';
+import 'package:flutter_wanandroid/views/my_collect_list_page/my_collect_list_page.dart';
 import 'package:flutter_wanandroid/views/page_not_found.dart';
 import 'package:flutter_wanandroid/views/photo_detail_page/photo_detail_page.dart';
 import 'package:flutter_wanandroid/views/register_page/register_page.dart';
@@ -45,12 +50,45 @@ var registerHandler = new Handler(
   },
 );
 
+/// 关于页面
+var aboutHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return AboutPage();
+  },
+);
+
+/// 积分排行榜页面
+var coinRankHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return CoinRankPage();
+  },
+);
+
+/// 积分排行榜页面
+var myCollectsHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return MyCollectListPage();
+  },
+);
+
+
 /// 分类页面
 var categoryHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     String name = params["type"]?.first;
 
     return new CollectionPage();
+  },
+);
+
+/// 子分类页面
+var subCatHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    String name = params["name"]?.first;
+    // todo list string 如何传递
+    List<Cat> cats = params["cats"]?.first as List<Cat>;
+
+    return  CatSubPage(name:name, cats: cats,);
   },
 );
 

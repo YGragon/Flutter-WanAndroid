@@ -20,20 +20,28 @@ class XRouter {
           print("route is not find !");
           return null;
         });
+    var mTransitiontype = TransitionType.inFromRight;
     // 首页
-    router.define(RouterPath.root, handler: rootHandler );
+    router.define(RouterPath.root, handler: rootHandler);
     // home 页
     router.define(RouterPath.home, handler: homeHandler );
-    // 详情页面
-    router.define(RouterPath.webViewPage,handler:webViewPageHand, transitionType:TransitionType.inFromLeft);
-    router.define(RouterPath.category,handler:categoryHandler, transitionType:TransitionType.inFromLeft);
-    router.define(RouterPath.treeList,handler:treeListHandler, transitionType:TransitionType.inFromLeft);
-    router.define(RouterPath.naviList,handler:naviListHandler, transitionType:TransitionType.inFromLeft);
-    router.define(RouterPath.projectList,handler:projectHandler, transitionType:TransitionType.inFromLeft);
-    router.define(RouterPath.errorPage,handler:pageNotFoundHandler, transitionType:TransitionType.inFromLeft);
-    router.define(RouterPath.photoDetailPage,handler:photoDetailPageHand, transitionType:TransitionType.inFromLeft);
-    router.define(RouterPath.login,handler:loginHandler, transitionType:TransitionType.inFromLeft);
-    router.define(RouterPath.register,handler:registerHandler, transitionType:TransitionType.inFromLeft);
+    // web页面
+    router.define(RouterPath.webViewPage,handler:webViewPageHand, transitionType:mTransitiontype);
+    router.define(RouterPath.category,handler:categoryHandler, transitionType:mTransitiontype);
+    router.define(RouterPath.treeList,handler:treeListHandler, transitionType:mTransitiontype);
+    router.define(RouterPath.naviList,handler:naviListHandler, transitionType:mTransitiontype);
+    router.define(RouterPath.projectList,handler:projectHandler, transitionType:mTransitiontype);
+    router.define(RouterPath.errorPage,handler:pageNotFoundHandler, transitionType:mTransitiontype);
+    // 项目页面
+    router.define(RouterPath.photoDetailPage,handler:photoDetailPageHand, transitionType:mTransitiontype);
+    router.define(RouterPath.login,handler:loginHandler, transitionType:mTransitiontype);
+    router.define(RouterPath.register,handler:registerHandler, transitionType:mTransitiontype);
+    // 关于页面
+    router.define(RouterPath.about,handler:aboutHandler, transitionType:mTransitiontype);
+    router.define(RouterPath.coinRank,handler:coinRankHandler, transitionType:mTransitiontype);
+    router.define(RouterPath.myCollect,handler:myCollectsHandler, transitionType:mTransitiontype);
+    // 二级分类
+    router.define(RouterPath.subCat,handler:subCatHandler, transitionType:mTransitiontype);
   }
 
 }

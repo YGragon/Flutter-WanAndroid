@@ -8,19 +8,15 @@ import 'package:flutter_wanandroid/model/store.dart';
 import 'package:flutter_wanandroid/model/theme.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/model/user_model.dart';
-import 'package:flutter_wanandroid/utils/image.dart';
+import 'package:flutter_wanandroid/routers/application.dart';
+import 'package:flutter_wanandroid/routers/router_path.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
-import 'package:flutter_wanandroid/views/about_page/about_page.dart';
-import 'package:flutter_wanandroid/views/coin_rank_page/coin_rank_page.dart';
-import 'package:flutter_wanandroid/views/login_page/login_page.dart';
-import 'package:flutter_wanandroid/views/my_collect_list_page/my_collect_list_page.dart';
 import 'package:flutter_wanandroid/widgets/list_item.dart';
 
 class MinePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    print("minePage-createState");
     return new MinePageState();
   }
 }
@@ -57,14 +53,12 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
   void initState() {
     _getUserName();
     super.initState();
-    print("minePage-initState");
     WidgetsBinding.instance.addObserver(this); //注册监听器
   }
 
   @override
   void deactivate() {
     super.deactivate();
-    print("minePage-deactivate");
     var bool = ModalRoute.of(context).isCurrent;
     print("页面返回：" + bool.toString());
     if (bool) {
@@ -75,29 +69,9 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
   @override
   void dispose() {
     super.dispose();
-    print("minePage-deactivate");
     WidgetsBinding.instance.removeObserver(this); //移除监听器
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print("minePage-didChangeDependencies");
-  }
-
-  @override
-  void didUpdateWidget(MinePage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    print("minePage-didUpdateWidget");
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
-    print("$state");
-    if (state == AppLifecycleState.resumed) {
-      // do sth
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,14 +128,13 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
                       margin: EdgeInsets.only(top: 40.0),
                       child: new InkWell(
                         onTap: () {
-                          if (User().isUserLogin()) {
-                            print("显示用户信息");
-                          } else {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => new LoginPage()));
-                          }
+                          User().getUserInfo().then((userName){
+                            if(userName.length > 0){
+                              print("显示用户信息");
+                            }else{
+                              Application.router.navigateTo(context, RouterPath.login);
+                            }
+                          });
                         },
                         child: Center(
                             child: Text(
@@ -186,29 +159,22 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
                 ),
                 // 内容
                 _buildItem(context, Colors.blue, Icons.favorite, "我的收藏", () {
-                  if (User().isUserLogin()) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyCollectListPage()));
-                  } else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LoginPage()));
-                  }
+                  User().getUserInfo().then((userName){
+                    if(userName.length > 0){
+                      Application.router.navigateTo(context, RouterPath.myCollect);
+                    }else{
+                      Application.router.navigateTo(context, RouterPath.login);
+                    }
+                  });
+
                 }),
-                _buildItem(
-                    context, Colors.deepPurpleAccent, Icons.score, "积分排行榜", () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CoinRankPage()));
+                _buildItem(context, Colors.deepPurpleAccent, Icons.score, "积分排行榜", () {
+                  Application.router.navigateTo(context, RouterPath.coinRank);
                 }),
                 _buildItem(context, Colors.deepOrange, Icons.info, "关于页面", () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AboutPage()));
+                  Application.router.navigateTo(context, RouterPath.about);
                 }),
-                _buildItem(context, Colors.pink, Icons.exit_to_app, "修改主题色",
-                    () {
+                _buildItem(context, Colors.pink, Icons.exit_to_app, "修改主题色", () {
                   _showChangeThemeDialog();
                 }),
                 _buildItem(context, Colors.pink, Icons.exit_to_app, "退出登录", () {

@@ -7,7 +7,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_wanandroid/components/cate_card_item.dart';
-import 'package:flutter_wanandroid/model/article.dart';
 import 'package:flutter_wanandroid/model/cat.dart';
 import 'package:flutter_wanandroid/model/navi_bean.dart';
 import 'package:flutter_wanandroid/routers/router_path.dart';
@@ -60,7 +59,7 @@ class CateCardContainer extends StatelessWidget {
                     print("articles--->"+articles.toString());
                     if(articles != null){
                       // 项目，体系
-                      Application.router.navigateTo(context, "${RouterPath.treeList}?id=${Uri.encodeComponent(cid.toString())}&name=${Uri.encodeComponent(name.toString())}", transition: TransitionType.inFromRight);
+                      Application.router.navigateTo(context, "${RouterPath.treeList}?id=${Uri.encodeComponent(cid.toString())}&name=${Uri.encodeComponent(name.toString())}");
                     }
                   }else{
                     var cats = item.cats as List<Cat> ;
@@ -72,7 +71,7 @@ class CateCardContainer extends StatelessWidget {
                         print("跳转猫耳-- 传递list->"+cats.toString());
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CatSubPage(name:item.name, cats: cats,)));
                       }else{
-                        Application.router.navigateTo(context, "${RouterPath.treeList}?id=${Uri.encodeComponent(item.id.toString())}&name=${Uri.encodeComponent(item.name.toString())}", transition: TransitionType.inFromRight);
+                        Application.router.navigateTo(context, "${RouterPath.treeList}?id=${Uri.encodeComponent(item.id.toString())}&name=${Uri.encodeComponent(item.name.toString())}");
                       }
                     }
                   }

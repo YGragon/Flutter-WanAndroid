@@ -83,6 +83,17 @@ class CommonService{
     });
   }
 
+  /// splash 图片接口
+  void splash(Function callback) async {
+    DioManager.singleton.dio.get("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN").then((response){
+      final data = response.toString();
+      final responseJson = json.decode(data);
+      Map<String, dynamic> imageJson = responseJson ;
+      final imageUrl = imageJson['images'][0]['url'];
+      callback(imageUrl);
+    });
+  }
+
   /// 登录接口
   void login(Function callback, String username, String password) async {
     DioManager.singleton.dio.post(Api.LOGIN+"?username=$username&password=$password", options:_getOptions()).then((response){

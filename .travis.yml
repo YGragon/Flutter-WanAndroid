@@ -1,8 +1,4 @@
 
-#.travis.yml
-language: dart
-
-
 matrix:
   include:
     #声明Android运行环境

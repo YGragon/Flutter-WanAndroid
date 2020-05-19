@@ -179,7 +179,22 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
                 }),
                 _buildItem(context, Colors.pink, Icons.exit_to_app, "退出登录", () {
                   _logout();
-                })
+                }),
+                RaisedButton(
+                  child: Text('Dart exception'),
+                  onPressed: () {
+                    //触发同步异常
+                    throw StateError('This is a Dart exception.');
+                  },
+                ),
+                RaisedButton(
+                  child: Text('async Dart exception'),
+                  onPressed: () {
+                    //触发异步异常
+                    Future.delayed(Duration(seconds: 1))
+                        .then((e) => throw StateError('This is a Dart exception in Future.'));
+                  },
+                )
               ]),
             ),
           ],

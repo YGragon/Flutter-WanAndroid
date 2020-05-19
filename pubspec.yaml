@@ -60,12 +60,16 @@ dependencies:
   camera: ^0.5.8+1
   # 视频
   video_player: ^0.10.11
-  # 设备信息
-#  device_info: ^0.4.2+1
-#  # 极光推送
-#  jpush_flutter: ^0.5.3
-#  # bugly
-#  flutter_bugly: ^0.2.8
+  # 极光推送
+#  jpush_flutter:
+#    git:
+#      url: git://github.com/jpush/jpush-flutter-plugin.git
+#      ref: master
+  # bugly
+  flutter_bugly:
+    git:
+      url: git://github.com/crazecoder/flutter_bugly.git
+      ref: dev
 
 dev_dependencies:
   flutter_test:

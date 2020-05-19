@@ -1,14 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_wanandroid/init/app.dart';
 
 /// 应用初始化
 class AppInit{
   static void run() {
-    catchException(() => App.run());
+//    catchException(() => App.run());
     // //Bugly的异常捕获上传
     // Bugly.postCatchedException(() => NormalApp.run());
+
+    /// 程序的主入口
+    FlutterBugly.postCatchedException((){
+      /// bugly 数据上报
+      App.run();
+    });
+
   }
 
   /// 异常捕获处理

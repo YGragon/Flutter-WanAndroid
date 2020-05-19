@@ -9,6 +9,7 @@ import 'package:flutter_wanandroid/model/theme.dart';
 import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/navigation_service.dart';
 import 'package:flutter_wanandroid/routers/router.dart';
+import 'package:flutter_wanandroid/utils/bugly.dart';
 import 'package:flutter_wanandroid/utils/provider.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/views/page_not_found.dart';
@@ -22,7 +23,6 @@ class App{
     /// 全局 provider 初始化
     SPUtils.init().then((value) => runApp(Store.init(MyApp())));
     initApp();
-
 
   }
 
@@ -40,7 +40,7 @@ class App{
     XRouter.init();
 //    SQLHelper.init();
 //    XPush.init();
-//    Bugly.init();
+    Bugly.init();
 //    UMeng.init();
   }
 }

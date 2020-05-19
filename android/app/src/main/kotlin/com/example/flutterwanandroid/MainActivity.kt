@@ -13,6 +13,7 @@ import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.net.Uri
 import android.util.Log
+import io.flutter.plugins.GeneratedPluginRegistrant
 
 
 class MainActivity: FlutterActivity() {
@@ -21,7 +22,7 @@ class MainActivity: FlutterActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
+    GeneratedPluginRegistrant.registerWith(this)
     MethodChannel(flutterView, CHANNEL).setMethodCallHandler { call, result ->
       when(call.method){
         "getBatteryLevel" ->{

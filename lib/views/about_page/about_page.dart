@@ -111,14 +111,14 @@ class _AboutPageState extends State<AboutPage> with TickerProviderStateMixin {
       ),
       body: new Stack(
         children: [
-          new Page(
+          new GuidePage(
             // page 的主要内容
             viewModel: pages[activeIndex],
             percentVisible: 1.0,
           ),
           new PageReveal(
             revealPercent: slidePercent,
-            child: new Page(
+            child: new GuidePage(
             viewModel: pages[nextPageIndex],
             percentVisible: slidePercent,
             ),

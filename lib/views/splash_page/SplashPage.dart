@@ -98,10 +98,13 @@ class _SplashPageState extends State<SplashPage> {
   void goHomePage() {
     print("判断跳转那个页面");
     User().getUserInfo().then((value){
-      print("用户名："+ value);
-      if(value.length > 0){
+      if(value != null && value.length > 0){
+        print("首页");
+
         Navigator.pushReplacementNamed(context, RouterPath.root);
       }else{
+        print("登录页面");
+
         Navigator.pushReplacementNamed(context, RouterPath.login);
       }
     });

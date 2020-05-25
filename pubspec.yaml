@@ -61,10 +61,10 @@ dependencies:
 #  # 视频
 #  video_player: ^0.10.11
   # 极光推送
-#  jpush_flutter:
-#    git:
-#      url: git://github.com/jpush/jpush-flutter-plugin.git
-#      ref: master
+  jpush_flutter:
+    git:
+      url: git://github.com/jpush/jpush-flutter-plugin.git
+      ref: master
   # bugly
   flutter_bugly:
     git:

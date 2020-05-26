@@ -13,12 +13,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    flutterVersionCode = '3'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    flutterVersionName = '1.2'
 }
 
 apply plugin: 'com.android.application'
@@ -58,6 +58,13 @@ android {
                 JPUSH_APPKEY : "e510f2e57ab1cb6d33fdc233", // NOTE: JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
+
+//        // 自定义输出配置
+//        android.applicationVariants.all { variant ->
+//            variant.outputs.all {
+//                outputFileName = "${variant.name}_${variant.versionName}_${variant.name}.apk"
+//            }
+//        }
     }
 
     signingConfigs {
@@ -78,6 +85,11 @@ android {
             // Signing with the debug keys for now, so `flutter run --debug` works.
             signingConfig signingConfigs.debug
         }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 

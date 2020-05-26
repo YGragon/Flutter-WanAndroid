@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/model/store.dart';
@@ -12,6 +15,7 @@ import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/router_path.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
+import 'package:flutter_wanandroid/utils/update_dialog.dart';
 import 'package:flutter_wanandroid/widgets/list_item.dart';
 
 class MinePage extends StatefulWidget {
@@ -23,15 +27,14 @@ class MinePage extends StatefulWidget {
 
 class MinePageState extends State<MinePage> with WidgetsBindingObserver,AutomaticKeepAliveClientMixin {
 
+  GlobalKey<UpdateDialogState> _dialogKey = new GlobalKey();
+  String _userName = "未登录";
+
+
   @override
   bool get wantKeepAlive => true;
 
-  MinePageState() {
-    print("minePage-constructor");
-  }
-
-  String _userName = "未登录";
-  String _getUserName() {
+  void _getUserName() {
     if (mounted) {
       User().getUserInfo().then((username) {
         if (username != null && username.isNotEmpty) {
@@ -76,7 +79,6 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print("minePage-build");
     return Stack(
       children: <Widget>[
         Container(
@@ -174,32 +176,58 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
                 _buildItem(context, Colors.deepOrange, Icons.info, "关于页面", () {
                   Application.router.navigateTo(context, RouterPath.about);
                 }),
-                _buildItem(context, Colors.pink, Icons.exit_to_app, "修改主题色", () {
+                _buildItem(context, Colors.green, Icons.exit_to_app, "修改主题色", () {
                   _showChangeThemeDialog();
+                }),
+                _buildItem(context, Colors.orangeAccent, Icons.exit_to_app, "检测更新", () {
+                  _checkUpdate();
                 }),
                 _buildItem(context, Colors.pink, Icons.exit_to_app, "退出登录", () {
                   _logout();
                 }),
-                RaisedButton(
-                  child: Text('Dart exception'),
-                  onPressed: () {
-                    //触发同步异常
-                    throw StateError('This is a Dart exception.');
-                  },
-                ),
-                RaisedButton(
-                  child: Text('async Dart exception'),
-                  onPressed: () {
-                    //触发异步异常
-                    Future.delayed(Duration(seconds: 1))
-                        .then((e) => throw StateError('This is a Dart exception in Future.'));
-                  },
-                )
               ]),
             ),
           ],
         ),
       ],
+    );
+  }
+
+  void _checkUpdate(){
+    if (Platform.isAndroid) {
+      FlutterBugly.checkUpgrade();
+      FlutterBugly.getUpgradeInfo().then((_info) {
+        print("--------_info----------${_info}");
+        print("------------------${_info?.title}");
+        FlutterBugly.getUpgradeInfo().then((UpgradeInfo info) {
+          if (info != null && info.id != null) {
+            showUpdateDialog(info.newFeature, info.apkUrl);
+          }
+        });
+      });
+    }
+  }
+
+  void showUpdateDialog(String version, String url) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) => _buildDialog(version, url),
+    );
+  }
+
+  Widget _buildDialog(String version, String url) {
+    return new UpdateDialog(
+      key:_dialogKey,
+      version:version,
+      onClickWhenDownload:(_msg) {
+        //提示不要重复下载
+        print("---------提示不要重复下载---------${_msg}");
+      },
+      onClickWhenNotDownload:() {
+        //下载apk，完成后打开apk文件，建议使用dio+open_file插件
+        print("---------下载apk，完成后打开apk文件,建议使用dio+open_file插件---------");
+      },
     );
   }
 

@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                   print("response：" + response.toString());
                   User().saveUserInfo(_userModel, response);
                   /// 跳转首页
-                  Navigator.pushReplacementNamed(context, RouterPath.root);
+                  Navigator.pushNamedAndRemoveUntil(context, RouterPath.root,ModalRoute.withName('/'));
 
                 } else if (_userModel.errorCode == -1) {
                   ToastUtil.showBasicToast(_userModel.errorMsg);

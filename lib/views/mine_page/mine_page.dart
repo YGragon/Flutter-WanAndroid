@@ -17,6 +17,8 @@ import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/utils/toast.dart';
 import 'package:flutter_wanandroid/utils/update_dialog.dart';
 import 'package:flutter_wanandroid/widgets/list_item.dart';
+import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MinePage extends StatefulWidget {
   @override
@@ -29,6 +31,7 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
 
   GlobalKey<UpdateDialogState> _dialogKey = new GlobalKey();
   String _userName = "未登录";
+  String _version = "";
 
 
   @override
@@ -57,7 +60,26 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
     _getUserName();
     super.initState();
     WidgetsBinding.instance.addObserver(this); //注册监听器
+
+    _packageInfo();
+
   }
+
+  void _packageInfo() async{
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    //APP名称
+    String appName = packageInfo.appName;
+    //包名
+    String packageName = packageInfo.packageName;
+    //版本名
+    String  version = packageInfo.version;
+    //版本号
+    String buildNumber = packageInfo.buildNumber;
+
+    _version = version +"+"+ buildNumber;
+  }
+
 
   @override
   void deactivate() {
@@ -160,7 +182,7 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
                   ],
                 ),
                 // 内容
-                _buildItem(context, Colors.blue, Icons.favorite, "我的收藏", () {
+                _buildItem(context, Colors.blue, Icons.favorite, "我的收藏", "",() {
                   User().getUserInfo().then((userName){
                     if(userName.length > 0){
                       Application.router.navigateTo(context, RouterPath.myCollect);
@@ -170,19 +192,19 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
                   });
 
                 }),
-                _buildItem(context, Colors.deepPurpleAccent, Icons.score, "积分排行榜", () {
+                _buildItem(context, Colors.deepPurpleAccent, Icons.score, "积分排行榜","", () {
                   Application.router.navigateTo(context, RouterPath.coinRank);
                 }),
-                _buildItem(context, Colors.deepOrange, Icons.info, "关于页面", () {
+                _buildItem(context, Colors.deepOrange, Icons.info, "关于页面","", () {
                   Application.router.navigateTo(context, RouterPath.about);
                 }),
-                _buildItem(context, Colors.green, Icons.exit_to_app, "修改主题色", () {
+                _buildItem(context, Colors.green, Icons.exit_to_app, "修改主题色", "",() {
                   _showChangeThemeDialog();
                 }),
-                _buildItem(context, Colors.orangeAccent, Icons.exit_to_app, "检测更新", () {
+                _buildItem(context, Colors.orangeAccent, Icons.exit_to_app, "检测更新",_version, () {
                   _checkUpdate();
                 }),
-                _buildItem(context, Colors.pink, Icons.exit_to_app, "退出登录", () {
+                _buildItem(context, Colors.pink, Icons.exit_to_app, "退出登录","", () {
                   _logout();
                 }),
               ]),
@@ -197,38 +219,52 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
     if (Platform.isAndroid) {
       FlutterBugly.checkUpgrade();
       FlutterBugly.getUpgradeInfo().then((_info) {
-        print("--------_info----------${_info}");
-        print("------------------${_info?.title}");
         FlutterBugly.getUpgradeInfo().then((UpgradeInfo info) {
           if (info != null && info.id != null) {
-            showUpdateDialog(info.newFeature, info.apkUrl);
+            showUpdateDialog(info.versionName, info.newFeature, info.apkUrl);
+          }else{
+            ToastUtil.showBasicToast("暂未检测到新版本");
           }
         });
       });
     }
   }
 
-  void showUpdateDialog(String version, String url) async {
+  void showUpdateDialog(String versionName, String feature, String url) async {
     await showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (_) => _buildDialog(version, url),
+      builder: (_) => _buildDialog(versionName,feature, url),
     );
   }
 
-  Widget _buildDialog(String version, String url) {
+  Widget _buildDialog(String versionName, String feature, String url) {
     return new UpdateDialog(
       key:_dialogKey,
-      version:version,
+      version:versionName,
+      feature:feature,
       onClickWhenDownload:(_msg) {
-        //提示不要重复下载
+        //2. 提示不要重复下载
         print("---------提示不要重复下载---------${_msg}");
       },
       onClickWhenNotDownload:() {
-        //下载apk，完成后打开apk文件，建议使用dio+open_file插件
-        print("---------下载apk，完成后打开apk文件,建议使用dio+open_file插件---------");
+
+        // 1. 直接使用浏览器下载
+        _launchURL(url);
+        // 2. 本地下载
+        // 下载apk，完成后打开apk文件，建议使用dio+open_file插件
+        print("---------下载apk，完成后打开apk文件,建议使用dio+open_file 插件---------");
       },
     );
+  }
+
+  /// 跳转应用市场升级
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   /// 退出登录
@@ -288,9 +324,7 @@ class MinePageState extends State<MinePage> with WidgetsBindingObserver,Automati
   }
 }
 
-Widget _buildItem(
-    BuildContext context, Color color, IconData icons, String title,
-    [Function callback]) {
+Widget _buildItem(BuildContext context, Color color, IconData icons, String title,[String version,Function callback]) {
   return Container(
     width: double.infinity,
     color: Colors.white,
@@ -309,6 +343,7 @@ Widget _buildItem(
                 title: title,
                 titleColor: Colors.white,
                 describeColor: Colors.white,
+                rightWidget: versionText(version),
                 onPressed: () {
                   callback();
                 },
@@ -317,6 +352,10 @@ Widget _buildItem(
           ),
         )),
   );
+}
+
+Widget versionText(version){
+  return Text(version,style: TextStyle(color: Colors.white),);
 }
 
 // 顶部栏裁剪

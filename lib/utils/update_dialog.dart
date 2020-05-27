@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class UpdateDialog extends StatefulWidget {
   final key;
   final version;
+  final feature;
   final Function onClickWhenDownload;
   final Function onClickWhenNotDownload;
 
   UpdateDialog({
     this.key,
     this.version,
+    this.feature,
     this.onClickWhenDownload,
     this.onClickWhenNotDownload,
   });
@@ -32,7 +34,7 @@ class UpdateDialogState extends State<UpdateDialog> {
       ),
       content: _downloadProgress == 0.0
           ? new Text(
-        "版本${widget.version}",
+        "版本:${widget.version}\n更新:${widget.feature}",
         style: _textStyle,
       )
           : new LinearProgressIndicator(

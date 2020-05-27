@@ -68,6 +68,8 @@ dependencies:
 #      ref: master
   # bugly
   flutter_bugly: 0.2.8
+  # 获取app信息：版本、包名等
+  package_info: ^0.4.0+18
 
 dev_dependencies:
   flutter_test:

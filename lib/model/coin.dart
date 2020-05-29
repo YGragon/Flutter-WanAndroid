@@ -61,7 +61,7 @@ class CoinInfo {
   String username;
   int coinCount;
   int level;
-  int rank;
+  String rank;
   int userId;
 
   CoinInfo({this.username, this.coinCount, this.level, this.rank, this.userId});

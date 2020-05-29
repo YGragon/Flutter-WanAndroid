@@ -11,6 +11,7 @@ import 'package:flutter_wanandroid/routers/router.dart';
 import 'package:flutter_wanandroid/utils/bugly.dart';
 import 'package:flutter_wanandroid/utils/provider.dart';
 import 'package:flutter_wanandroid/utils/push.dart';
+import 'package:flutter_wanandroid/api/http.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/views/page_not_found.dart';
 import 'package:flutter_wanandroid/views/splash_page/SplashPage.dart';
@@ -36,26 +37,12 @@ class App{
     SearchHistoryList();
 
     DBProvider().init(true);
-//    XHttp.init();
+    Http.init();
     XRouter.init();
-//    SQLHelper.init();
     XPush.init();
     Bugly.init();
-//    UMeng.init();
   }
 }
-//@override
-//void initState() {
-//  if (Platform.isAndroid) {
-//    FlutterCrashPlugin.setUp('43eed8b173');
-//  } else if (Platform.isIOS) {
-//    FlutterCrashPlugin.setUp('088aebe0d5');
-//  }
-//  final eventBus = new EventBus();
-//  Application.eventBus = eventBus;
-//
-//  super.initState();
-//}
 
 
 class MyApp extends StatelessWidget {

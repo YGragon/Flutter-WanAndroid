@@ -1,10 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/api/Api.dart';
+import 'package:flutter_wanandroid/api/http.dart';
 import 'package:flutter_wanandroid/components/disclaimer_msg.dart';
 import 'package:flutter_wanandroid/components/list_view_item.dart';
 import 'package:flutter_wanandroid/components/list_refresh.dart' as listComp;
 import 'package:flutter_wanandroid/components/pagination.dart';
+import 'package:flutter_wanandroid/model/splash.dart';
+import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:flutter_wanandroid/views/search_page/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,6 +32,21 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
   @override
   void initState() {
     super.initState();
+    /// 当天是否已经获取过
+    print(_getDateTime());
+    print(SPUtils.getString(SharedPreferencesKeys.splash_date));
+    if(SPUtils.getString(SharedPreferencesKeys.splash_date) != _getDateTime()){
+      Http.getData(Api.DAY_IMAGE, success: (data) {
+        var splash = Splash.fromJson(data);
+        final enddate = splash.images[0].enddate;
+        final imageUrl = "https://cn.bing.com${splash.images[0].url}";
+        SPUtils.putString(SharedPreferencesKeys.splash_date, enddate);
+        SPUtils.putString(SharedPreferencesKeys.splash_image, imageUrl);
+      }, error: (e) {
+        print("DAY_IMAGE 接口出错：${e.message}");
+      });
+    }
+
     if (key == null) {
       key = GlobalKey<DisclaimerMsgState>();
       //获取sharePre
@@ -43,6 +63,11 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
         });
       });
     }
+  }
+
+  /// 获取当前时间 格式：20200531
+  String _getDateTime(){
+    return DateTime.now().toString().replaceAll("-", "").substring(0,8);
   }
 
 

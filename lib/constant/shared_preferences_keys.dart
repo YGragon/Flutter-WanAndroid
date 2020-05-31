@@ -25,5 +25,8 @@ class SharedPreferencesKeys {
   /// }]
   static String searchHistory = 'searchHistory';
   static String userName = 'userName';
+
+  static String splash_date = "key_splash_date";
+  static String splash_image = "key_splash_image";
 }
 

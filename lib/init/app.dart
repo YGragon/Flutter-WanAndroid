@@ -31,8 +31,6 @@ class App{
 
   //程序初始化操作
   static void initApp() {
-    // SP 初始化
-    SPUtils.init();
     // 搜索历史
     SearchHistoryList();
 

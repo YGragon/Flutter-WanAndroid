@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/common_service.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/routers/router_path.dart';
+import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 
 /// 闪屏页，首页之前的广告页面
 class SplashPage extends StatefulWidget{
@@ -17,26 +18,27 @@ class _SplashPageState extends State<SplashPage> {
   // splash 默认图片
   var mImagesUrl = '';
   Timer _timer;
-  int _countdownTime = 3;
+  int _countdownTime = 5;
 
   @override
   void initState() {
     super.initState();
 
     getSplashImage();
-    startCountdownTimer();
+
 
   }
 
   @override
   void dispose() {
     _timer.cancel();
+    _timer = null;
     super.dispose();
   }
 
   /// 倒计时
   void startCountdownTimer() {
-    const duration = const Duration(seconds: 3);
+    const duration = const Duration(seconds: 1);
     var callback = (timer) => {
       setState(() {
         if (_countdownTime > 0) {
@@ -53,13 +55,18 @@ class _SplashPageState extends State<SplashPage> {
 
   /// 获取 splash 图片
   void getSplashImage(){
-    CommonService().splash((String imageUrl) {
+    /// 从缓存中获取，缓存中没有直接跳转首页
+    var splashImage = SPUtils.getString(SharedPreferencesKeys.splash_image);
+    if(splashImage != null){
+      /// 开始倒计时
+      startCountdownTimer();
       setState(() {
-        mImagesUrl = "https://cn.bing.com/" + imageUrl ;
+        mImagesUrl = splashImage;
         print("图片mImagesUrl：$mImagesUrl");
       });
-
-    });
+    }else{
+      goHomePage();
+    }
   }
 
   @override
@@ -73,7 +80,7 @@ class _SplashPageState extends State<SplashPage> {
           child:  ExtendedImage.network(
             mImagesUrl,
             enableLoadState: false,
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           ),
         ),
         Positioned(
@@ -84,10 +91,13 @@ class _SplashPageState extends State<SplashPage> {
             highlightColor: Colors.blue[700],// 按钮高亮后的背景色
             colorBrightness: Brightness.dark,// 使用深色主题，保证按钮文字颜色为浅色
             splashColor: Colors.grey,// 点击时，水波动画中水波的颜色
-            child: Text('$_countdownTime s'),// 文本
+            child: Text('跳过（$_countdownTime s）'),// 文本
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)), //圆角矩形
-            onPressed: () {},
+            onPressed: () {
+              _timer.cancel();
+              goHomePage();
+            },
           ),
         ),
       ],);

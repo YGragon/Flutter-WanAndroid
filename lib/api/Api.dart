@@ -27,4 +27,6 @@ class Api{
   static const String MY_COLLECT = "https://www.wanandroid.com/lg/collect/list/";
   /// 积分排行榜
   static const String COIN_RANK = "$BASE_URL coin/rank/";
+  /// 每日一图
+  static const String DAY_IMAGE = "https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN";
 }

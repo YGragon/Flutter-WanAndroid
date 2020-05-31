@@ -27,9 +27,11 @@ class BannerState extends State<Pagination> {
     _bannerList.clear();
     CommonService().getBanner((BannerModel _bean) {
       if (_bean.data.length > 0) {
-        setState(() {
-          _bannerList = _bean.data;
-        });
+        if(mounted){
+          setState(() {
+            _bannerList = _bean.data;
+          });
+        }
       }
     });
   }

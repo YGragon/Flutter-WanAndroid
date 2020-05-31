@@ -25,7 +25,8 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     getSplashImage();
-
+    /// 开始倒计时
+    startCountdownTimer();
 
   }
 
@@ -58,8 +59,6 @@ class _SplashPageState extends State<SplashPage> {
     /// 从缓存中获取，缓存中没有直接跳转首页
     var splashImage = SPUtils.getString(SharedPreferencesKeys.splash_image);
     if(splashImage != null){
-      /// 开始倒计时
-      startCountdownTimer();
       setState(() {
         mImagesUrl = splashImage;
         print("图片mImagesUrl：$mImagesUrl");

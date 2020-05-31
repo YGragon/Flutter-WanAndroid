@@ -32,20 +32,6 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
   @override
   void initState() {
     super.initState();
-    /// 当天是否已经获取过
-    print(_getDateTime());
-    print(SPUtils.getString(SharedPreferencesKeys.splash_date));
-    if(SPUtils.getString(SharedPreferencesKeys.splash_date) != _getDateTime()){
-      Http.getData(Api.DAY_IMAGE, success: (data) {
-        var splash = Splash.fromJson(data);
-        final enddate = splash.images[0].enddate;
-        final imageUrl = "https://cn.bing.com${splash.images[0].url}";
-        SPUtils.putString(SharedPreferencesKeys.splash_date, enddate);
-        SPUtils.putString(SharedPreferencesKeys.splash_image, imageUrl);
-      }, error: (e) {
-        print("DAY_IMAGE 接口出错：${e.message}");
-      });
-    }
 
     if (key == null) {
       key = GlobalKey<DisclaimerMsgState>();
@@ -63,8 +49,25 @@ class FirstPageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
         });
       });
     }
+    _getImage();
   }
 
+  Future<void> _getImage() async {
+    /// 当天是否已经获取过
+    print(_getDateTime());
+    print(SPUtils.getString(SharedPreferencesKeys.splash_date));
+    if(SPUtils.getString(SharedPreferencesKeys.splash_date) != _getDateTime()){
+      Http.getData(Api.DAY_IMAGE, success: (data) {
+        var splash = Splash.fromJson(data);
+        final enddate = splash.images[0].enddate;
+        final imageUrl = "https://cn.bing.com${splash.images[0].url}";
+        SPUtils.putString(SharedPreferencesKeys.splash_date, enddate);
+        SPUtils.putString(SharedPreferencesKeys.splash_image, imageUrl);
+      }, error: (e) {
+        print("DAY_IMAGE 接口出错：${e.message}");
+      });
+    }
+  }
   /// 获取当前时间 格式：20200531
   String _getDateTime(){
     return DateTime.now().toString().replaceAll("-", "").substring(0,8);

@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-export 'file:///C:/Users/Aller/AndroidStudioProjects/flutter/flutter_wanandroid/lib/constant/shared_preferences_keys.dart';
 
 /// 用来做shared_preferences的存储
 class SPUtils {

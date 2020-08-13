@@ -7,6 +7,8 @@ import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/routers/router_path.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 
+import '../../constant/shared_preferences_keys.dart';
+
 /// 闪屏页，首页之前的广告页面
 class SplashPage extends StatefulWidget{
   @override

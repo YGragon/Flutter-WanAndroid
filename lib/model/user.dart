@@ -3,6 +3,8 @@ import 'package:flutter_wanandroid/model/user_model.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../constant/shared_preferences_keys.dart';
+
 class User {
   static final User singleton = User._internal();
 

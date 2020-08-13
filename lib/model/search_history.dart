@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 
+import '../constant/shared_preferences_keys.dart';
+
 
 class SearchHistory {
   final String name;

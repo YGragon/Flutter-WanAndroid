@@ -14,6 +14,8 @@ import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/router_path.dart';
 import 'package:flutter_wanandroid/utils/shared_preferences.dart';
 
+import '../../constant/shared_preferences_keys.dart';
+
 class SearchPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {

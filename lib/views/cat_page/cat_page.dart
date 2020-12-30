@@ -6,6 +6,7 @@ import 'package:flutter_wanandroid/components/search_input.dart';
 import 'package:flutter_wanandroid/model/cat.dart';
 import 'package:flutter_wanandroid/model/navi_bean.dart';
 import 'package:flutter_wanandroid/views/search_page/search_page.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 /// 猫耳布局
 /// 展示 体系、项目、导航 三大分类
@@ -84,17 +85,32 @@ class CatPageState extends State<CatPage> with AutomaticKeepAliveClientMixin {
     );
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   super.build(context);
+  //   return Scaffold(
+  //     appBar: new AppBar(title: SearchPage(),),
+  //     body:  Container(
+  //       color: Theme.of(context).backgroundColor,
+  //       child: WebviewScaffold(
+  //         url:'https://www.wanandroid.com/navi',
+  //         withZoom: false,
+  //         withLocalStorage: true,
+  //         withJavascript: true,
+  //       ),
+  //     ),
+  //   );
+  // }
 
-
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return Scaffold(
-      appBar: new AppBar(title: SearchPage(),),
-      body:  Container(
-        color: Theme.of(context).backgroundColor,
-        child: this.buildGrid(),
-      ),
-    );
-  }
+ @override
+ Widget build(BuildContext context) {
+   super.build(context);
+   return Scaffold(
+     appBar: new AppBar(title: SearchPage(),),
+     body:  Container(
+       color: Theme.of(context).backgroundColor,
+       child: this.buildGrid(),
+     ),
+   );
+ }
 }

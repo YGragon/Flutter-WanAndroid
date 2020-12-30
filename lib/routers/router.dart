@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
+import 'package:flutter/cupertino.dart' hide Router;
 import 'package:flutter_wanandroid/routers/application.dart';
 import 'package:flutter_wanandroid/routers/router_handler.dart';
 import 'package:flutter_wanandroid/routers/router_path.dart';

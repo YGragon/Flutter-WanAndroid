@@ -34,7 +34,7 @@ dependencies:
   # cookie 管理
   cookie_jar: ^1.0.1
   dio_cookie_manager: 1.0.0
-  flutter_webview_plugin: ^0.3.0+2
+  flutter_webview_plugin: ^0.3.11
   # 日期格式化
   #  intl: 0.15.7
   # city_pickers: ^0.1.0

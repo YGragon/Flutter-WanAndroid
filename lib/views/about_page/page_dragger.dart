@@ -24,7 +24,7 @@ class PageDragger extends StatefulWidget {
   _PageDraggerState createState() => _PageDraggerState();
 }
 
-class _PageDraggerState extends State<PageDragger> {
+class _PageDraggerState extends State<PageDragger> with SingleTickerProviderStateMixin {
 
   static const FULL_TRANSTITION_PX = 300.0;
 
